@@ -5,7 +5,7 @@ const DeleteResource = ({ id }) => {
   const router = useRouter();
 
   const deletResource = async () => {
-    const res = await fetch(`http://localhost:3000/api/Resources/${id}`, {
+    const res = await fetch(`https://ktltcp.vercel.app/api/Resources/${id}`, {
       method: "DELETE",
     });
     if (res.ok) {

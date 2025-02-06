@@ -5,9 +5,12 @@ const DeleteDevdepartment = ({ id }) => {
   const router = useRouter();
 
   const deletDevdepartment = async () => {
-    const res = await fetch(`http://localhost:3000/api/Devdepartments/${id}`, {
-      method: "DELETE",
-    });
+    const res = await fetch(
+      `https://ktltcp.vercel.app/api/Devdepartments/${id}`,
+      {
+        method: "DELETE",
+      },
+    );
     if (res.ok) {
       router.refresh();
     }

@@ -5,7 +5,7 @@ const DeletePdca = ({ id }) => {
   const router = useRouter();
 
   const deletPdca = async () => {
-    const res = await fetch(`http://localhost:3000/api/Pdcas/${id}`, {
+    const res = await fetch(`https://ktltcp.vercel.app/api/Pdcas/${id}`, {
       method: "DELETE",
     });
     if (res.ok) {

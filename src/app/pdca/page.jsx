@@ -3,7 +3,7 @@ import PdcaCard from "@/app/(components)/PdcaCard";
 
 const getPdcas = async () => {
   try {
-    const res = await fetch(`http://localhost:3000/api/Pdcas`, {
+    const res = await fetch(`https://ktltcp.vercel.app/api/Pdcas`, {
       cache: "no-store",
     });
 

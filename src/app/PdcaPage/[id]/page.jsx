@@ -1,7 +1,7 @@
 import EditPdcaForm from "@/app/(components)/EditPdcaForm";
 const getUserById = async (id) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/Pdcas/${id}`, {
+    const res = await fetch(`https://ktltcp.vercel.app/api/Pdcas/${id}`, {
       cache: "no-store",
     });
 

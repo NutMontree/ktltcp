@@ -1,7 +1,7 @@
 import EditResourceForm from "@/app/(components)/EditResourceForm";
 const getUserById = async (id) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/Resources/${id}`, {
+    const res = await fetch(`https://ktltcp.vercel.app/api/Resources/${id}`, {
       cache: "no-store",
     });
 

@@ -3,7 +3,7 @@ import DevdepartmentCard from "@/app/(components)/DevdepartmentCard";
 
 const getDevdepartments = async () => {
   try {
-    const res = await fetch(`http://localhost:3000/api/Devdepartments`, {
+    const res = await fetch(`https://ktltcp.vercel.app/api/Devdepartments`, {
       cache: "no-store",
     });
 

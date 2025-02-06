@@ -5,7 +5,7 @@ const DeleteAcademic = ({ id }) => {
   const router = useRouter();
 
   const deletAcademic = async () => {
-    const res = await fetch(`http://localhost:3000/api/Academics/${id}`, {
+    const res = await fetch(`https://ktltcp.vercel.app/api/Academics/${id}`, {
       method: "DELETE",
     });
     if (res.ok) {

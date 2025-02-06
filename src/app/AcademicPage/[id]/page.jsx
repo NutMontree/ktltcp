@@ -1,7 +1,7 @@
 import EditAcademicForm from "@/app/(components)/EditAcademicForm";
 const getUserById = async (id) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/Academics/${id}`, {
+    const res = await fetch(`https://ktltcp.vercel.app/api/Academics/${id}`, {
       cache: "no-store",
     });
 

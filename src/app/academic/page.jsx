@@ -3,7 +3,7 @@ import AcademicCard from "@/app/(components)/AcademicCard";
 
 const getAcademics = async () => {
   try {
-    const res = await fetch(`http://localhost:3000/api/Academics`, {
+    const res = await fetch(`https://ktltcp.vercel.app/api/Academics`, {
       cache: "no-store",
     });
 

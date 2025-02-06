@@ -3,7 +3,7 @@ import ResourceCard from "@/app/(components)/ResourceCard";
 
 const getResources = async () => {
   try {
-    const res = await fetch(`http://localhost:3000/api/Resources`, {
+    const res = await fetch(`https://ktltcp.vercel.app/api/Resources`, {
       cache: "no-store",
     });
 
