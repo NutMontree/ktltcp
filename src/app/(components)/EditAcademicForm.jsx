@@ -10,7 +10,7 @@ const EditAcademicForm = ({ academic }) => {
   const EDITMODE = academic._id === "new" ? false : true;
   const router = useRouter();
   const startingAcademicData = {
-    department: "ฝ่ายบริหารทรัพยากร",
+    department: "ฝ่ายวิชาการ",
     namework: "",
     nameproject: "",
     id1: "",
