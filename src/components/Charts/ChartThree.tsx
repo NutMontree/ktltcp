@@ -12,7 +12,12 @@ const options: ApexOptions = {
     type: "donut",
   },
   colors: ["#3C50E0", "#6577F3", "#8FD0EF", "#0FADCF"],
-  labels: ["Desktop", "Tablet", "Mobile", "Unknown"],
+  labels: [
+    "ฝ่ายแผนงานและความร่วมมือ",
+    "ฝ่ายบริหารทรัพยากร",
+    "ฝ่ายพัฒนากิจการนักเรียน",
+    "ฝ่ายวิชาการ",
+  ],
   legend: {
     show: false,
     position: "bottom",
@@ -50,14 +55,14 @@ const options: ApexOptions = {
 };
 
 const ChartThree: React.FC = () => {
-  const series = [65, 34, 12, 56];
+  const series = [1, 1, 1, 1];
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-5">
       <div className="mb-3 justify-between gap-4 sm:flex">
         <div>
           <h5 className="text-xl font-semibold text-black dark:text-white">
-            Visitors Analytics
+            Data Analytics
           </h5>
         </div>
         <div>
@@ -109,8 +114,8 @@ const ChartThree: React.FC = () => {
           <div className="flex w-full items-center">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-primary"></span>
             <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Desktop </span>
-              <span> 65% </span>
+              <span> ฝ่ายแผนงานและความร่วมมือ </span>
+              <span> 1% </span>
             </p>
           </div>
         </div>
@@ -118,8 +123,8 @@ const ChartThree: React.FC = () => {
           <div className="flex w-full items-center">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#6577F3]"></span>
             <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Tablet </span>
-              <span> 34% </span>
+              <span> ฝ่ายบริหารทรัพยากร </span>
+              <span> 1% </span>
             </p>
           </div>
         </div>
@@ -127,8 +132,8 @@ const ChartThree: React.FC = () => {
           <div className="flex w-full items-center">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#8FD0EF]"></span>
             <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Mobile </span>
-              <span> 45% </span>
+              <span> ฝ่ายพัฒนากิจการนักเรียน </span>
+              <span> 1% </span>
             </p>
           </div>
         </div>
@@ -136,8 +141,8 @@ const ChartThree: React.FC = () => {
           <div className="flex w-full items-center">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#0FADCF]"></span>
             <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Unknown </span>
-              <span> 12% </span>
+              <span> ฝ่ายวิชาการ </span>
+              <span> 1% </span>
             </p>
           </div>
         </div>
