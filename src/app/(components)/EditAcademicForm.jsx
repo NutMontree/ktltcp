@@ -130,8 +130,12 @@ const EditAcademicForm = ({ academic }) => {
                 </Link>
 
                 <p className="2xl:px-20">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  suspendisse.
+                  <p className="2xl:px-20">ระบบ ตรวจเช็ค Pdca งานแผน</p>
+                  <p>ระบบไม่เปิดให้ไขข้อมูลได้ภายหลัง</p>
+                  <p>
+                    กรุณากรอกข้อมูลเฉพาะส่วนของท่าน
+                    และตรวจสอบข้อมูลก่อนดำเนินส่งข้อมูล
+                  </p>
                 </p>
 
                 <span className="mt-15 inline-block">
