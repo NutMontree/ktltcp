@@ -22,7 +22,7 @@ const PdcaCard = ({ pdca }) => {
   const createdDateTime = formatTimestamp(pdca.createdAt);
 
   return (
-    <div className="hover:bg-card-hover bg-card m-2 flex flex-col border border-stroke bg-white p-3 px-7.5 py-6 shadow-default  dark:border-strokedark dark:bg-boxdark">
+    <div className="hover:bg-card-hover bg-card m-2 flex flex-col border border-stroke bg-white p-3 px-7.5 py-6 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="ml-auto flex gap-4">
         <div className="">
           <Link href={`/PdcaPage/${pdca._id}`} style={{ display: "contents" }}>
