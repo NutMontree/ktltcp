@@ -55,25 +55,24 @@ const TableThree = () => {
                   <h5 className="font-medium text-black dark:text-white">
                     {packageItem.name}
                   </h5>
-                  <p className="text-sm">${packageItem.price}</p>
+                  <div className="text-sm">${packageItem.price}</div>
                 </td>
                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                  <p className="text-black dark:text-white">
+                  <div className="text-black dark:text-white">
                     {packageItem.invoiceDate}
-                  </p>
+                  </div>
                 </td>
                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                  <p
-                    className={`inline-flex rounded-full bg-opacity-10 px-3 py-1 text-sm font-medium ${
-                      packageItem.status === "Paid"
-                        ? "bg-success text-success"
-                        : packageItem.status === "Unpaid"
-                          ? "bg-danger text-danger"
-                          : "bg-warning text-warning"
-                    }`}
+                  <div
+                    className={`inline-flex rounded-full bg-opacity-10 px-3 py-1 text-sm font-medium ${packageItem.status === "Paid"
+                      ? "bg-success text-success"
+                      : packageItem.status === "Unpaid"
+                        ? "bg-danger text-danger"
+                        : "bg-warning text-warning"
+                      }`}
                   >
                     {packageItem.status}
-                  </p>
+                  </div>
                 </td>
                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">

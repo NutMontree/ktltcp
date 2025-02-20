@@ -35,5 +35,5 @@ const AcademicSchema = new Schema(
 );
 
 const Academic = mongoose.models.Academic || mongoose.model("Academic", AcademicSchema);
-
 export default Academic;
+

@@ -36,11 +36,11 @@ const Alerts = () => {
               <h5 className="mb-3 text-lg font-semibold text-[#9D5425]">
                 Attention needed
               </h5>
-              <p className="leading-relaxed text-[#D0915C]">
+              <div className="leading-relaxed text-[#D0915C]">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry&apos;s standard
                 dummy text ever since the 1500s, when
-              </p>
+              </div>
             </div>
           </div>
           {/* <!-- Alerts Item --> */}
@@ -64,10 +64,10 @@ const Alerts = () => {
               <h5 className="mb-3 text-lg font-semibold text-black dark:text-[#34D399] ">
                 Message Sent Successfully
               </h5>
-              <p className="text-base leading-relaxed text-body">
+              <div className="text-base leading-relaxed text-body">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry.
-              </p>
+              </div>
             </div>
           </div>
           {/* <!-- Alerts Item --> */}
@@ -99,8 +99,8 @@ const Alerts = () => {
             </div>
           </div>
         </div>
-      </div>
-    </DefaultLayout>
+      </div >
+    </DefaultLayout >
   );
 };
 

@@ -157,8 +157,8 @@ const ChartOne: React.FC = () => {
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-primary"></span>
             </span>
             <div className="w-full">
-              <p className="font-semibold text-primary">Total Data</p>
-              <p className="text-sm font-medium">4</p>
+              <div className="font-semibold text-primary">Total Data</div>
+              <div className="text-sm font-medium">4</div>
             </div>
           </div>
           {/* <div className="flex min-w-47.5">
@@ -166,8 +166,8 @@ const ChartOne: React.FC = () => {
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-secondary"></span>
             </span>
             <div className="w-full">
-              <p className="font-semibold text-secondary">Total Sales</p>
-              <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p>
+              <div className="font-semibold text-secondary">Total Sales</div>
+              <div className="text-sm font-medium">12.04.2022 - 12.05.2022</div>
             </div>
           </div> */}
         </div>
@@ -184,7 +184,7 @@ const ChartOne: React.FC = () => {
             </button>
           </div>
         </div>
-      </div>
+      </div >
 
       <div>
         <div id="chartOne" className="-ml-5">
@@ -197,7 +197,7 @@ const ChartOne: React.FC = () => {
           />
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

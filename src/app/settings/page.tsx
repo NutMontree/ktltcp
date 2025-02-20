@@ -288,12 +288,12 @@ const Settings = () => {
                           />
                         </svg>
                       </span>
-                      <p>
+                      <div>
                         <span className="text-primary">Click to upload</span> or
                         drag and drop
-                      </p>
-                      <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
-                      <p>(max, 800 X 800px)</p>
+                      </div>
+                      <div className="mt-1.5">SVG, PNG, JPG or GIF</div>
+                      <div>(max, 800 X 800px)</div>
                     </div>
                   </div>
 
@@ -316,8 +316,8 @@ const Settings = () => {
             </div>
           </div>
         </div>
-      </div>
-    </DefaultLayout>
+      </div >
+    </DefaultLayout >
   );
 };
 

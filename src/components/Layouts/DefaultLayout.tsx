@@ -30,8 +30,8 @@ export default function DefaultLayout({
             </div>
           </main>
           <footer className="flex justify-center gap-2 py-4 pl-4 ">
-            <p className="text-sm">งานศูนย์ข้อมูลและสารสนเทศ</p>
-            <p className="text-sm font-bold text-sky-600">KTLTC</p>
+            <div className="text-sm">งานศูนย์ข้อมูลและสารสนเทศ</div>
+            <div className="text-sm font-bold text-sky-600">KTLTC</div>
           </footer>
           {/* <!-- ===== Main Content End ===== --> */}
         </div>

@@ -21,7 +21,7 @@ const Resource = async () => {
   const data = await getResources();
 
   if (!data?.resources) {
-    return <p>No resource.</p>;
+    return <div>No resource.</div>;
   }
 
   const resources = data.resources;

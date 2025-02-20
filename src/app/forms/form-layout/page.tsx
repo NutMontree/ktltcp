@@ -154,7 +154,7 @@ const FormLayout = () => {
                         </span>
                       </div>
                     </div>
-                    <p>Remember me</p>
+                    <div>Remember me</div>
                   </label>
 
                   <Link

@@ -113,41 +113,41 @@ const ChartThree: React.FC = () => {
         <div className="w-full px-8 sm:w-1/2">
           <div className="flex w-full items-center">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-primary"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
+            <div className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
               <span> ฝ่ายแผนงานและความร่วมมือ </span>
               <span> 1% </span>
-            </p>
+            </div>
           </div>
         </div>
         <div className="w-full px-8 sm:w-1/2">
           <div className="flex w-full items-center">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#6577F3]"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
+            <div className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
               <span> ฝ่ายบริหารทรัพยากร </span>
               <span> 1% </span>
-            </p>
+            </div>
           </div>
         </div>
         <div className="w-full px-8 sm:w-1/2">
           <div className="flex w-full items-center">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#8FD0EF]"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
+            <div className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
               <span> ฝ่ายพัฒนากิจการนักเรียน </span>
               <span> 1% </span>
-            </p>
+            </div>
           </div>
-        </div>
+        </div >
         <div className="w-full px-8 sm:w-1/2">
           <div className="flex w-full items-center">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#0FADCF]"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
+            <div className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
               <span> ฝ่ายวิชาการ </span>
               <span> 1% </span>
-            </p>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </div >
+      </div >
+    </div >
   );
 };
 

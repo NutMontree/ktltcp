@@ -21,7 +21,7 @@ const Academic = async () => {
   const data = await getAcademics();
 
   if (!data?.academics) {
-    return <p>No academic.</p>;
+    return <div>No academic.</div>;
   }
 
   const academics = data.academics;

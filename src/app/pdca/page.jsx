@@ -21,7 +21,7 @@ const Pdca = async () => {
   const data = await getPdcas();
 
   if (!data?.pdcas) {
-    return <p>No pdca.</p>;
+    return <div>No pdca.</div>;
   }
 
   const pdcas = data.pdcas;

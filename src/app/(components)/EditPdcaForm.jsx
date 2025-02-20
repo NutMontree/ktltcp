@@ -117,21 +117,24 @@ const EditPdcaForm = ({ pdca }) => {
                     className="hidden dark:block"
                     src={"/images/logo/logo.svg"}
                     alt="Logo"
-                    width={176}
-                    height={32}
+                    width="176"
+                    height="32"
                   />
                   <Image
                     className="dark:hidden"
                     src={"/images/logo/logo.svg"}
                     alt="Logo"
-                    width={176}
-                    height={32}
+                    width="176"
+                    height="32"
                   />
                 </Link>
 
-                <p className="2xl:px-20">ระบบ ตรวจเช็ค Pdca งานแผน</p>
-                <p>ระบบไม่เปิดให้ไขข้อมูลได้ภายหลัง</p>
-                <p>กรุณากรอกข้อมูลเฉพาะส่วนของท่าน และตรวจสอบข้อมูลก่อนดำเนินส่งข้อมูล</p>
+                <div className="2xl:px-20">ระบบ ตรวจเช็ค Pdca งานแผน</div>
+                <div>ระบบไม่เปิดให้ไขข้อมูลได้ภายหลัง</div>
+                <div>
+                  กรุณากรอกข้อมูลเฉพาะส่วนของท่าน
+                  และตรวจสอบข้อมูลก่อนดำเนินส่งข้อมูล
+                </div>
 
                 <span className="mt-15 inline-block">
                   <svg

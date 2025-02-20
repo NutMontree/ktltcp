@@ -26,21 +26,21 @@ const SignUp: React.FC = () => {
                   className="hidden dark:block"
                   src={"/images/logo/logo.svg"}
                   alt="Logo"
-                  width={176}
-                  height={32}
+                  width='176'
+                  height='32'
                 />
                 <Image
                   className="dark:hidden"
                   src={"/images/logo/logo.svg"}
                   alt="Logo"
-                  width={176}
-                  height={32}
+                  width='176'
+                  height='32'
                 />
               </Link>
-              <p className="2xl:px-20">
+              <div className="2xl:px-20">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit
                 suspendisse.
-              </p>
+              </div>
 
               <span className="mt-15 inline-block">
                 <svg
@@ -357,19 +357,19 @@ const SignUp: React.FC = () => {
                 </button>
 
                 <div className="mt-6 text-center">
-                  <p>
+                  <div>
                     Already have an account?{" "}
                     <Link href="/auth/signin" className="text-primary">
                       Sign in
                     </Link>
-                  </p>
+                  </div>
                 </div>
               </form>
             </div>
           </div>
         </div>
       </div>
-    </DefaultLayout>
+    </DefaultLayout >
   );
 };
 

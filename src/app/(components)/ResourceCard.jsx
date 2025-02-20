@@ -22,7 +22,7 @@ const ResourceCard = ({ resource }) => {
   const createdDateTime = formatTimestamp(resource.createdAt);
 
   return (
-    <div className="hover:bg-card-hover bg-card m-2 flex flex-col border border-stroke bg-white p-3 px-7.5 py-6 shadow-default  dark:border-strokedark dark:bg-boxdark">
+    <div className="hover:bg-card-hover bg-card m-2 flex flex-col border border-stroke bg-white p-3 px-7.5 py-6 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="ml-auto flex gap-4">
         <div className="">
           <Link
@@ -42,31 +42,33 @@ const ResourceCard = ({ resource }) => {
         style={{ display: "contents" }}
       >
         <hr className="bg-page mb-2 h-px border-0"></hr>
-        <p className="pt-1">ชื่องาน : {resource.namework}</p>
-        <p className="pt-1">ชื่อโครงการ : {resource.nameproject}</p>
-        <p className="pt-1">{resource.id1}</p>
-        <p className="pt-1">{resource.id2}</p>
-        <p className="pt-1">{resource.id3}</p>
-        <p className="pt-1">{resource.id4}</p>
-        <p className="pt-1">{resource.id5}</p>
-        <p className="pt-1">{resource.id6}</p>
-        <p className="pt-1">{resource.id7}</p>
-        <p className="pt-1">{resource.id8}</p>
-        <p className="pt-1">{resource.id9}</p>
-        <p className="pt-1">{resource.id10}</p>
-        <p className="pt-1">{resource.id11}</p>
-        <p className="pt-1">{resource.id12}</p>
-        <p className="pt-1">{resource.id13}</p>
-        <p className="pt-1">{resource.id14}</p>
-        <p className="pt-1">{resource.id15}</p>
-        <p className="pt-1">{resource.id16}</p>
-        <p className="pt-1">{resource.id17}</p>
-        <p className="pt-1">{resource.id18}</p>
-        <p className="pt-1">{resource.id19}</p>
-        <p className="pt-1">{resource.id20}</p>
+        <div className="pt-1">ชื่องาน : {resource.namework}</div>
+        <div className="pt-1">ชื่อโครงการ : {resource.nameproject}</div>
+        <div className="pt-1">{resource.id1}</div>
+        <div className="pt-1">{resource.id2}</div>
+        <div className="pt-1">{resource.id3}</div>
+        <div className="pt-1">{resource.id4}</div>
+        <div className="pt-1">{resource.id5}</div>
+        <div className="pt-1">{resource.id6}</div>
+        <div className="pt-1">{resource.id7}</div>
+        <div className="pt-1">{resource.id8}</div>
+        <div className="pt-1">{resource.id9}</div>
+        <div className="pt-1">{resource.id10}</div>
+        <div className="pt-1">{resource.id11}</div>
+        <div className="pt-1">{resource.id12}</div>
+        <div className="pt-1">{resource.id13}</div>
+        <div className="pt-1">{resource.id14}</div>
+        <div className="pt-1">{resource.id15}</div>
+        <div className="pt-1">{resource.id16}</div>
+        <div className="pt-1">{resource.id17}</div>
+        <div className="pt-1">{resource.id18}</div>
+        <div className="pt-1">{resource.id19}</div>
+        <div className="pt-1">{resource.id20}</div>
         <div className="mt-2 flex">
           <div className="flex flex-col">
-            <p className="my-1 text-xs">วันที่กรอกข้อมูล: {createdDateTime}</p>
+            <div className="my-1 text-xs">
+              วันที่กรอกข้อมูล: {createdDateTime}
+            </div>
           </div>
         </div>
       </div>

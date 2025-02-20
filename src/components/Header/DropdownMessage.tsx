@@ -20,9 +20,8 @@ const DropdownMessage = () => {
           href="#"
         >
           <span
-            className={`absolute -right-0.5 -top-0.5 z-1 h-2 w-2 rounded-full bg-meta-1 ${
-              notifying === false ? "hidden" : "inline"
-            }`}
+            className={`absolute -right-0.5 -top-0.5 z-1 h-2 w-2 rounded-full bg-meta-1 ${notifying === false ? "hidden" : "inline"
+              }`}
           >
             <span className="absolute -z-1 inline-flex h-full w-full animate-ping rounded-full bg-meta-1 opacity-75"></span>
           </span>
@@ -86,8 +85,8 @@ const DropdownMessage = () => {
                     <h6 className="text-sm font-medium text-black dark:text-white">
                       Mariya Desoja
                     </h6>
-                    <p className="text-sm">I like your confidence 💪</p>
-                    <p className="text-xs">2min ago</p>
+                    <div className="text-sm">I like your confidence 💪</div>
+                    <div className="text-xs">2min ago</div>
                   </div>
                 </Link>
               </li>
@@ -113,8 +112,8 @@ const DropdownMessage = () => {
                     <h6 className="text-sm font-medium text-black dark:text-white">
                       Robert Jhon
                     </h6>
-                    <p className="text-sm">Can you share your offer?</p>
-                    <p className="text-xs">10min ago</p>
+                    <div className="text-sm">Can you share your offer?</div>
+                    <div className="text-xs">10min ago</div>
                   </div>
                 </Link>
               </li>
@@ -140,8 +139,8 @@ const DropdownMessage = () => {
                     <h6 className="text-sm font-medium text-black dark:text-white">
                       Henry Dholi
                     </h6>
-                    <p className="text-sm">I cam across your profile and...</p>
-                    <p className="text-xs">1day ago</p>
+                    <div className="text-sm">I cam across your profile and...</div>
+                    <div className="text-xs">1day ago</div>
                   </div>
                 </Link>
               </li>
@@ -167,8 +166,8 @@ const DropdownMessage = () => {
                     <h6 className="text-sm font-medium text-black dark:text-white">
                       Cody Fisher
                     </h6>
-                    <p className="text-sm">I’m waiting for you response!</p>
-                    <p className="text-xs">5days ago</p>
+                    <div className="text-sm">I’m waiting for you response!</div>
+                    <div className="text-xs">5days ago</div>
                   </div>
                 </Link>
               </li>
@@ -194,17 +193,17 @@ const DropdownMessage = () => {
                     <h6 className="text-sm font-medium text-black dark:text-white">
                       Mariya Desoja
                     </h6>
-                    <p className="text-sm">I like your confidence 💪</p>
-                    <p className="text-xs">2min ago</p>
+                    <div className="text-sm">I like your confidence 💪</div>
+                    <div className="text-xs">2min ago</div>
                   </div>
                 </Link>
-              </li>
-            </ul>
-          </div>
+              </li >
+            </ul >
+          </div >
         )}
         {/* <!-- Dropdown End --> */}
-      </li>
-    </ClickOutside>
+      </li >
+    </ClickOutside >
   );
 };
 

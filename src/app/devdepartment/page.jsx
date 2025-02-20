@@ -21,7 +21,7 @@ const Devdepartment = async () => {
   const data = await getDevdepartments();
 
   if (!data?.devdepartments) {
-    return <p>No devdepartment.</p>;
+    return <div>No devdepartment.</div>;
   }
 
   const devdepartments = data.devdepartments;

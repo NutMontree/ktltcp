@@ -5,6 +5,7 @@ const DeleteAcademic = ({ id }) => {
   const router = useRouter();
 
   const deletAcademic = async () => {
+    // ไปลบข้อมูลในเว็บเท่านั้น https://ktltcp.vercel.app
     const res = await fetch(`https://ktltcp.vercel.app/api/Academics/${id}`, {
       method: "DELETE",
     });

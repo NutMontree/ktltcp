@@ -84,40 +84,39 @@ const TableFour: React.FC = () => {
 
           {brandData.map((brand, key) => (
             <div
-              className={`grid grid-cols-3 sm:grid-cols-4 ${
-                key === brandData.length - 1
+              className={`grid grid-cols-3 sm:grid-cols-4 ${key === brandData.length - 1
                   ? ""
                   : "border-b border-stroke dark:border-strokedark"
-              }`}
+                }`}
               key={key}
             >
               <div className="flex items-center gap-3 p-2.5 xl:p-5">
                 <div className="h-9 w-full max-w-9 flex-shrink-0">
                   <Image src={brand.logo} width={60} height={50} alt="Brand" />
                 </div>
-                <p className="hidden font-medium text-black dark:text-white sm:block">
+                <div className="hidden font-medium text-black dark:text-white sm:block">
                   {brand.name}
-                </p>
+                </div>
               </div>
 
               <div className="flex items-center justify-center p-2.5 xl:p-5">
-                <p className="font-medium text-black dark:text-white">
+                <div className="font-medium text-black dark:text-white">
                   {brand.visitors}K
-                </p>
+                </div>
               </div>
 
               <div className="flex items-center justify-center p-2.5 xl:p-5">
-                <p className="font-medium text-meta-3">${brand.revenues}</p>
+                <div className="font-medium text-meta-3">${brand.revenues}</div>
               </div>
 
               <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                <p className="font-medium text-meta-5">{brand.conversion}%</p>
+                <div className="font-medium text-meta-5">{brand.conversion}%</div>
               </div>
-            </div>
+            </div >
           ))}
-        </div>
-      </div>
-    </div>
+        </div >
+      </div >
+    </div >
   );
 };
 
