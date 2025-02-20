@@ -1,5 +1,4 @@
 import Academic from '@/app/models/Academic';
-import { model } from 'mongoose';
 import { NextResponse } from "next/server";
 
 export async function GET() {
