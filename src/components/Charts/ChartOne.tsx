@@ -132,7 +132,7 @@ const ChartOne: React.FC = () => {
   const series = [
     {
       name: "ฝ่ายแผนงานและความร่วมมือ",
-      data: [1, 1],
+      data: [1, 2],
     },
     {
       name: "ฝ่ายบริหารทรัพยากร",
@@ -144,7 +144,7 @@ const ChartOne: React.FC = () => {
     },
     {
       name: "ฝ่ายวิชาการ",
-      data: [1, 1],
+      data: [1, 2],
     },
   ];
 

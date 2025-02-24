@@ -55,7 +55,7 @@ const options: ApexOptions = {
 };
 
 const ChartThree: React.FC = () => {
-  const series = [1, 1, 1, 1];
+  const series = [2, 1, 1, 2];
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-5">
@@ -115,7 +115,7 @@ const ChartThree: React.FC = () => {
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-primary"></span>
             <div className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
               <span> ฝ่ายแผนงานและความร่วมมือ </span>
-              <span> 1% </span>
+              <span> 2% </span>
             </div>
           </div>
         </div>
@@ -142,7 +142,7 @@ const ChartThree: React.FC = () => {
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#0FADCF]"></span>
             <div className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
               <span> ฝ่ายวิชาการ </span>
-              <span> 1% </span>
+              <span> 2% </span>
             </div>
           </div>
         </div >
