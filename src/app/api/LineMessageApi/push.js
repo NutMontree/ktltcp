@@ -24,7 +24,7 @@ mobuld.exports = {
                     'Content-Type': "application/json",
                     'Authorization': `Bearer ${bearerToken}`,
                     to: "Cff6e2d23bf3c718620c38c98c3462ba1",
-                    notificationDisabled: false, // เปลี่ยนเป็น true หากต้องการปิดการแจ้งเตือน
+                    notificationDisabled: true, // เปลี่ยนเป็น true หากต้องการปิดการแจ้งเตือน
 
                 }
             })
