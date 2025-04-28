@@ -18,7 +18,7 @@ let config = {
         'Content-Type': 'application/json',
         "Authorization": "Bearer LuVp1mV6NLHuAdPxbf3+XlqWBsxtEhLElHYlDjWAwURwKk2XGtjXvkYmevwGX02HqxLceZsEEtbsVDrmbTTeArQcRg9q8RsCopa7niK+DyoAkZl87MfgjV1bVPK3TO/QSbobW/UNW4y8TsSMYpze0QdB04t89/1O/w1cDnyilFU="
     },
-    notificationDisabled: false, // เปลี่ยนเป็น true หากต้องการปิดการแจ้งเตือน
+    notificationDisabled: true, // เปลี่ยนเป็น true หากต้องการปิดการแจ้งเตือน
     data: data
 };
 
