@@ -285,7 +285,7 @@ const EditPdcaForm = ({ pdca }) => {
                         type="text"
                         onChange={handleChange}
                         required={true}
-                        value={formData.department}
+                        value={formData.year}
                         className="dark:border-dark-3 text-dark-6 relative z-20 w-full appearance-none rounded-lg border border-stroke bg-transparent px-5 py-[10px] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2"
                       >
                         <option value="2567" className="dark:bg-dark-2">
