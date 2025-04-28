@@ -11,7 +11,7 @@ const EditPdcaForm = ({ pdca }) => {
   const router = useRouter();
   const startingPdcaData = {
     year: "",
-    department: "",
+    department: "ฝ่ายแผนงานและความร่วมมือ",
     namework: "",
     nameproject: "",
     id1: "",

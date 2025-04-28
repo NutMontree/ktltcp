@@ -11,7 +11,7 @@ const EditResourceForm = ({ resource }) => {
   const router = useRouter();
   const startingResourceData = {
     year: "",
-    department: "",
+    department: "ฝ่ายบริหารทรัพยากร",
     namework: "",
     nameproject: "",
     id1: "",

@@ -11,7 +11,7 @@ const EditAcademicForm = ({ academic }) => {
   const router = useRouter();
   const startingAcademicData = {
     year: "",
-    department: "",
+    department: "ฝ่ายวิชาการ",
     namework: "",
     nameproject: "",
     id1: "",

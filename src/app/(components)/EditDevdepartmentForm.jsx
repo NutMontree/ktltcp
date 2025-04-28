@@ -11,7 +11,7 @@ const EditDevdepartmentForm = ({ devdepartment }) => {
   const router = useRouter();
   const startingDevdepartmentData = {
     year: "",
-    department: "",
+    department: "ฝ่ายพัฒนากิจการนักเรียน",
     namework: "",
     nameproject: "",
     id1: "",
