@@ -278,16 +278,16 @@ const EditPdcaForm = ({ pdca }) => {
                     <label className="text-dark mb-[10px] block text-base font-medium dark:text-white">
                       ปีงบประมาณ
                     </label>
-                    <div
-                      id="year"
-                      name="year"
-                      type="text"
-                      onChange={handleChange}
-                      required={true}
-                      value={formData.department}
-                      className="relative z-20"
-                    >
-                      <select className="dark:border-dark-3 text-dark-6 relative z-20 w-full appearance-none rounded-lg border border-stroke bg-transparent px-5 py-[10px] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2">
+                    <div>
+                      <select
+                        id="year"
+                        name="year"
+                        type="text"
+                        onChange={handleChange}
+                        required={true}
+                        value={formData.department}
+                        className="dark:border-dark-3 text-dark-6 relative z-20 w-full appearance-none rounded-lg border border-stroke bg-transparent px-5 py-[10px] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2"
+                      >
                         <option value="2567" className="dark:bg-dark-2">
                           2567
                         </option>
