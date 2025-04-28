@@ -10,7 +10,7 @@ const EditResourceForm = ({ resource }) => {
   const EDITMODE = resource._id === "new" ? false : true;
   const router = useRouter();
   const startingResourceData = {
-    year: "",
+    year: "2567",
     department: "ฝ่ายบริหารทรัพยากร",
     namework: "",
     nameproject: "",
@@ -277,16 +277,16 @@ const EditResourceForm = ({ resource }) => {
                     method="post"
                     className="" // xl:w-2/3
                   >
-                    <label className="text-dark mb-[10px] block text-base font-medium dark:text-white">
-                      ปีงบประมาณ
-                    </label>
                     <div>
+                      <label className="text-dark mb-[10px] block text-base font-medium dark:text-white">
+                        ปีงบประมาณ
+                      </label>
                       <select
                         id="year"
                         name="year"
                         type="text"
                         onChange={handleChange}
-                        required={true}
+                        // required={true}
                         value={formData.year}
                         className="dark:border-dark-3 text-dark-6 relative z-20 w-full appearance-none rounded-lg border border-stroke bg-transparent px-5 py-[10px] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2"
                       >

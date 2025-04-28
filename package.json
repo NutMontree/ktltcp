@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroui/accordion": "^2.2.14",
+    "@heroui/system": "^2.4.13",
+    "@heroui/theme": "^2.4.13",
     "@tailwindcss/postcss": "^4.0.3",
     "apexcharts": "^4.4.0",
     "axios": "^1.7.9",
@@ -19,9 +22,9 @@
     "next": "15.1.6",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "react": "^19.0.0",
+    "react": "^19.1.0",
     "react-apexcharts": "^1.7.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

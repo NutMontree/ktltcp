@@ -1,3 +1,4 @@
+import { heroui } from "@heroui/theme";
 import type { Config } from "tailwindcss";
 import defaultTheme from "tailwindcss/defaultTheme";
 const colors = require("tailwindcss/colors");
@@ -7,6 +8,7 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@heroui/theme/dist/components/(accordion|divider).js",
   ],
   darkMode: "class",
   theme: {
@@ -342,6 +344,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [heroui()],
 };
 export default config;

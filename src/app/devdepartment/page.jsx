@@ -3,7 +3,7 @@ import DevdepartmentCard from "@/app/(components)/DevdepartmentCard";
 
 const getDevdepartments = async () => {
   try {
-    const res = await fetch(`https://ktltcp.vercel.app/api/Devdepartments`, {
+    const res = await fetch(`https://ktltcp.vercel.app/api/Devdepartments`, {      //`http://localhost:3000
       cache: "no-store",
     });
 
@@ -30,12 +30,15 @@ const Devdepartment = async () => {
 
   return (
     <>
+      <h1 className="text-xl font-bold text-black-2">
+        ฝ่ายพัฒนากิจการนักเรียน
+      </h1>
       <div className="bg-page text-default-text flex-grow overflow-y-auto p-5">
         <div>
           {devdepartments &&
             uniqueYears?.map((uniqueYear, yearIndex) => (
               <div key={yearIndex} className="mb-4">
-                <h2>{uniqueYear}</h2>
+                <h2 className="text-black-2">{uniqueYear}</h2>
                 <div className="grid-cols-2 lg:grid xl:grid-cols-3">
                   {devdepartments
                     .filter(

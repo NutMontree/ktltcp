@@ -4,6 +4,7 @@ import ResourceCard from "@/app/(components)/ResourceCard";
 const getResources = async () => {
   try {
     const res = await fetch(`https://ktltcp.vercel.app/api/Resources`, {
+      //`http://localhost:3000
       cache: "no-store",
     });
 
@@ -30,12 +31,13 @@ const Resource = async () => {
 
   return (
     <>
+      <h1 className="text-xl font-bold text-black-2">ฝ่ายบริหารทรัพยากร</h1>
       <div className="bg-page text-default-text flex-grow overflow-y-auto p-5">
         <div>
           {resources &&
             uniqueYears?.map((uniqueYear, yearIndex) => (
               <div key={yearIndex} className="mb-4">
-                <h2>{uniqueYear}</h2>
+                <h2 className="text-black-2">{uniqueYear}</h2>
                 <div className="grid-cols-2 lg:grid xl:grid-cols-3">
                   {resources
                     .filter((resource) => resource.year === uniqueYear)
