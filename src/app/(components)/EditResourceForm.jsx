@@ -290,10 +290,10 @@ const EditResourceForm = ({ resource }) => {
                       className="relative z-20"
                     >
                       <select className="dark:border-dark-3 text-dark-6 relative z-20 w-full appearance-none rounded-lg border border-stroke bg-transparent px-5 py-[10px] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2">
-                        <option value="" className="dark:bg-dark-2">
+                        <option value="2567" className="dark:bg-dark-2">
                           2567
                         </option>
-                        <option value="" className="dark:bg-dark-2">
+                        <option value="2568" className="dark:bg-dark-2">
                           2568
                         </option>
                       </select>
