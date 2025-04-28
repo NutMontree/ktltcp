@@ -42,7 +42,7 @@ const ResourceCard = ({ resource }) => {
         style={{ display: "contents" }}
       >
         <hr className="bg-page mb-2 h-px border-0"></hr>{" "}
-        <div className="pt-1">ปีงบประมาณ : {academic.year}</div>
+        <div className="pt-1">ปีงบประมาณ : {resource.year}</div>
         <div className="pt-1">ชื่องาน : {resource.namework}</div>
         <div className="pt-1">ชื่อโครงการ : {resource.nameproject}</div>
         <div className="pt-1">{resource.id1}</div>
