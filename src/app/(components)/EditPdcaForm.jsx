@@ -37,7 +37,7 @@ const EditPdcaForm = ({ pdca }) => {
   };
 
   if (EDITMODE) {
-    startingAcademicData["year"] = academic.year;
+    startingPdcaData["year"] = pdca.year;
     startingPdcaData["department"] = pdca.department;
     startingPdcaData["namework"] = pdca.namework;
     startingPdcaData["nameproject"] = pdca.nameproject;

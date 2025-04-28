@@ -37,7 +37,7 @@ const EditDevdepartmentForm = ({ devdepartment }) => {
   };
 
   if (EDITMODE) {
-    startingAcademicData["year"] = academic.year;
+    startingDevdepartmentData["year"] = devdepartment.year;
     startingDevdepartmentData["department"] = devdepartment.department;
     startingDevdepartmentData["namework"] = devdepartment.namework;
     startingDevdepartmentData["nameproject"] = devdepartment.nameproject;

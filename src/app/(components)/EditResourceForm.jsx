@@ -37,7 +37,7 @@ const EditResourceForm = ({ resource }) => {
   };
 
   if (EDITMODE) {
-    startingAcademicData["year"] = academic.year;
+    startingResourceData["year"] = resource.year;
     startingResourceData["department"] = resource.department;
     startingResourceData["namework"] = resource.namework;
     startingResourceData["nameproject"] = resource.nameproject;
