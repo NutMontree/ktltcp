@@ -26,21 +26,19 @@ const Pdca = async () => {
 
   const pdcas = data.pdcas;
 
-  const uniqueDepartments = [
-    ...new Set(pdcas?.map(({ department }) => department)),
-  ];
+  const uniqueYears = [...new Set(pdcas?.map(({ year }) => year))];
 
   return (
     <>
       <div className="bg-page text-default-text flex-grow overflow-y-auto p-5">
         <div>
           {pdcas &&
-            uniqueDepartments?.map((uniqueDepartment, departmentIndex) => (
-              <div key={departmentIndex} className="mb-4">
-                <h2>{uniqueDepartment}</h2>
+            uniqueYears?.map((uniqueYear, yearIndex) => (
+              <div key={yearIndex} className="mb-4">
+                <h2>{uniqueYear}</h2>
                 <div className="grid-cols-2 lg:grid xl:grid-cols-3">
                   {pdcas
-                    .filter((pdca) => pdca.department === uniqueDepartment)
+                    .filter((pdca) => pdca.year === uniqueYear)
                     .map((filteredPdca, _index) => (
                       <PdcaCard id={_index} key={_index} pdca={filteredPdca} />
                     ))}

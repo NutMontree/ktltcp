@@ -10,7 +10,8 @@ const EditResourceForm = ({ resource }) => {
   const EDITMODE = resource._id === "new" ? false : true;
   const router = useRouter();
   const startingResourceData = {
-    department: "ฝ่ายบริหารทรัพยากร",
+    year: "",
+    department: "",
     namework: "",
     nameproject: "",
     id1: "",
@@ -36,6 +37,7 @@ const EditResourceForm = ({ resource }) => {
   };
 
   if (EDITMODE) {
+    startingAcademicData["year"] = academic.year;
     startingResourceData["department"] = resource.department;
     startingResourceData["namework"] = resource.namework;
     startingResourceData["nameproject"] = resource.nameproject;
@@ -275,18 +277,44 @@ const EditResourceForm = ({ resource }) => {
                     method="post"
                     className="" // xl:w-2/3
                   >
-                    <label className="mb-2.5 block font-medium text-black dark:text-white">
-                      ชื่อฝ่าย
+                    <label className="text-dark mb-[10px] block text-base font-medium dark:text-white">
+                      ปีงบประมาณ
                     </label>
-                    <input
-                      id="department"
-                      name="department"
+                    <div
+                      id="year"
+                      name="year"
                       type="text"
                       onChange={handleChange}
                       required={true}
                       value={formData.department}
-                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                    />
+                      className="relative z-20"
+                    >
+                      <select className="dark:border-dark-3 text-dark-6 relative z-20 w-full appearance-none rounded-lg border border-stroke bg-transparent px-5 py-[10px] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2">
+                        <option value="" className="dark:bg-dark-2">
+                          2567
+                        </option>
+                        <option value="" className="dark:bg-dark-2">
+                          2568
+                        </option>
+                      </select>
+                      <span className="border-body-color absolute right-4 top-1/2 z-10 mt-[-2px] h-[10px] w-[10px] -translate-y-1/2 rotate-45 border-b-2 border-r-2"></span>
+                    </div>
+
+                    <div className="pt-6">
+                      <label className="text-dark mb-[10px] block text-base font-medium dark:text-white">
+                        ชื่อฝ่าย
+                      </label>
+                      <input
+                        id="department"
+                        placeholder="ฝ่ายบริหารทรัพยากร"
+                        disabled
+                        type="text"
+                        onChange={handleChange}
+                        required={true}
+                        value={formData.department}
+                        className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      />
+                    </div>
 
                     <div className="pt-6">
                       <label className="mb-2.5 block font-medium text-black dark:text-white">

@@ -3,6 +3,7 @@ import AcademicCard from "@/app/(components)/AcademicCard";
 
 const getAcademics = async () => {
   try {
+    // const res = await fetch(`https://ktltcp.vercel.app/api/Academics`, {
     const res = await fetch(`https://ktltcp.vercel.app/api/Academics`, {
       cache: "no-store",
     });
@@ -26,23 +27,19 @@ const Academic = async () => {
 
   const academics = data.academics;
 
-  const uniqueDepartments = [
-    ...new Set(academics?.map(({ department }) => department)),
-  ];
+  const uniqueYears = [...new Set(academics?.map(({ year }) => year))];
 
   return (
     <>
       <div className="bg-page text-default-text flex-grow overflow-y-auto p-5">
         <div>
           {academics &&
-            uniqueDepartments?.map((uniqueDepartment, departmentIndex) => (
-              <div key={departmentIndex} className="mb-4">
-                <h2>{uniqueDepartment}</h2>
+            uniqueYears?.map((uniqueYear, yearIndex) => (
+              <div key={yearIndex} className="mb-4">
+                <h2>{uniqueYear}</h2>
                 <div className="grid-cols-2 lg:grid xl:grid-cols-3">
                   {academics
-                    .filter(
-                      (academic) => academic.department === uniqueDepartment,
-                    )
+                    .filter((academic) => academic.year === uniqueYear)
                     .map((filteredAcademic, _index) => (
                       <AcademicCard
                         id={_index}

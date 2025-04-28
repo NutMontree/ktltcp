@@ -26,23 +26,19 @@ const Resource = async () => {
 
   const resources = data.resources;
 
-  const uniqueDepartments = [
-    ...new Set(resources?.map(({ department }) => department)),
-  ];
+  const uniqueYears = [...new Set(resources?.map(({ year }) => year))];
 
   return (
     <>
       <div className="bg-page text-default-text flex-grow overflow-y-auto p-5">
         <div>
           {resources &&
-            uniqueDepartments?.map((uniqueDepartment, departmentIndex) => (
-              <div key={departmentIndex} className="mb-4">
-                <h2>{uniqueDepartment}</h2>
+            uniqueYears?.map((uniqueYear, yearIndex) => (
+              <div key={yearIndex} className="mb-4">
+                <h2>{uniqueYear}</h2>
                 <div className="grid-cols-2 lg:grid xl:grid-cols-3">
                   {resources
-                    .filter(
-                      (resource) => resource.department === uniqueDepartment,
-                    )
+                    .filter((resource) => resource.year === uniqueYear)
                     .map((filteredResource, _index) => (
                       <ResourceCard
                         id={_index}

@@ -38,7 +38,8 @@ const PdcaCard = ({ pdca }) => {
         href={`/ProfilePdca/${pdca._id}`}
         style={{ display: "contents" }}
       >
-        <hr className="bg-page mb-2 h-px border-0"></hr>
+        <hr className="bg-page mb-2 h-px border-0"></hr>{" "}
+        <div className="pt-1">ปีงบประมาณ : {academic.year}</div>
         <div className="pt-1">ชื่องาน : {pdca.namework}</div>
         <div className="pt-1">ชื่อโครงการ : {pdca.nameproject}</div>
         <div className="pt-1">{pdca.id1}</div>

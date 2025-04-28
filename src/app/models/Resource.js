@@ -5,6 +5,7 @@ mongoose.Promise = global.Promise;
 
 const ResourceSchema = new Schema(
   {
+    year: String,
     department: String,
     namework: String,
     nameproject: String,

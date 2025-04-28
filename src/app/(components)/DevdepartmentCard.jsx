@@ -41,7 +41,8 @@ const DevdepartmentCard = ({ devdepartment }) => {
         href={`/ProfileDevdepartment/${devdepartment._id}`}
         style={{ display: "contents" }}
       >
-        <hr className="bg-page mb-2 h-px border-0"></hr>
+        <hr className="bg-page mb-2 h-px border-0"></hr>{" "}
+        <div className="pt-1">ปีงบประมาณ : {academic.year}</div>
         <div className="pt-1">ชื่องาน : {devdepartment.namework}</div>
         <div className="pt-1">ชื่อโครงการ : {devdepartment.nameproject}</div>
         <div className="pt-1">{devdepartment.id1}</div>

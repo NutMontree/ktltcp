@@ -26,23 +26,20 @@ const Devdepartment = async () => {
 
   const devdepartments = data.devdepartments;
 
-  const uniqueDepartments = [
-    ...new Set(devdepartments?.map(({ department }) => department)),
-  ];
+  const uniqueYears = [...new Set(devdepartments?.map(({ year }) => year))];
 
   return (
     <>
       <div className="bg-page text-default-text flex-grow overflow-y-auto p-5">
         <div>
           {devdepartments &&
-            uniqueDepartments?.map((uniqueDepartment, departmentIndex) => (
-              <div key={departmentIndex} className="mb-4">
-                <h2>{uniqueDepartment}</h2>
+            uniqueYears?.map((uniqueYear, yearIndex) => (
+              <div key={yearIndex} className="mb-4">
+                <h2>{uniqueYear}</h2>
                 <div className="grid-cols-2 lg:grid xl:grid-cols-3">
                   {devdepartments
                     .filter(
-                      (devdepartment) =>
-                        devdepartment.department === uniqueDepartment,
+                      (devdepartment) => devdepartment.year === uniqueYear,
                     )
                     .map((filteredDevdepartment, _index) => (
                       <DevdepartmentCard
