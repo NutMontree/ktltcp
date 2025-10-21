@@ -1,77 +1,82 @@
+"use client";
+
 import DeleteAcademic from "./DeleteAcademic";
 import Link from "next/link";
 
-const AcademicCard = ({ academic }) => {
-  // สร้างวันเวลาอัตโนมัติ
-  function formatTimestamp(timestamp) {
+const AcademicCard = ({ academic, editing = false, onEditChange }) => {
+  function formatThaiDate(timestamp) {
+    if (!timestamp) return "-";
     const options = {
       year: "numeric",
-      month: "2-digit",
+      month: "long",
       day: "2-digit",
       hour: "2-digit",
       minute: "2-digit",
-      hour12: true,
+      second: "2-digit",
     };
-
-    const date = new Date(timestamp);
-    const formattedDate = date.toLocaleString("en-US", options);
-
-    return formattedDate;
+    return new Date(timestamp).toLocaleString("th-TH", options);
   }
-  // สร้างวันเวลาอัตโนมัติ
-  const createdDateTime = formatTimestamp(academic.createdAt);
+
+  const createdDateTime = formatThaiDate(academic.createdAt);
 
   return (
-    <div className="hover:bg-card-hover bg-card m-2 flex flex-col border border-stroke bg-white p-3 px-7.5 py-6 shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div className="ml-auto flex gap-4">
-        <div className="">
-          <Link
-            href={`/AcademicPage/${academic._id}`}
-            style={{ display: "contents" }}
-          >
-            ✏️
-          </Link>
-        </div>
-        <div className="">
-          <DeleteAcademic id={academic._id} />
-        </div>
+    <div className="relative w-full max-w-3xl overflow-y-auto rounded-xl bg-white p-6 shadow-md transition-shadow duration-300 hover:shadow-xl">
+      {/* Action buttons */}
+      <div className="absolute right-4 top-4 flex gap-3">
+        <Link
+          href={`/AcademicPage/${academic._id}`}
+          className="text-blue-500 transition-colors hover:text-blue-700"
+        >
+          ✏️ แก้ไข
+        </Link>
+        <DeleteAcademic id={academic._id} />
       </div>
-      <div
-        className=""
-        href={`/ProfileAcademic/${academic._id}`}
-        style={{ display: "contents" }}
-      >
-        <hr className="bg-page mb-2 h-px border-0"></hr>
-        <div className="pt-1">ปีงบประมาณ : {academic.year}</div>
-        <div className="pt-1">ชื่องาน : {academic.namework}</div>
-        <div className="pt-1">ชื่อโครงการ : {academic.nameproject}</div>
-        <div className="pt-1">{academic.id1}</div>
-        <div className="pt-1">{academic.id2}</div>
-        <div className="pt-1">{academic.id3}</div>
-        <div className="pt-1">{academic.id4}</div>
-        <div className="pt-1">{academic.id5}</div>
-        <div className="pt-1">{academic.id6}</div>
-        <div className="pt-1">{academic.id7}</div>
-        <div className="pt-1">{academic.id8}</div>
-        <div className="pt-1">{academic.id9}</div>
-        <div className="pt-1">{academic.id10}</div>
-        <div className="pt-1">{academic.id11}</div>
-        <div className="pt-1">{academic.id12}</div>
-        <div className="pt-1">{academic.id13}</div>
-        <div className="pt-1">{academic.id14}</div>
-        <div className="pt-1">{academic.id15}</div>
-        <div className="pt-1">{academic.id16}</div>
-        <div className="pt-1">{academic.id17}</div>
-        <div className="pt-1">{academic.id18}</div>
-        <div className="pt-1">{academic.id19}</div>
-        <div className="pt-1">{academic.id20}</div>
-        <div className="mt-2 flex">
-          <div className="flex flex-col">
-            <div className="my-1 text-xs">
-              วันที่กรอกข้อมูล: {createdDateTime}
+
+      {/* Header */}
+      <div className="mb-4 pt-8">
+        <h2 className="text-lg font-semibold text-gray-800">
+          {academic.nameproject}
+        </h2>
+        <p className="text-sm text-gray-500">{academic.namework}</p>
+      </div>
+
+      <div className="mb-4 flex gap-2">
+        <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">
+          ปีงบประมาณ: {academic.year}
+        </span>
+      </div>
+
+      <hr className="my-4 border-gray-200" />
+
+      <div>
+        {Array.from({ length: 20 }, (_, i) => {
+          const key = `id${i + 1}`;
+          const value = academic[key];
+
+          if (editing && onEditChange) {
+            return (
+              <div key={key} className="flex items-center gap-2 pt-1">
+                <input
+                  type="checkbox"
+                  checked={!!value}
+                  onChange={(e) => onEditChange(key, e.target.checked)}
+                  className="h-4 w-4"
+                />
+                <label>{key}</label>
+              </div>
+            );
+          }
+
+          return (
+            <div key={key} className="pt-1">
+              {value}
             </div>
-          </div>
-        </div>
+          );
+        })}
+      </div>
+
+      <div className="mt-4 text-right text-xs text-gray-400">
+        วันที่กรอกข้อมูล: {createdDateTime}
       </div>
     </div>
   );

@@ -1,77 +1,82 @@
+"use client";
+
 import DeleteResource from "./DeleteResource";
 import Link from "next/link";
 
-const ResourceCard = ({ resource }) => {
-  // สร้างวันเวลาอัตโนมัติ
-  function formatTimestamp(timestamp) {
+const ResourceCard = ({ resource, editing = false, onEditChange }) => {
+  function formatThaiDate(timestamp) {
+    if (!timestamp) return "-";
     const options = {
       year: "numeric",
-      month: "2-digit",
+      month: "long",
       day: "2-digit",
       hour: "2-digit",
       minute: "2-digit",
-      hour12: true,
+      second: "2-digit",
     };
-
-    const date = new Date(timestamp);
-    const formattedDate = date.toLocaleString("en-US", options);
-
-    return formattedDate;
+    return new Date(timestamp).toLocaleString("th-TH", options);
   }
-  // สร้างวันเวลาอัตโนมัติ
-  const createdDateTime = formatTimestamp(resource.createdAt);
+
+  const createdDateTime = formatThaiDate(resource.createdAt);
 
   return (
-    <div className="hover:bg-card-hover bg-card m-2 flex flex-col border border-stroke bg-white p-3 px-7.5 py-6 shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div className="ml-auto flex gap-4">
-        <div className="">
-          <Link
-            href={`/ResourcePage/${resource._id}`}
-            style={{ display: "contents" }}
-          >
-            ✏️
-          </Link>
-        </div>
-        <div className="">
-          <DeleteResource id={resource._id} />
-        </div>
+    <div className="relative w-full max-w-3xl overflow-y-auto rounded-xl bg-white p-6 shadow-md transition-shadow duration-300 hover:shadow-xl">
+      {/* Action buttons */}
+      <div className="absolute right-4 top-4 flex gap-3">
+        <Link
+          href={`/ResourcePage/${resource._id}`}
+          className="text-blue-500 transition-colors hover:text-blue-700"
+        >
+          ✏️ แก้ไข
+        </Link>
+        <DeleteResource id={resource._id} />
       </div>
-      <div
-        className=""
-        href={`/ProfileResource/${resource._id}`}
-        style={{ display: "contents" }}
-      >
-        <hr className="bg-page mb-2 h-px border-0"></hr>{" "}
-        <div className="pt-1">ปีงบประมาณ : {resource.year}</div>
-        <div className="pt-1">ชื่องาน : {resource.namework}</div>
-        <div className="pt-1">ชื่อโครงการ : {resource.nameproject}</div>
-        <div className="pt-1">{resource.id1}</div>
-        <div className="pt-1">{resource.id2}</div>
-        <div className="pt-1">{resource.id3}</div>
-        <div className="pt-1">{resource.id4}</div>
-        <div className="pt-1">{resource.id5}</div>
-        <div className="pt-1">{resource.id6}</div>
-        <div className="pt-1">{resource.id7}</div>
-        <div className="pt-1">{resource.id8}</div>
-        <div className="pt-1">{resource.id9}</div>
-        <div className="pt-1">{resource.id10}</div>
-        <div className="pt-1">{resource.id11}</div>
-        <div className="pt-1">{resource.id12}</div>
-        <div className="pt-1">{resource.id13}</div>
-        <div className="pt-1">{resource.id14}</div>
-        <div className="pt-1">{resource.id15}</div>
-        <div className="pt-1">{resource.id16}</div>
-        <div className="pt-1">{resource.id17}</div>
-        <div className="pt-1">{resource.id18}</div>
-        <div className="pt-1">{resource.id19}</div>
-        <div className="pt-1">{resource.id20}</div>
-        <div className="mt-2 flex">
-          <div className="flex flex-col">
-            <div className="my-1 text-xs">
-              วันที่กรอกข้อมูล: {createdDateTime}
+
+      {/* Header */}
+      <div className="mb-4 pt-8">
+        <h2 className="text-lg font-semibold text-gray-800">
+          {resource.nameproject}
+        </h2>
+        <p className="text-sm text-gray-500">{resource.namework}</p>
+      </div>
+
+      <div className="mb-4 flex gap-2">
+        <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">
+          ปีงบประมาณ: {resource.year}
+        </span>
+      </div>
+
+      <hr className="my-4 border-gray-200" />
+
+      <div>
+        {Array.from({ length: 20 }, (_, i) => {
+          const key = `id${i + 1}`;
+          const value = resource[key];
+
+          if (editing && onEditChange) {
+            return (
+              <div key={key} className="flex items-center gap-2 pt-1">
+                <input
+                  type="checkbox"
+                  checked={!!value}
+                  onChange={(e) => onEditChange(key, e.target.checked)}
+                  className="h-4 w-4"
+                />
+                <label>{key}</label>
+              </div>
+            );
+          }
+
+          return (
+            <div key={key} className="pt-1">
+              {value}
             </div>
-          </div>
-        </div>
+          );
+        })}
+      </div>
+
+      <div className="mt-4 text-right text-xs text-gray-400">
+        วันที่กรอกข้อมูล: {createdDateTime}
       </div>
     </div>
   );
