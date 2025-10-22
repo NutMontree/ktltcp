@@ -15,17 +15,10 @@ const Chart: React.FC = () => {
   return (
     <>
       <Breadcrumb pageName="Chart" />
-      <div className="pb-6">
-        <ECommerce />
-      </div>
-      <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
-        <ChartOne />
-        {/* <ChartTwo /> */}
-        <ChartThree />
-        <div className=" ">
-          <Chartfour />
-        </div>
-      </div >
+      <div className="pb-6"><ECommerce /></div>
+      <div className="pb-6"><ChartOne /></div>
+      <div className="pb-6"><ChartThree /></div>
+      <div className="pb-6"><Chartfour /></div>
     </>
   );
 };

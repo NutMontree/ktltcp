@@ -1,11 +1,6 @@
 "use client";
 
 import React, { useEffect, useState, useMemo } from "react";
-import dynamic from "next/dynamic";
-import { ApexOptions } from "apexcharts";
-
-// Dynamic import
-const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 // Interfaces
 interface Pdca { _id: string; status?: string; year?: string; date?: string; }
@@ -26,8 +21,6 @@ const Chartfour: React.FC = () => {
     const [devDepartments, setDevDepartments] = useState<DevDepartment[]>([]);
     const [academics, setAcademics] = useState<Academic[]>([]);
     const [loading, setLoading] = useState(true);
-
-    // const [period, setPeriod] = useState<"Day" | "Week" | "Month">("Month");
 
     // Target จำนวนทั้งหมดต่อฝ่าย
     const target: TargetData = {
@@ -111,43 +104,10 @@ const Chartfour: React.FC = () => {
         },
     ];
 
-    // const options: ApexOptions = {
-    //     chart: {
-    //         type: "bar",
-    //         stacked: true,
-    //         toolbar: { show: true },
-    //         zoom: { enabled: false }
-    //     },
-    //     plotOptions: { bar: { horizontal: false, columnWidth: "100%" } },
-    //     dataLabels: { enabled: false },
-    //     xaxis: { categories: allYears },
-    //     yaxis: { min: 0 },
-    //     colors: ["#3C50E0", "#FF6B6B", "#80CAEE", "#FF9F43", "#2ED573", "#FF6B81", "#A29BFE", "#FFCA3A"],
-    //     legend: { show: true, position: "top", horizontalAlign: "left" },
-    //     responsive: [
-    //         {
-    //             breakpoint: 1024,
-    //             options: {
-    //                 plotOptions: { bar: { columnWidth: "60%" } },
-    //                 legend: { position: "bottom" },
-    //             },
-    //         },
-    //         {
-    //             breakpoint: 640,
-    //             options: {
-    //                 plotOptions: { bar: { columnWidth: "80%" } },
-    //                 legend: { position: "bottom", fontSize: "10px" },
-    //             },
-    //         },
-    //     ],
-    // };
-
     return (
-        <div className=" ">
-            {/* <div className=" mt-6">
-                <table className="min-w-[800px] border border-gray-300 dark:border-gray-600 text-sm"></table> */}
-            <div className="inline-block min-w-[600px] border border-gray-300 dark:border-gray-600 rounded-lg shadow-md">
-                <table className="w-full text-center text-sm md:text-base">
+        <div className="flex justify-center items-center flex-col gap-6">
+            <div className="inline-block border border-gray-300 dark:border-gray-600 rounded-lg shadow-md">
+                <table className="w-full text-sm md:text-base">
                     <thead>
                         <tr className="bg-gray-100 dark:bg-gray-700">
                             <th className="px-4 py-3 border-b">ฝ่าย</th>
@@ -159,27 +119,27 @@ const Chartfour: React.FC = () => {
                     <tbody>
                         <tr className="even:bg-gray-50 dark:even:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
                             <td className="px-4 py-2 border-b">ฝ่ายแผนงานและความร่วมมือ</td>
-                            <td className="px-4 py-2 border-b">{target.pdca}</td>
-                            <td className="px-4 py-2 border-b">{pdcas.length}</td>
-                            <td className="px-4 py-2 border-b">{target.pdca - pdcas.length}</td>
+                            <td className="text-center px-4 py-2 border-b">{target.pdca}</td>
+                            <td className="text-center px-4 py-2 border-b">{pdcas.length}</td>
+                            <td className="text-center px-4 py-2 border-b">{target.pdca - pdcas.length}</td>
                         </tr>
                         <tr className="even:bg-gray-50 dark:even:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
                             <td className="px-4 py-2 border-b">ฝ่ายบริหารทรัพยากร</td>
-                            <td className="px-4 py-2 border-b">{target.resources}</td>
-                            <td className="px-4 py-2 border-b">{resources.length}</td>
-                            <td className="px-4 py-2 border-b">{target.resources - resources.length}</td>
+                            <td className="text-center px-4 py-2 border-b">{target.resources}</td>
+                            <td className="text-center px-4 py-2 border-b">{resources.length}</td>
+                            <td className="text-center px-4 py-2 border-b">{target.resources - resources.length}</td>
                         </tr>
                         <tr className="even:bg-gray-50 dark:even:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
                             <td className="px-4 py-2 border-b">ฝ่ายพัฒนากิจการนักเรียน</td>
-                            <td className="px-4 py-2 border-b">{target.devDepartments}</td>
-                            <td className="px-4 py-2 border-b">{devDepartments.length}</td>
-                            <td className="px-4 py-2 border-b">{target.devDepartments - devDepartments.length}</td>
+                            <td className="text-center px-4 py-2 border-b">{target.devDepartments}</td>
+                            <td className="text-center px-4 py-2 border-b">{devDepartments.length}</td>
+                            <td className="text-center px-4 py-2 border-b">{target.devDepartments - devDepartments.length}</td>
                         </tr>
                         <tr className="even:bg-gray-50 dark:even:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
                             <td className="px-4 py-2 border-b">ฝ่ายวิชาการ</td>
-                            <td className="px-4 py-2 border-b">{target.academics}</td>
-                            <td className="px-4 py-2 border-b">{academics.length}</td>
-                            <td className="px-4 py-2 border-b">{target.academics - academics.length}</td>
+                            <td className="text-center px-4 py-2 border-b">{target.academics}</td>
+                            <td className="text-center px-4 py-2 border-b">{academics.length}</td>
+                            <td className="text-center px-4 py-2 border-b">{target.academics - academics.length}</td>
                         </tr>
                     </tbody>
                 </table>
