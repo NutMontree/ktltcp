@@ -9,32 +9,11 @@ import Image from "next/image";
 const EditAcademicForm = ({ academic }) => {
   const EDITMODE = academic._id === "new" ? false : true;
   const router = useRouter();
-  const startingAcademicData = {
-    year: "2567",
-    department: "ฝ่ายวิชาการ",
-    namework: "",
-    nameproject: "",
-    id1: "",
-    id2: "",
-    id3: "",
-    id4: "",
-    id5: "",
-    id6: "",
-    id7: "",
-    id8: "",
-    id9: "",
-    id10: "",
-    id11: "",
-    id12: "",
-    id13: "",
-    id14: "",
-    id15: "",
-    id16: "",
-    id17: "",
-    id18: "",
-    id19: "",
-    id20: "",
-  };
+
+  const startingAcademicData = {};
+  for (let i = 1; i <= 20; i++) {
+    startingAcademicData[`id${i}`] = EDITMODE ? academic[`id${i}`] || "" : "";
+  }
 
   if (EDITMODE) {
     startingAcademicData["year"] = academic.year;

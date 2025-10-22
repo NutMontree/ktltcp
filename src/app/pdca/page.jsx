@@ -1,120 +1,3 @@
-// import React from "react";
-// import PdcaCard from "@/app/(components)/PdcaCard";
-
-// const getPdcas = async () => {
-//   try {
-//     const res = await fetch(`https://ktltcp.vercel.app/api/Pdcas`, {
-//`http://localhost:3000
-//       cache: "no-store",
-//     });
-
-//     if (!res.ok) {
-//       throw new Error("Failed to fetch topics");
-//     }
-
-//     return res.json();
-//   } catch (error) {
-//     console.log("Error loading topics: ", error);
-//   }
-// };
-
-// const Pdca = async () => {
-//   const data = await getPdcas();
-
-//   if (!data?.pdcas) {
-//     return <div>No pdca.</div>;
-//   }
-
-//   const pdcas = data.pdcas;
-
-//   const uniqueYears = [...new Set(pdcas?.map(({ year }) => year))];
-
-//   return (
-//     <>
-//       <h1 className="text-xl font-bold text-black-2">
-//         ฝ่ายแผนงานและความร่วมมือ
-//       </h1>
-//       <div className="bg-page text-default-text flex-grow overflow-y-auto p-5">
-//         <div>
-//           {pdcas &&
-//             uniqueYears?.map((uniqueYear, yearIndex) => (
-//               <div key={yearIndex} className="mb-4">
-//                 <h2 className="text-black-2">{uniqueYear}</h2>
-//                 <div className="grid-cols-2 lg:grid xl:grid-cols-3">
-//                   {pdcas
-//                     .filter((pdca) => pdca.year === uniqueYear)
-//                     .map((filteredPdca, _index) => (
-//                       <PdcaCard id={_index} key={_index} pdca={filteredPdca} />
-//                     ))}
-//                 </div>
-//               </div>
-//             ))}
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default Pdca;
-// import React from "react";
-// import PdcaCard from "@/app/(components)/PdcaCard";
-
-// const getPdcas = async () => {
-//   try {
-//     const res = await fetch(`https://ktltcp.vercel.app/api/Pdcas`, {
-//`http://localhost:3000
-//       cache: "no-store",
-//     });
-
-//     if (!res.ok) {
-//       throw new Error("Failed to fetch topics");
-//     }
-
-//     return res.json();
-//   } catch (error) {
-//     console.log("Error loading topics: ", error);
-//   }
-// };
-
-// const Pdca = async () => {
-//   const data = await getPdcas();
-
-//   if (!data?.pdcas) {
-//     return <div>No pdca.</div>;
-//   }
-
-//   const pdcas = data.pdcas;
-
-//   const uniqueYears = [...new Set(pdcas?.map(({ year }) => year))];
-
-//   return (
-//     <>
-//       <h1 className="text-xl font-bold text-black-2">
-//         ฝ่ายแผนงานและความร่วมมือ
-//       </h1>
-//       <div className="bg-page text-default-text flex-grow overflow-y-auto p-5">
-//         <div>
-//           {pdcas &&
-//             uniqueYears?.map((uniqueYear, yearIndex) => (
-//               <div key={yearIndex} className="mb-4">
-//                 <h2 className="text-black-2">{uniqueYear}</h2>
-//                 <div className="grid-cols-2 lg:grid xl:grid-cols-3">
-//                   {pdcas
-//                     .filter((pdca) => pdca.year === uniqueYear)
-//                     .map((filteredPdca, _index) => (
-//                       <PdcaCard id={_index} key={_index} pdca={filteredPdca} />
-//                     ))}
-//                 </div>
-//               </div>
-//             ))}
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default Pdca;
-
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
@@ -259,16 +142,22 @@ const PdcaDashboard = () => {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
           onClick={() => setSelectedPdca(null)}
         >
-          <div onClick={(e) => e.stopPropagation()}>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-xl bg-white p-6 px-8 py-8 shadow-lg"
+          >
+            {/* ปุ่มปิด */}
             <button
-              className="absolute right-4 top-4 text-lg font-bold text-red-500 transition hover:text-red-700"
+              className="absolute right-4 top-4 z-10 pt-4 text-2xl font-bold text-red-500 hover:text-red-700"
               onClick={() => setSelectedPdca(null)}
             >
               ✕
             </button>
 
-            {/* PdcaCard แสดงข้อมูล แต่ไม่มี modal ซ้อน */}
-            <PdcaCard pdca={selectedPdca} />
+            {/* เนื้อหา PdcaCard */}
+            <div className="mt-8">
+              <PdcaCard pdca={selectedPdca} />
+            </div>
           </div>
         </div>
       )}
