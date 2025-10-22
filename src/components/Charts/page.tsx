@@ -5,6 +5,7 @@ import ChartOne from "@/components/Charts/ChartOne";
 import dynamic from "next/dynamic";
 import React from "react";
 import ECommerce from "../Dashboard/E-commerce";
+import Chartfour from "./Chartfour";
 
 const ChartThree = dynamic(() => import("@/components/Charts/ChartThree"), {
   ssr: false,
@@ -21,7 +22,10 @@ const Chart: React.FC = () => {
         <ChartOne />
         {/* <ChartTwo /> */}
         <ChartThree />
-      </div>
+        <div className=" ">
+          <Chartfour />
+        </div>
+      </div >
     </>
   );
 };

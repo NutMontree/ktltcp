@@ -1,203 +1,143 @@
 "use client";
 
-import { ApexOptions } from "apexcharts";
-import React from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import dynamic from "next/dynamic";
+import { ApexOptions } from "apexcharts";
 
-const ReactApexChart = dynamic(() => import("react-apexcharts"), {
-  ssr: false,
-});
+const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-const options: ApexOptions = {
-  legend: {
-    show: false,
-    position: "top",
-    horizontalAlign: "left",
-  },
-  colors: ["#3C50E0", "#80CAEE"],
-  chart: {
-    fontFamily: "Satoshi, sans-serif",
-    height: 335,
-    type: "area",
-    dropShadow: {
-      enabled: true,
-      color: "#623CEA14",
-      top: 10,
-      blur: 4,
-      left: 0,
-      opacity: 0.1,
-    },
-
-    toolbar: {
-      show: false,
-    },
-  },
-  responsive: [
-    {
-      breakpoint: 1024,
-      options: {
-        chart: {
-          height: 300,
-        },
-      },
-    },
-    {
-      breakpoint: 1366,
-      options: {
-        chart: {
-          height: 350,
-        },
-      },
-    },
-  ],
-  stroke: {
-    width: [2, 2],
-    curve: "straight",
-  },
-  // labels: {
-  //   show: false,
-  //   position: "top",
-  // },
-  grid: {
-    xaxis: {
-      lines: {
-        show: true,
-      },
-    },
-    yaxis: {
-      lines: {
-        show: true,
-      },
-    },
-  },
-  dataLabels: {
-    enabled: false,
-  },
-  markers: {
-    size: 4,
-    colors: "#fff",
-    strokeColors: ["#3056D3", "#80CAEE"],
-    strokeWidth: 3,
-    strokeOpacity: 0.9,
-    strokeDashArray: 0,
-    fillOpacity: 1,
-    discrete: [],
-    hover: {
-      size: undefined,
-      sizeOffset: 5,
-    },
-  },
-  xaxis: {
-    type: "category",
-    categories: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
-    axisBorder: {
-      show: false,
-    },
-    axisTicks: {
-      show: false,
-    },
-  },
-  yaxis: {
-    title: {
-      style: {
-        fontSize: "0px",
-      },
-    },
-    min: 0,
-    max: 100,
-  },
-};
-
-interface ChartOneState {
-  series: {
-    name: string;
-    data: number[];
-  }[];
-}
+// Types
+interface Pdca { _id: string; status?: string; year?: string; date?: string; }
+interface Resource { _id: string; name?: string; date?: string; }
+interface DevDepartment { _id: string; name?: string; date?: string; }
+interface Academic { _id: string; name?: string; date?: string; }
 
 const ChartOne: React.FC = () => {
-  const series = [
-    {
-      name: "ฝ่ายแผนงานและความร่วมมือ",
-      data: [1, 2],
-    },
-    {
-      name: "ฝ่ายบริหารทรัพยากร",
-      data: [1, 1],
-    },
-    {
-      name: "ฝ่ายพัฒนากิจการนักเรียน",
-      data: [1, 1],
-    },
-    {
-      name: "ฝ่ายวิชาการ",
-      data: [1, 2],
-    },
-  ];
+  const [pdcas, setPdcas] = useState<Pdca[]>([]);
+  const [resources, setResources] = useState<Resource[]>([]);
+  const [devDepartments, setDevDepartments] = useState<DevDepartment[]>([]);
+  const [academics, setAcademics] = useState<Academic[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const [period, setPeriod] = useState<"Day" | "Week" | "Month">("Month");
+
+  // Fetch all data
+  useEffect(() => {
+    const fetchAllData = async () => {
+      try {
+        const [pdcaRes, resourceRes, devDeptRes, academicRes] = await Promise.all([
+          fetch("/api/Pdcas", { cache: "no-store" }),
+          fetch("/api/Resources", { cache: "no-store" }),
+          fetch("/api/Devdepartments", { cache: "no-store" }),
+          fetch("/api/Academics", { cache: "no-store" }),
+        ]);
+
+        const [pdcaData, resourceData, devDeptData, academicData] = await Promise.all([
+          pdcaRes.json(),
+          resourceRes.json(),
+          devDeptRes.json(),
+          academicRes.json(),
+        ]);
+
+        setPdcas(Array.isArray(pdcaData.pdcas) ? pdcaData.pdcas : []);
+        setResources(Array.isArray(resourceData.resources) ? resourceData.resources : []);
+        setDevDepartments(Array.isArray(devDeptData.devdepartments) ? devDeptData.devdepartments : []);
+        setAcademics(Array.isArray(academicData.academics) ? academicData.academics : []);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAllData();
+  }, []);
+
+  // Generate x-axis categories
+  const categories = period === "Day"
+    ? Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`)
+    : period === "Week"
+      ? ["Week 1", "Week 2", "Week 3", "Week 4"]
+      : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  // Count items per period
+  const countPerPeriod = (items: { date?: string }[]) => {
+    if (period === "Day") return Array.from({ length: 30 }, () => 0);
+    if (period === "Week") return [0, 0, 0, 0];
+    return Array.from({ length: 12 }, () => 0);
+  };
+
+  // Series data
+  const series = useMemo(() => [
+    { name: "ฝ่ายแผนงานและความร่วมมือ", data: [pdcas.length] },
+    { name: "ฝ่ายบริหารทรัพยากร", data: [resources.length] },
+    { name: "ฝ่ายพัฒนากิจการนักเรียน", data: [devDepartments.length] },
+    { name: "ฝ่ายวิชาการ", data: [academics.length] },
+  ], [pdcas, resources, devDepartments, academics]);
+
+  const options: ApexOptions = {
+    chart: { type: "bar", height: 350, toolbar: { show: false } },
+    plotOptions: { bar: { horizontal: false, columnWidth: "50%" } },
+    dataLabels: { enabled: false },
+    xaxis: { categories },
+    yaxis: { min: 0 },
+    colors: ["#3C50E0", "#80CAEE", "#FF6B6B", "#FFC300"],
+    legend: { show: true, position: "top", horizontalAlign: "left" },
+  };
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
-      <div className="flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap">
-        <div className="flex w-full flex-wrap gap-3 sm:gap-5">
-          <div className="flex min-w-47.5">
-            <span className="mr-2 mt-1 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-primary">
-              <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-primary"></span>
-            </span>
-            <div className="w-full">
-              <div className="font-semibold text-primary">Total Data</div>
-              <div className="text-sm font-medium">4</div>
-            </div>
-          </div>
-          {/* <div className="flex min-w-47.5">
-            <span className="mr-2 mt-1 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-secondary">
-              <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-secondary"></span>
-            </span>
-            <div className="w-full">
-              <div className="font-semibold text-secondary">Total Sales</div>
-              <div className="text-sm font-medium">12.04.2022 - 12.05.2022</div>
-            </div>
-          </div> */}
-        </div>
-        <div className="flex w-full max-w-45 justify-end">
-          <div className="inline-flex items-center rounded-md bg-whiter p-1.5 dark:bg-meta-4">
-            <button className="rounded bg-white px-3 py-1 text-xs font-medium text-black shadow-card hover:bg-white hover:shadow-card dark:bg-boxdark dark:text-white dark:hover:bg-boxdark">
-              Day
+      {/* Header + Period Selector */}
+      <div className="flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap mb-4">
+        <div className="flex gap-3">
+          {["Day", "Week", "Month"].map((p) => (
+            <button
+              key={p}
+              onClick={() => setPeriod(p as "Day" | "Week" | "Month")}
+              className={`rounded px-3 py-1 text-xs font-medium ${period === p
+                ? "bg-primary text-white"
+                : "bg-gray-200 text-black dark:bg-boxdark dark:text-white"
+                }`}
+            >
+              {p}
             </button>
-            <button className="rounded px-3 py-1 text-xs font-medium text-black hover:bg-white hover:shadow-card dark:text-white dark:hover:bg-boxdark">
-              Week
-            </button>
-            <button className="rounded px-3 py-1 text-xs font-medium text-black hover:bg-white hover:shadow-card dark:text-white dark:hover:bg-boxdark">
-              Month
-            </button>
-          </div>
-        </div>
-      </div >
-
-      <div>
-        <div id="chartOne" className="-ml-5">
-          <ReactApexChart
-            options={options}
-            series={series}
-            type="area"
-            height={350}
-            width={"100%"}
-          />
+          ))}
         </div>
       </div>
-    </div >
+
+      {/* Chart */}
+      <ReactApexChart options={options} series={series} type="bar" height={350} />
+
+      {/* Table */}
+      <table className="min-w-full mt-6 border border-gray-300 dark:border-gray-600 text-sm">
+        <thead>
+          <tr className="bg-gray-100 dark:bg-gray-700">
+            <th className="p-2 border-b">ฝ่าย</th>
+            <th className="p-2 border-b">จำนวนทั้งหมด</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td className="p-2 border-b">ฝ่ายแผนงานและความร่วมมือ</td>
+            <td className="p-2 border-b">{pdcas.length}</td>
+          </tr>
+          <tr>
+            <td className="p-2 border-b">ฝ่ายบริหารทรัพยากร</td>
+            <td className="p-2 border-b">{resources.length}</td>
+          </tr>
+          <tr>
+            <td className="p-2 border-b">ฝ่ายพัฒนากิจการนักเรียน</td>
+            <td className="p-2 border-b">{devDepartments.length}</td>
+          </tr>
+          <tr>
+            <td className="p-2 border-b">ฝ่ายวิชาการ</td>
+            <td className="p-2 border-b">{academics.length}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   );
 };
 

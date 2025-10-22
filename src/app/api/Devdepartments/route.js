@@ -7,10 +7,11 @@ export async function GET() {
 
     return NextResponse.json({ devdepartments }, { status: 200 });
   } catch (err) {
-    console.log(err);
+    console.error("❌ DevDepartment fetch error:", err);
     return NextResponse.json({ messsge: "Error", err }, { status: 500 });
   }
 }
+
 
 export async function POST(req) {
   ////////////////////////////////////////////// NOtify Line //////////////////////////////////////////////
