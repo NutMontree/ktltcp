@@ -24,9 +24,9 @@ const DevdepartmentCard = ({
   const createdDateTime = formatThaiDate(devdepartment.createdAt);
 
   return (
-    <div className="relative w-full max-w-3xl overflow-y-auto rounded-xl bg-white p-6 shadow-md transition-shadow duration-300 hover:shadow-xl">
+    <div className="">
       {/* Action buttons */}
-      <div className="absolute right-4 top-4 flex gap-3">
+      {/* <div className="absolute right-4 top-4 flex gap-3 pt-10">
         <Link
           href={`/DevdepartmentPage/${devdepartment._id}`}
           className="text-blue-500 transition-colors hover:text-blue-700"
@@ -43,15 +43,12 @@ const DevdepartmentCard = ({
         </h2>
         <p className="text-sm text-gray-500">{devdepartment.namework}</p>
       </div>
-
       <div className="mb-4 flex gap-2">
         <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800">
           ปีงบประมาณ: {devdepartment.year}
         </span>
       </div>
-
       <hr className="my-4 border-gray-200" />
-
       <div>
         {Array.from({ length: 20 }, (_, i) => {
           const key = `id${i + 1}`;
@@ -78,7 +75,6 @@ const DevdepartmentCard = ({
           );
         })}
       </div>
-
       <div className="mt-4 text-right text-xs text-gray-400">
         วันที่กรอกข้อมูล: {createdDateTime}
       </div>

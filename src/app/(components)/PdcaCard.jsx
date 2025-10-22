@@ -97,7 +97,7 @@ const PdcaCard = ({ pdca, editing = false, onEditChange }) => {
           ✏️ แก้ไข
         </Link>
         <DeletePdca id={pdca._id} />
-      </div> */}
+      </div> 
 
       {/* Header */}
       <div className="mb-4 pt-8">

@@ -154,7 +154,6 @@ const PdcaDashboard = () => {
               ✕
             </button>
 
-            {/* เนื้อหา PdcaCard */}
             <div className="mt-8">
               <PdcaCard pdca={selectedPdca} />
             </div>

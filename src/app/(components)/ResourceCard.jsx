@@ -20,9 +20,9 @@ const ResourceCard = ({ resource, editing = false, onEditChange }) => {
   const createdDateTime = formatThaiDate(resource.createdAt);
 
   return (
-    <div className="relative w-full max-w-3xl overflow-y-auto rounded-xl bg-white p-6 shadow-md transition-shadow duration-300 hover:shadow-xl">
+    <div className="">
       {/* Action buttons */}
-      <div className="absolute right-4 top-4 flex gap-3">
+      {/* <div className="absolute right-4 top-4 flex gap-3 pt-10">
         <Link
           href={`/ResourcePage/${resource._id}`}
           className="text-blue-500 transition-colors hover:text-blue-700"

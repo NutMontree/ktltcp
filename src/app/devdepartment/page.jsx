@@ -150,15 +150,17 @@ const DevdepartmentDashboard = () => {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
           onClick={() => setSelectedDevdepartment(null)}
         >
-          <div onClick={(e) => e.stopPropagation()}>
+          <div
+            className="relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-xl bg-white p-6 px-8 py-8 shadow-lg"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
-              className="absolute right-4 top-4 text-lg font-bold text-red-500 transition hover:text-red-700"
+              className="absolute right-4 top-4 z-10 pt-4 text-2xl font-bold text-red-500 hover:text-red-700"
               onClick={() => setSelectedDevdepartment(null)}
             >
               ✕
             </button>
 
-            {/* DevdepartmentCard แสดงข้อมูล แต่ไม่มี modal ซ้อน */}
             <DevdepartmentCard devdepartment={selectedDevdepartment} />
           </div>
         </div>
