@@ -695,6 +695,26 @@ const EditPdcaForm = ({ pdca }) => {
     filepdf: null, // สำหรับเก็บ File Object ใหม่ที่เลือก
     fileUrl: null, // สำหรับเก็บ URL ไฟล์เดิมจาก DB
     originalFileName: null, // สำหรับเก็บชื่อไฟล์เดิมจาก DB
+    id1: "",
+    id2: "",
+    id3: "",
+    id4: "",
+    id5: "",
+    id6: "",
+    id7: "",
+    id8: "",
+    id9: "",
+    id10: "",
+    id11: "",
+    id12: "",
+    id13: "",
+    id14: "",
+    id15: "",
+    id16: "",
+    id17: "",
+    id18: "",
+    id19: "",
+    id20: "",
   };
 
   if (EDITMODE) {
@@ -705,6 +725,26 @@ const EditPdcaForm = ({ pdca }) => {
     // ✅ ดึง URL และชื่อไฟล์เดิมจาก props (สมมติว่าชื่อ field ใน DB คือ fileUrl และ originalFileName)
     startingPdcaData["fileUrl"] = pdca.fileUrl || null;
     startingPdcaData["originalFileName"] = pdca.originalFileName || null;
+    startingPdcaData["id1"] = pdca.id1;
+    startingPdcaData["id2"] = pdca.id2;
+    startingPdcaData["id3"] = pdca.id3;
+    startingPdcaData["id4"] = pdca.id4;
+    startingPdcaData["id5"] = pdca.id5;
+    startingPdcaData["id6"] = pdca.id6;
+    startingPdcaData["id7"] = pdca.id7;
+    startingPdcaData["id8"] = pdca.id8;
+    startingPdcaData["id9"] = pdca.id9;
+    startingPdcaData["id10"] = pdca.id10;
+    startingPdcaData["id11"] = pdca.id11;
+    startingPdcaData["id12"] = pdca.id12;
+    startingPdcaData["id13"] = pdca.id13;
+    startingPdcaData["id14"] = pdca.id14;
+    startingPdcaData["id15"] = pdca.id15;
+    startingPdcaData["id16"] = pdca.id16;
+    startingPdcaData["id17"] = pdca.id17;
+    startingPdcaData["id18"] = pdca.id18;
+    startingPdcaData["id19"] = pdca.id19;
+    startingPdcaData["id20"] = pdca.id20;
   }
 
   const [formData, setFormData] = useState(startingPdcaData);
@@ -981,6 +1021,295 @@ const EditPdcaForm = ({ pdca }) => {
                           className="w-full rounded-lg border border-stroke bg-transparent py-3 pl-6 pr-10 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
                         />
                       )}
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id1"
+                        name="id1"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="1. บันทึกข้อความขออนุมัติโครงการ ✅"
+                        default={formData.id1}
+                      />
+                      <label
+                        className="form-check-label pl-2 pt-4"
+                        htmlFor="id1"
+                      >
+                        1. บันทึกข้อความขออนุมัติโครงการ
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id2"
+                        name="id2"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="2. บันทึกข้อความขออนุญาติดำเนินโครงการ ✅"
+                        default={formData.id2}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id2">
+                        2. บันทึกข้อความขออนุญาติดำเนินโครงการ
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id3"
+                        name="id3"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="3. โครงการ ที่ผู้บริหารลงนามแล้ว ✅"
+                        default={formData.id3}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id3">
+                        3. โครงการ ที่ผู้บริหารลงนามแล้ว
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id4"
+                        name="id4"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="4. บันทึกขออนุมัติคำสั่ง ✅"
+                        default={formData.id4}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id4">
+                        4. บันทึกขออนุมัติคำสั่ง
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id5"
+                        name="id5"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="5. คำสั่งแต่งตั้งคณะกรรมการดำเนินงาน ✅"
+                        default={formData.id5}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id5">
+                        5. คำสั่งแต่งตั้งคณะกรรมการดำเนินงาน
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id6"
+                        name="id6"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="6. บันทึกข้อความขออนุญาตประชุม ✅"
+                        default={formData.id6}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id6">
+                        6. บันทึกข้อความขออนุญาตประชุม
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id7"
+                        name="id7"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="7. บันทึกข้อความขอเชิญประชุม ✅"
+                        default={formData.id7}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id7">
+                        7. บันทึกข้อความขอเชิญประชุม
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id8"
+                        name="id8"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="8. บันทึกข้อความขอรายงานการประชุม ✅"
+                        default={formData.id8}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id8">
+                        8. บันทึกข้อความขอรายงานการประชุม
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id9"
+                        name="id9"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="9. บันทึกข้อความขอความอนุเคราะห์ประชาสัมพันธ์โครงการ ✅"
+                        default={formData.id9}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id9">
+                        9. บันทึกข้อความขอความอนุเคราะห์ประชาสัมพันธ์โครงการ
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id10"
+                        name="id10"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="10. บันทึกข้อความรายงานการประชาสัมพันธ์โครงการ ✅"
+                        default={formData.id10}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id10">
+                        10. บันทึกข้อความรายงานการประชาสัมพันธ์โครงการ
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id11"
+                        name="id11"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="11. กำหนดการจัดกิจกรรม ✅"
+                        default={formData.id11}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id11">
+                        11. กำหนดการจัดกิจกรรม
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id12"
+                        name="id12"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="12. หนังสือเชิญเป็นวิทยากร/หนังสือตอบรับเป็นวิทยากร/หนังสือขอบคุณวิทยากร ✅"
+                        default={formData.id12}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id12">
+                        12.
+                        หนังสือเชิญเป็นวิทยากร/หนังสือตอบรับเป็นวิทยากร/หนังสือขอบคุณวิทยากร
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id13"
+                        name="id13"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="13. ลายมือชื่อผู้เข้าร่วมโครงการ ✅"
+                        default={formData.id13}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id13">
+                        13. ลายมือชื่อผู้เข้าร่วมโครงการ
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id14"
+                        name="id14"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="14. รูปภาพการดำเนินงานโครงการ ✅"
+                        default={formData.id14}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id14">
+                        14. รูปภาพการดำเนินงานโครงการ
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id15"
+                        name="id15"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="15. บันทึกข้อความรายงานสรุปการใช้งบประมาณ ✅"
+                        default={formData.id15}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id15">
+                        15. บันทึกข้อความรายงานสรุปการใช้งบประมาณ
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="เอกสารชุดเบิกโครงการ"
+                        name="id16"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="16. เอกสารชุดเบิกโครงการ ✅"
+                        default={formData.id16}
+                      />
+                      <label
+                        className="pl-2 pt-4"
+                        htmlFor="เอกสารชุดเบิกโครงการ"
+                      >
+                        16. เอกสารชุดเบิกโครงการ
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id17"
+                        name="id17"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="17. แบบสอบถามประเมินความพึงพอใจผู้เข้าร่วมโครงการ Google from / QR Code ✅"
+                        default={formData.id17}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id17">
+                        17. แบบสอบถามประเมินความพึงพอใจผู้เข้าร่วมโครงการ Google
+                        from / QR Code
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id18"
+                        name="id18"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="18. บันทึกข้อความรายงานสรุปผลการวิเคราะห์ข้อมูลการดำเนินโครงการ ✅"
+                        default={formData.id18}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id18">
+                        18.
+                        บันทึกข้อความรายงานสรุปผลการวิเคราะห์ข้อมูลการดำเนินโครงการ
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id19"
+                        name="id19"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="19. ผลการวิเคราะห์ข้อมูล ✅"
+                        default={formData.id19}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id19">
+                        19. ผลการวิเคราะห์ข้อมูล
+                      </label>
+                    </div>
+                    <div className="form-check pt-4 text-black dark:text-white">
+                      <input
+                        id="id20"
+                        name="id20"
+                        type="checkbox"
+                        className="form-check-input"
+                        onChange={handleChange}
+                        value="20. บันทึกกข้อความรายงานสรุปผลการดำเนินโครงการ ✅"
+                        default={formData.id20}
+                      />
+                      <label className="pl-2 pt-4" htmlFor="id20">
+                        20. บันทึกกข้อความรายงานสรุปผลการดำเนินโครงการ
+                      </label>
                     </div>
 
                     <div className="flex justify-center pt-4">
