@@ -44,12 +44,13 @@
 
 
 
+// src/app/api/Pdcas/[id]/route.js
 import Pdca from "@/app/models/Pdca";
-import { NextResponse } from "next/server"; // ✅ แก้ไข: ต้อง Import NextResponse
-import fs from "fs";
-import path from "path"; // ✅ แก้ไข: ต้อง Import path
+import { NextResponse } from "next/server";
+// import fs from "fs"; // ❌ ลบ fs
+// import path from "path"; // ❌ ลบ path
+import { put } from '@vercel/blob'; // ✅ เพิ่ม Vercel Blob
 
-// การตั้งค่านี้อาจไม่จำเป็นใน App Router แต่ถ้ายังใช้เพื่อให้ FormData ทำงานได้ก็เก็บไว้
 export const config = {
   api: {
     bodyParser: false,
@@ -57,19 +58,22 @@ export const config = {
 };
 
 // ฟังก์ชันช่วยแปลง FormData ของ Next.js เป็น object
+// ฟังก์ชันช่วยแปลง FormData ของ Next.js เป็น object
 async function parseFormData(req) {
   const formData = await req.formData();
   const data = {};
 
   for (const [key, value] of formData.entries()) {
     if (value instanceof File) {
-      // 🚨 คำเตือน: การเขียนไฟล์แบบนี้จะไม่ทำงานใน Production บน Vercel 
-      // ควรใช้ External Storage เช่น Vercel Blob, S3
-      const filePath = path.join(process.cwd(), "public", value.name);
-      const buffer = Buffer.from(await value.arrayBuffer());
-      fs.writeFileSync(filePath, buffer);
+      // 🚀 ใช้ Vercel Blob ในการอัปโหลดไฟล์แทน fs
 
-      data.fileUrl = `${value.name}`;
+      // แปลง File เป็น Buffer
+      const buffer = Buffer.from(await value.arrayBuffer());
+
+      // อัปโหลดไปยัง Vercel Blob
+      const { url } = await put(value.name, buffer, { access: 'public' });
+
+      data.fileUrl = url; // บันทึก URL ที่ Vercel Blob คืนมา
       data.originalFileName = value.name;
     } else {
       data[key] = value;
