@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-import DevdepartmentCard from "@/app/(components)/DevdepartmentCard"; // ✅ เพิ่มบรรทัดนี้
+import DevdepartmentCard from "@/app/(components)/DevdepartmentCard";
 
 const DevdepartmentDashboard = () => {
   const [devdepartments, setDevdepartments] = useState([]);
@@ -18,7 +18,7 @@ const DevdepartmentDashboard = () => {
         const data = await res.json();
         setDevdepartments(data.devdepartments);
       } catch (error) {
-        console.error("Failed to fetch devdepartment:", error);
+        console.error("Failed to fetch PDCA:", error);
       } finally {
         setLoading(false);
       }
@@ -43,11 +43,9 @@ const DevdepartmentDashboard = () => {
 
   return (
     <div className="space-y-6 p-6">
-      <h1 className="text-3xl font-bold text-gray-800">
-        devdepartment Dashboard
-      </h1>
+      <h1 className="text-3xl font-bold text-gray-800">PDCA Dashboard</h1>
 
-      {/* Filter Buttons */}
+      {/* Filter Buttons (โค้ดส่วนนี้ไม่เปลี่ยนแปลง) */}
       <div className="flex flex-wrap items-center gap-2">
         <span className="font-semibold text-gray-700">Year:</span>
         {years.map((y) => (
@@ -113,14 +111,14 @@ const DevdepartmentDashboard = () => {
       {/* Loading / Empty State */}
       {loading ? (
         <p className="mt-6 text-center text-gray-500">
-          Loading devdepartment records...
+          Loading PDCA records...
         </p>
       ) : filteredDevdepartments.length === 0 ? (
         <p className="mt-6 text-center italic text-gray-500">
-          ไม่มี devdepartment ตามเงื่อนไขที่เลือก
+          ไม่มี PDCA ตามเงื่อนไขที่เลือก
         </p>
       ) : (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredDevdepartments.map((devdepartment) => (
             <div
               key={devdepartment._id}
@@ -144,24 +142,69 @@ const DevdepartmentDashboard = () => {
         </div>
       )}
 
-      {/* ใน DevdepartmentDashboard */}
+      {/* ⭐️⭐️ Modal Component (แก้ไข Positioning และ Scroll) ⭐️⭐️ */}
       {selectedDevdepartment && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+        <div // Overlay
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm" // ใช้ Flexbox เพื่อจัดกึ่งกลาง
           onClick={() => setSelectedDevdepartment(null)}
         >
+          {/* Content Box: ใช้ m-4 เพื่อให้มี margin รอบ ๆ และ max-h เพื่อให้ scroll ภายในกล่องได้ */}
           <div
-            className="relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-xl bg-white p-6 px-8 py-8 shadow-lg"
             onClick={(e) => e.stopPropagation()}
+            className="relative m-4 max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-xl bg-white p-6 shadow-2xl transition-all duration-300 sm:p-8 lg:max-w-6xl"
           >
+            {/* ปุ่มปิด */}
             <button
-              className="absolute right-4 top-4 z-10 pt-4 text-2xl font-bold text-red-500 hover:text-red-700"
+              className="absolute right-6 top-6 z-10 pt-4 text-3xl font-light text-red-500 hover:text-red-700"
               onClick={() => setSelectedDevdepartment(null)}
             >
               ✕
             </button>
-
-            <DevdepartmentCard devdepartment={selectedDevdepartment} />
+            <h2 className="mb-6 pt-12 text-3xl font-bold text-gray-900">
+              รายละเอียด PDCA: {selectedDevdepartment.nameproject}
+            </h2>
+            {/* ปุ่มดาวน์โหลดไฟล์ PDF */}
+            {selectedDevdepartment.fileUrl && (
+              <a
+                href={selectedDevdepartment.fileUrl}
+                download={selectedDevdepartment.fileUrl || "download.pdf"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mb-6 inline-block rounded-lg bg-blue-600 px-6 py-2 font-medium text-white transition hover:bg-blue-700"
+              >
+                📥 Download PDF
+              </a>
+            )}
+            {/* แสดง DevdepartmentCard (เป็นเนื้อหาที่อาจต้อง Scroll) */}
+            <div className="mt-4 border-t border-gray-200 pt-6">
+              <DevdepartmentCard devdepartment={selectedDevdepartment} />
+            </div>
+            {/* ส่วนแสดงผล PDF (เป็นเนื้อหาที่อาจต้อง Scroll) */}
+            <div className="mt-8 border-t border-gray-200 pt-6">
+              {selectedDevdepartment.fileUrl ? (
+                <div>
+                  <h3 className="mb-3 text-xl font-semibold text-gray-700">
+                    PDF Preview:
+                  </h3>
+                  <div className="h-[600px] w-full">
+                    <iframe
+                      src={selectedDevdepartment.fileUrl}
+                      width="100%"
+                      height="100%"
+                      className="rounded-md border border-gray-300"
+                      title={`PDF Preview for ${selectedDevdepartment.nameproject}`}
+                    >
+                      Your browser does not support iframes. Please download the
+                      PDF to view it.
+                    </iframe>
+                  </div>
+                </div>
+              ) : (
+                <p className="mt-6 text-center italic text-gray-500">
+                  (ไม่มีไฟล์ PDF แนบ)
+                </p>
+              )}
+            </div>
           </div>
         </div>
       )}

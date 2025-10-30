@@ -1,7 +1,16 @@
 import mongoose, { Schema } from "mongoose";
 
-mongoose.connect(process.env.MONGODB_URI);
-mongoose.Promise = global.Promise;
+const { MONGODB_URI } = process.env;
+
+if (!MONGODB_URI) {
+  throw new Error("Please define the MONGODB_URI environment variable");
+}
+
+// Connect to MongoDB
+mongoose
+  .connect(MONGODB_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
 const ResourceSchema = new Schema(
   {
@@ -9,6 +18,12 @@ const ResourceSchema = new Schema(
     department: String,
     namework: String,
     nameproject: String,
+    // ✅ เพิ่มใหม่: เก็บไฟล์จริงเป็น Binary PDF ในฐานข้อมูล
+    fileUrl: String,
+    fileData: Buffer,
+    fileType: String,
+    originalFileName: String,
+    // ฟิลด์อื่น ๆ ตามที่ต้องการ
     id1: String,
     id2: String,
     id3: String,
@@ -35,7 +50,9 @@ const ResourceSchema = new Schema(
   }
 );
 
-const Resource =
-  mongoose.models.Resource || mongoose.model("Resource", ResourceSchema);
+const Resource = mongoose.models.Resource || mongoose.model("Resource", ResourceSchema);
 
 export default Resource;
+
+
+Resource
