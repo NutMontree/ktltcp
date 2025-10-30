@@ -688,7 +688,7 @@ const EditPdcaForm = ({ pdca }) => {
 
   const startingPdcaData = {
     year: "2567",
-    department: "",
+    department: "ฝ่ายแผนงานและความร่วมมือ",
     namework: "",
     nameproject: "",
     filepdf: null, // สำหรับเก็บ File Object ใหม่ที่เลือก
