@@ -15,7 +15,7 @@ const nextConfig = {
     // แต่เป็นวิธีที่ถูกต้องในการตั้งค่า Body Size Limit ใน Next.js
     api: {
         bodyParser: {
-            sizeLimit: '100mb',
+            sizeLimit: '60mb',
         },
     },
 };
