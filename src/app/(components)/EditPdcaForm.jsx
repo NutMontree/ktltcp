@@ -783,6 +783,8 @@ const EditPdcaForm = ({ pdca }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null); // ล้างข้อผิดพลาดก่อนเริ่มการส่งใหม่
+    setIsSubmitting(true);
 
     try {
       const formToSend = new FormData();
@@ -809,7 +811,7 @@ const EditPdcaForm = ({ pdca }) => {
         formToSend.append("fileUrl", formData.fileUrl);
         formToSend.append("originalFileName", formData.originalFileName);
         formToSend.append("fileAction", "RETAIN");
-      } else if (EDITMODE && pdca.fileUrl && !formData.fileUrl) {
+      } else if (EDITMODE && pdca?.fileUrl && !formData.fileUrl) {
         // กรณี 3: EDITMODE และไฟล์เดิมถูกลบออกไปแล้ว
         formToSend.append("fileAction", "DELETE");
       } else {
@@ -829,17 +831,44 @@ const EditPdcaForm = ({ pdca }) => {
           method: "POST",
           body: formToSend,
         });
-      }
+      } // <--- FIX: Removed the extra closing parenthesis ')' here
 
       if (!res.ok) {
-        // ข้อผิดพลาด 413 จะถูกตรวจจับที่นี่
-        throw new Error("Failed to create/update PDCA");
+        // ดึงข้อความข้อผิดพลาดจาก response ถ้ามี
+        let errorDetails = `Status: ${res.status}`;
+        try {
+          const errorJson = await res.json();
+          errorDetails += ` - ${errorJson.message || res.statusText}`;
+        } catch {
+          errorDetails += ` - ${res.statusText}`;
+        }
+
+        // โยน Error เพื่อให้ถูกจับใน Catch block
+        throw new Error(errorDetails);
       }
 
       router.refresh();
       router.push("/");
     } catch (err) {
       console.error("❌ Error submitting PDCA:", err);
+      // *** การแจ้งเตือนผู้ใช้ ***
+      let userMessage =
+        "ไม่สามารถดำเนินการได้: เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง";
+
+      // ตรวจสอบข้อผิดพลาด 413 (Content Too Large) ที่มักเกิดขึ้นใน Vercel
+      if (err.message.includes("413")) {
+        userMessage =
+          "ไม่สามารถบันทึกได้: ไฟล์แนบมีขนาดใหญ่เกินกว่าที่เซิร์ฟเวอร์จะรับได้ (เกิน 1MB) กรุณาลองใช้ไฟล์ที่มีขนาดเล็กลง";
+      } else if (err.message.includes("Failed to fetch")) {
+        userMessage =
+          "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต";
+      } else {
+        userMessage += ` (รายละเอียด: ${err.message})`;
+      }
+
+      setError(userMessage);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
