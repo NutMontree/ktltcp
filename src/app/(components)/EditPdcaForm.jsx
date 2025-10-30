@@ -686,7 +686,6 @@ const EditPdcaForm = ({ pdca }) => {
   const EDITMODE = pdca && pdca._id !== "new";
   const router = useRouter();
 
-  // 1. ✅ อัปเดต State ให้มีฟิลด์สำหรับ metadata ของไฟล์เดิม
   const startingPdcaData = {
     year: "2567",
     department: "ฝ่ายแผนงานและความร่วมมือ",
@@ -718,69 +717,67 @@ const EditPdcaForm = ({ pdca }) => {
   };
 
   if (EDITMODE) {
-    startingPdcaData["year"] = pdca.year;
-    startingPdcaData["department"] = pdca.department;
-    startingPdcaData["namework"] = pdca.namework;
-    startingPdcaData["nameproject"] = pdca.nameproject;
-    // ✅ ดึง URL และชื่อไฟล์เดิมจาก props (สมมติว่าชื่อ field ใน DB คือ fileUrl และ originalFileName)
+    startingPdcaData["year"] = pdca.year || startingPdcaData.year;
+    startingPdcaData["department"] =
+      pdca.department || startingPdcaData.department;
+    startingPdcaData["namework"] = pdca.namework || "";
+    startingPdcaData["nameproject"] = pdca.nameproject || "";
     startingPdcaData["fileUrl"] = pdca.fileUrl || null;
     startingPdcaData["originalFileName"] = pdca.originalFileName || null;
-    startingPdcaData["id1"] = pdca.id1;
-    startingPdcaData["id2"] = pdca.id2;
-    startingPdcaData["id3"] = pdca.id3;
-    startingPdcaData["id4"] = pdca.id4;
-    startingPdcaData["id5"] = pdca.id5;
-    startingPdcaData["id6"] = pdca.id6;
-    startingPdcaData["id7"] = pdca.id7;
-    startingPdcaData["id8"] = pdca.id8;
-    startingPdcaData["id9"] = pdca.id9;
-    startingPdcaData["id10"] = pdca.id10;
-    startingPdcaData["id11"] = pdca.id11;
-    startingPdcaData["id12"] = pdca.id12;
-    startingPdcaData["id13"] = pdca.id13;
-    startingPdcaData["id14"] = pdca.id14;
-    startingPdcaData["id15"] = pdca.id15;
-    startingPdcaData["id16"] = pdca.id16;
-    startingPdcaData["id17"] = pdca.id17;
-    startingPdcaData["id18"] = pdca.id18;
-    startingPdcaData["id19"] = pdca.id19;
-    startingPdcaData["id20"] = pdca.id20;
+    startingPdcaData["id1"] = pdca.id1 || "";
+    startingPdcaData["id2"] = pdca.id2 || "";
+    startingPdcaData["id3"] = pdca.id3 || "";
+    startingPdcaData["id4"] = pdca.id4 || "";
+    startingPdcaData["id5"] = pdca.id5 || "";
+    startingPdcaData["id6"] = pdca.id6 || "";
+    startingPdcaData["id7"] = pdca.id7 || "";
+    startingPdcaData["id8"] = pdca.id8 || "";
+    startingPdcaData["id9"] = pdca.id9 || "";
+    startingPdcaData["id10"] = pdca.id10 || "";
+    startingPdcaData["id11"] = pdca.id11 || "";
+    startingPdcaData["id12"] = pdca.id12 || "";
+    startingPdcaData["id13"] = pdca.id13 || "";
+    startingPdcaData["id14"] = pdca.id14 || "";
+    startingPdcaData["id15"] = pdca.id15 || "";
+    startingPdcaData["id16"] = pdca.id16 || "";
+    startingPdcaData["id17"] = pdca.id17 || "";
+    startingPdcaData["id18"] = pdca.id18 || "";
+    startingPdcaData["id19"] = pdca.id19 || "";
+    startingPdcaData["id20"] = pdca.id20 || "";
   }
 
   const [formData, setFormData] = useState(startingPdcaData);
 
-  // 2. ✅ จัดการไฟล์ PDF: เมื่อเลือกไฟล์ใหม่ ให้เคลียร์ metadata ของไฟล์เดิม
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setFormData((prev) => ({
       ...prev,
-      filepdf: file, // เก็บ File Object ใหม่
-      fileUrl: null, // เคลียร์ URL เดิม เพราะกำลังจะแทนที่
-      originalFileName: null, // เคลียร์ชื่อเดิม
+      filepdf: file,
+      fileUrl: null,
+      originalFileName: null,
     }));
   };
 
+  // ⭐️ การจัดการ Checkbox ที่ถูกต้อง
   const handleChange = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
+    const { name, value, type, checked } = e.target;
 
     setFormData((preState) => ({
       ...preState,
-      [name]: value,
+      // ถ้าเป็น checkbox: ถ้าถูก check ให้ใช้ value, ถ้าไม่ให้เป็น string ว่าง ("")
+      [name]: type === "checkbox" ? (checked ? value : "") : value,
     }));
   };
 
-  // 3. ✅ ฟังก์ชันสำหรับลบไฟล์ที่แนบไว้ (ทั้งไฟล์ใหม่ที่เลือก และไฟล์เดิมที่มาจาก DB)
   const handleRemoveAttachment = () => {
-    // เคลียร์ค่าใน input field ด้วย (เพื่อ UX ที่ดี)
     const fileInput = document.getElementById("filepdf");
     if (fileInput) fileInput.value = "";
 
     setFormData((prev) => ({
       ...prev,
-      filepdf: null, // ลบ File Object ใหม่
-      fileUrl: null, // ลบ URL เดิม (API จะต้องตีความว่าเป็นการลบไฟล์)
-      originalFileName: null, // ลบชื่อไฟล์เดิม
+      filepdf: null,
+      fileUrl: null,
+      originalFileName: null,
     }));
   };
 
@@ -788,30 +785,32 @@ const EditPdcaForm = ({ pdca }) => {
     e.preventDefault();
 
     try {
-      // 4. ✅ ใช้ FormData แทน JSON เพื่อแนบไฟล์
       const formToSend = new FormData();
       formToSend.append("year", formData.year);
       formToSend.append("department", formData.department);
       formToSend.append("namework", formData.namework);
       formToSend.append("nameproject", formData.nameproject);
 
+      // ใส่ Checkbox ทั้งหมดลงใน FormData
+      for (let i = 1; i <= 20; i++) {
+        // ส่งเฉพาะ idX ที่มีค่า (ถูก Check)
+        if (formData[`id${i}`]) {
+          formToSend.append(`id${i}`, formData[`id${i}`]);
+        }
+      }
+
       if (formData.filepdf) {
-        // กรณี 1: มีการเลือกไฟล์ใหม่ (File Object)
+        // กรณี 1: มีการเลือกไฟล์ใหม่
         formToSend.append("filepdf", formData.filepdf);
-        // ⭐ โค้ดที่เพิ่ม: ส่งชื่อไฟล์จริงของไฟล์ใหม่ไปยัง API/MongoDB ⭐
         formToSend.append("originalFileName", formData.filepdf.name);
         formToSend.append("fileAction", "REPLACE");
       } else if (EDITMODE && formData.fileUrl && formData.originalFileName) {
         // กรณี 2: EDITMODE และไม่มีไฟล์ใหม่ แต่มีไฟล์เดิม (ต้องการเก็บไว้)
         formToSend.append("fileUrl", formData.fileUrl);
         formToSend.append("originalFileName", formData.originalFileName);
-
-        // ❌ ลบบรรทัดที่มีปัญหาเดิมออกไป:
-        // formToSend.append("originalFileName", formData.filepdf.name);
-
         formToSend.append("fileAction", "RETAIN");
       } else if (EDITMODE && pdca.fileUrl && !formData.fileUrl) {
-        // กรณี 3: EDITMODE และไฟล์เดิมถูกลบออกไปแล้ว (fileUrl เป็น null)
+        // กรณี 3: EDITMODE และไฟล์เดิมถูกลบออกไปแล้ว
         formToSend.append("fileAction", "DELETE");
       } else {
         // กรณี 4: สร้างใหม่ ไม่มีไฟล์ หรือ EDITMODE ไม่มีไฟล์เดิมและไม่เลือกไฟล์ใหม่
@@ -821,13 +820,11 @@ const EditPdcaForm = ({ pdca }) => {
       let res;
 
       if (EDITMODE) {
-        // ✅ PUT (กรณีแก้ไข)
         res = await fetch(`/api/Pdcas/${pdca._id}`, {
           method: "PUT",
           body: formToSend,
         });
       } else {
-        // ✅ POST (กรณีสร้างใหม่)
         res = await fetch("/api/Pdcas", {
           method: "POST",
           body: formToSend,
@@ -845,7 +842,6 @@ const EditPdcaForm = ({ pdca }) => {
     }
   };
 
-  // ตรวจสอบว่ามีไฟล์แนบอยู่ (ไฟล์เดิมใน DB หรือไฟล์ใหม่ที่กำลังจะอัปโหลด)
   const hasAttachment = formData.filepdf || formData.fileUrl;
 
   return (
@@ -895,6 +891,7 @@ const EditPdcaForm = ({ pdca }) => {
                     method="post"
                     encType="multipart/form-data"
                   >
+                    {/* ส่วนของปีงบประมาณ */}
                     <div>
                       <label className="text-dark mb-[10px] block text-base font-medium dark:text-white">
                         ปีงบประมาณ
@@ -922,12 +919,14 @@ const EditPdcaForm = ({ pdca }) => {
                       </select>
                     </div>
 
+                    {/* ส่วนของชื่อฝ่าย */}
                     <div className="pt-6">
                       <label className="text-dark mb-[10px] block text-base font-medium dark:text-white">
                         ชื่อฝ่าย
                       </label>
                       <input
                         id="department"
+                        name="department"
                         placeholder="ฝ่ายแผนงานและความร่วมมือ"
                         disabled
                         type="text"
@@ -938,6 +937,7 @@ const EditPdcaForm = ({ pdca }) => {
                       />
                     </div>
 
+                    {/* ส่วนของชื่องาน */}
                     <div className="pt-6">
                       <label className="mb-2.5 block font-medium text-black dark:text-white">
                         ชื่องาน
@@ -954,6 +954,7 @@ const EditPdcaForm = ({ pdca }) => {
                       />
                     </div>
 
+                    {/* ส่วนของชื่อโครงการ */}
                     <div className="pt-6">
                       <label className="mb-2.5 block font-medium text-black dark:text-white">
                         ชื่อโครงการ
@@ -970,17 +971,16 @@ const EditPdcaForm = ({ pdca }) => {
                       />
                     </div>
 
-                    {/* ✅ ส่วนจัดการไฟล์ PDF */}
+                    {/* 🛠️ ส่วนจัดการไฟล์ PDF ที่ลบ 'required' ออกแล้ว */}
                     <div className="pt-6">
                       <label className="mb-2.5 block font-medium text-black dark:text-white">
                         แนบไฟล์ PDF
                       </label>
 
-                      {/* 5. ✅ แสดงไฟล์ที่แนบอยู่ (ไฟล์ใหม่ที่เลือก หรือ ไฟล์เดิมจาก DB) */}
+                      {/* แสดงไฟล์ที่แนบอยู่ (ไฟล์ใหม่ที่เลือก หรือ ไฟล์เดิมจาก DB) */}
                       {hasAttachment ? (
                         <div className="flex items-center justify-between rounded-lg border border-primary bg-primary/10 p-4 text-black dark:text-white">
                           <div className="flex flex-col">
-                            {/* แก้ไขแล้ว: เพิ่มการตรวจสอบ null/undefined ให้กับ formData.filepdf ก่อนอ่าน .name */}
                             <p className="font-semibold">
                               📎{" "}
                               {formData.originalFileName ||
@@ -1016,12 +1016,14 @@ const EditPdcaForm = ({ pdca }) => {
                           type="file"
                           accept="application/pdf"
                           onChange={handleFileChange}
-                          // ถ้าเป็นโหมด EDIT และไม่มีไฟล์เดิม ผู้ใช้ต้องสามารถเลือกไฟล์ใหม่ได้
-                          required={!EDITMODE && !hasAttachment}
+                          // ❌ ลบ required ออกตามคำขอ
                           className="w-full rounded-lg border border-stroke bg-transparent py-3 pl-6 pr-10 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
                         />
                       )}
                     </div>
+                    {/* ---------------------------------------------------- */}
+
+                    {/* ⭐️ Checkbox ที่แก้ไขให้ใช้ 'checked' แทน 'default' */}
                     <div className="form-check pt-4 text-black dark:text-white">
                       <input
                         id="id1"
@@ -1030,7 +1032,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="1. บันทึกข้อความขออนุมัติโครงการ ✅"
-                        default={formData.id1}
+                        checked={!!formData.id1}
                       />
                       <label
                         className="form-check-label pl-2 pt-4"
@@ -1047,7 +1049,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="2. บันทึกข้อความขออนุญาติดำเนินโครงการ ✅"
-                        default={formData.id2}
+                        checked={!!formData.id2}
                       />
                       <label className="pl-2 pt-4" htmlFor="id2">
                         2. บันทึกข้อความขออนุญาติดำเนินโครงการ
@@ -1061,7 +1063,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="3. โครงการ ที่ผู้บริหารลงนามแล้ว ✅"
-                        default={formData.id3}
+                        checked={!!formData.id3}
                       />
                       <label className="pl-2 pt-4" htmlFor="id3">
                         3. โครงการ ที่ผู้บริหารลงนามแล้ว
@@ -1075,7 +1077,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="4. บันทึกขออนุมัติคำสั่ง ✅"
-                        default={formData.id4}
+                        checked={!!formData.id4}
                       />
                       <label className="pl-2 pt-4" htmlFor="id4">
                         4. บันทึกขออนุมัติคำสั่ง
@@ -1089,7 +1091,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="5. คำสั่งแต่งตั้งคณะกรรมการดำเนินงาน ✅"
-                        default={formData.id5}
+                        checked={!!formData.id5}
                       />
                       <label className="pl-2 pt-4" htmlFor="id5">
                         5. คำสั่งแต่งตั้งคณะกรรมการดำเนินงาน
@@ -1103,7 +1105,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="6. บันทึกข้อความขออนุญาตประชุม ✅"
-                        default={formData.id6}
+                        checked={!!formData.id6}
                       />
                       <label className="pl-2 pt-4" htmlFor="id6">
                         6. บันทึกข้อความขออนุญาตประชุม
@@ -1117,7 +1119,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="7. บันทึกข้อความขอเชิญประชุม ✅"
-                        default={formData.id7}
+                        checked={!!formData.id7}
                       />
                       <label className="pl-2 pt-4" htmlFor="id7">
                         7. บันทึกข้อความขอเชิญประชุม
@@ -1131,7 +1133,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="8. บันทึกข้อความขอรายงานการประชุม ✅"
-                        default={formData.id8}
+                        checked={!!formData.id8}
                       />
                       <label className="pl-2 pt-4" htmlFor="id8">
                         8. บันทึกข้อความขอรายงานการประชุม
@@ -1145,7 +1147,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="9. บันทึกข้อความขอความอนุเคราะห์ประชาสัมพันธ์โครงการ ✅"
-                        default={formData.id9}
+                        checked={!!formData.id9}
                       />
                       <label className="pl-2 pt-4" htmlFor="id9">
                         9. บันทึกข้อความขอความอนุเคราะห์ประชาสัมพันธ์โครงการ
@@ -1159,7 +1161,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="10. บันทึกข้อความรายงานการประชาสัมพันธ์โครงการ ✅"
-                        default={formData.id10}
+                        checked={!!formData.id10}
                       />
                       <label className="pl-2 pt-4" htmlFor="id10">
                         10. บันทึกข้อความรายงานการประชาสัมพันธ์โครงการ
@@ -1173,7 +1175,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="11. กำหนดการจัดกิจกรรม ✅"
-                        default={formData.id11}
+                        checked={!!formData.id11}
                       />
                       <label className="pl-2 pt-4" htmlFor="id11">
                         11. กำหนดการจัดกิจกรรม
@@ -1187,7 +1189,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="12. หนังสือเชิญเป็นวิทยากร/หนังสือตอบรับเป็นวิทยากร/หนังสือขอบคุณวิทยากร ✅"
-                        default={formData.id12}
+                        checked={!!formData.id12}
                       />
                       <label className="pl-2 pt-4" htmlFor="id12">
                         12.
@@ -1202,7 +1204,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="13. ลายมือชื่อผู้เข้าร่วมโครงการ ✅"
-                        default={formData.id13}
+                        checked={!!formData.id13}
                       />
                       <label className="pl-2 pt-4" htmlFor="id13">
                         13. ลายมือชื่อผู้เข้าร่วมโครงการ
@@ -1216,7 +1218,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="14. รูปภาพการดำเนินงานโครงการ ✅"
-                        default={formData.id14}
+                        checked={!!formData.id14}
                       />
                       <label className="pl-2 pt-4" htmlFor="id14">
                         14. รูปภาพการดำเนินงานโครงการ
@@ -1230,7 +1232,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="15. บันทึกข้อความรายงานสรุปการใช้งบประมาณ ✅"
-                        default={formData.id15}
+                        checked={!!formData.id15}
                       />
                       <label className="pl-2 pt-4" htmlFor="id15">
                         15. บันทึกข้อความรายงานสรุปการใช้งบประมาณ
@@ -1238,18 +1240,15 @@ const EditPdcaForm = ({ pdca }) => {
                     </div>
                     <div className="form-check pt-4 text-black dark:text-white">
                       <input
-                        id="เอกสารชุดเบิกโครงการ"
+                        id="id16"
                         name="id16"
                         type="checkbox"
                         className="form-check-input"
                         onChange={handleChange}
                         value="16. เอกสารชุดเบิกโครงการ ✅"
-                        default={formData.id16}
+                        checked={!!formData.id16}
                       />
-                      <label
-                        className="pl-2 pt-4"
-                        htmlFor="เอกสารชุดเบิกโครงการ"
-                      >
+                      <label className="pl-2 pt-4" htmlFor="id16">
                         16. เอกสารชุดเบิกโครงการ
                       </label>
                     </div>
@@ -1261,7 +1260,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="17. แบบสอบถามประเมินความพึงพอใจผู้เข้าร่วมโครงการ Google from / QR Code ✅"
-                        default={formData.id17}
+                        checked={!!formData.id17}
                       />
                       <label className="pl-2 pt-4" htmlFor="id17">
                         17. แบบสอบถามประเมินความพึงพอใจผู้เข้าร่วมโครงการ Google
@@ -1276,7 +1275,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="18. บันทึกข้อความรายงานสรุปผลการวิเคราะห์ข้อมูลการดำเนินโครงการ ✅"
-                        default={formData.id18}
+                        checked={!!formData.id18}
                       />
                       <label className="pl-2 pt-4" htmlFor="id18">
                         18.
@@ -1291,7 +1290,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="19. ผลการวิเคราะห์ข้อมูล ✅"
-                        default={formData.id19}
+                        checked={!!formData.id19}
                       />
                       <label className="pl-2 pt-4" htmlFor="id19">
                         19. ผลการวิเคราะห์ข้อมูล
@@ -1305,7 +1304,7 @@ const EditPdcaForm = ({ pdca }) => {
                         className="form-check-input"
                         onChange={handleChange}
                         value="20. บันทึกกข้อความรายงานสรุปผลการดำเนินโครงการ ✅"
-                        default={formData.id20}
+                        checked={!!formData.id20}
                       />
                       <label className="pl-2 pt-4" htmlFor="id20">
                         20. บันทึกกข้อความรายงานสรุปผลการดำเนินโครงการ

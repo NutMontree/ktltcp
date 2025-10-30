@@ -43,7 +43,7 @@ const ResourceDashboard = () => {
 
   return (
     <div className="space-y-6 p-6">
-      <h1 className="text-3xl font-bold text-gray-800">PDCA Dashboard</h1>
+      <h1 className="text-3xl font-bold text-gray-800">resource Dashboard</h1>
 
       {/* Filter Buttons */}
       <div className="flex flex-wrap items-center gap-2">
