@@ -8,7 +8,7 @@ export const config = {
   api: {
     bodyParser: false,
     // ✅ แก้ไข Error 413: เพิ่มขนาด Body Limit (ปรับตัวเลขตามความเหมาะสม)
-    sizeLimit: '100mb',
+    sizeLimit: '50mb',
   },
 };
 
