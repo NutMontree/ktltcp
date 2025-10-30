@@ -12,7 +12,7 @@
 
 //   const startingAcademicData = {
 //     year: "2567",
-//     department: "ฝ่ายแผนงานและความร่วมมือ",
+//     department: "ฝ่ายวิชาการ",
 //     namework: "",
 //     nameproject: "",
 //     id1: "",
@@ -312,7 +312,7 @@
 //                       </label>
 //                       <input
 //                         id="department"
-//                         placeholder="ฝ่ายแผนงานและความร่วมมือ"
+//                         placeholder="ฝ่ายวิชาการ"
 //                         disabled
 //                         type="text"
 //                         onChange={handleChange}
@@ -688,7 +688,7 @@ const EditAcademicForm = ({ academic }) => {
 
   const startingAcademicData = {
     year: "2567",
-    department: "ฝ่ายแผนงานและความร่วมมือ",
+    department: "ฝ่ายวิชาการ",
     namework: "",
     nameproject: "",
     filepdf: null, // สำหรับเก็บ File Object ใหม่ที่เลือก
@@ -928,7 +928,7 @@ const EditAcademicForm = ({ academic }) => {
                       <input
                         id="department"
                         name="department"
-                        placeholder="ฝ่ายแผนงานและความร่วมมือ"
+                        placeholder="ฝ่ายวิชาการ"
                         disabled
                         type="text"
                         onChange={handleChange}

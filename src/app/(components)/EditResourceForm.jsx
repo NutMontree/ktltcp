@@ -12,7 +12,7 @@ const EditResourceForm = ({ resource }) => {
 
   const startingResourceData = {
     year: "2567",
-    department: "ฝ่ายแผนงานและความร่วมมือ",
+    department: "ฝ่ายบริหารทรัพยากร",
     namework: "",
     nameproject: "",
     filepdf: null, // สำหรับเก็บ File Object ใหม่ที่เลือก
@@ -252,7 +252,7 @@ const EditResourceForm = ({ resource }) => {
                       <input
                         id="department"
                         name="department"
-                        placeholder="ฝ่ายแผนงานและความร่วมมือ"
+                        placeholder="ฝ่ายบริหารทรัพยากร"
                         disabled
                         type="text"
                         onChange={handleChange}

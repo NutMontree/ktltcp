@@ -12,7 +12,7 @@
 
 //   const startingDevdepartmentData = {
 //     year: "2567",
-//     department: "ฝ่ายแผนงานและความร่วมมือ",
+//     department: "ฝ่ายพัฒนากิจการนักเรียน",
 //     namework: "",
 //     nameproject: "",
 //     id1: "",
@@ -312,7 +312,7 @@
 //                       </label>
 //                       <input
 //                         id="department"
-//                         placeholder="ฝ่ายแผนงานและความร่วมมือ"
+//                         placeholder="ฝ่ายพัฒนากิจการนักเรียน"
 //                         disabled
 //                         type="text"
 //                         onChange={handleChange}
@@ -688,7 +688,7 @@ const EditDevdepartmentForm = ({ devdepartment }) => {
 
   const startingDevdepartmentData = {
     year: "2567",
-    department: "ฝ่ายแผนงานและความร่วมมือ",
+    department: "ฝ่ายพัฒนากิจการนักเรียน",
     namework: "",
     nameproject: "",
     filepdf: null, // สำหรับเก็บ File Object ใหม่ที่เลือก
@@ -933,7 +933,7 @@ const EditDevdepartmentForm = ({ devdepartment }) => {
                       <input
                         id="department"
                         name="department"
-                        placeholder="ฝ่ายแผนงานและความร่วมมือ"
+                        placeholder="ฝ่ายพัฒนากิจการนักเรียน"
                         disabled
                         type="text"
                         onChange={handleChange}
