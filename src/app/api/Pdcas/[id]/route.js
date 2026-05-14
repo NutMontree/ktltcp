@@ -57,7 +57,7 @@ async function parseFormData(req) {
 export async function GET(req, { params }) {
   // await connectDB(); 
   try {
-    const { id } = params;
+    const { id } = await params;
     const foundPdca = await Pdca.findById(id);
 
     if (!foundPdca) return NextResponse.json({ message: "Pdca not found" }, { status: 404 });
@@ -72,7 +72,7 @@ export async function GET(req, { params }) {
 // --- PUT (อัปเดตข้อมูลและไฟล์) ---
 export async function PUT(req, { params }) {
   // await connectDB(); 
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const pdcaData = await parseFormData(req);
@@ -140,7 +140,7 @@ export async function PUT(req, { params }) {
 export async function DELETE(req, { params }) {
   // await connectDB();
   try {
-    const { id } = params;
+    const { id } = await params;
     const pdcaToDelete = await Pdca.findById(id);
 
     // 🗑️ ลบไฟล์ออกจาก Vercel Blob ก่อนลบเอกสาร
