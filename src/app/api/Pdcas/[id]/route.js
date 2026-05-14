@@ -3,23 +3,16 @@ import { NextResponse } from "next/server";
 import { put, del } from '@vercel/blob';
 // import connectDB from "@/path/to/your/connectDB"; // 💡 นำเข้าและเรียกใช้ connectDB ถ้าคุณสร้างไว้แล้ว
 
-// ปิด bodyParser เพื่อรับ FormData และเพิ่มการจำกัดขนาด Body
-export const config = {
-  api: {
-    bodyParser: false,
-    // ✅ แก้ไข Error 413: เพิ่มขนาด Body Limit (ปรับตัวเลขตามความเหมาะสม)
-    sizeLimit: '50mb',
-  },
-};
-
 // --- ฟังก์ชันช่วย: parseFormData ---
+
 // แปลง FormData ของ Next.js เป็น object และจัดการการอัปโหลดไฟล์
 async function parseFormData(req) {
   const formData = await req.formData();
   const data = {};
+  const attachments = [];
 
   for (const [key, value] of formData.entries()) {
-    if (value instanceof File && value.size > 0) {
+    if (value instanceof File && value.size > 0 && key.startsWith("filepdf")) {
       // 🚀 อัปโหลดไปยัง Vercel Blob
       const buffer = Buffer.from(await value.arrayBuffer());
 
@@ -29,11 +22,31 @@ async function parseFormData(req) {
       // Put file to Vercel Blob storage
       const { url } = await put(filename, buffer, { access: 'public' });
 
-      data.fileUrl = url; // บันทึก URL ใหม่
-      data.originalFileName = value.name;
+      attachments.push({ fileUrl: url, originalFileName: value.name });
     } else {
       data[key] = value;
     }
+  }
+
+  // Handle multiple attachments
+  if (attachments.length > 0) {
+    data.attachments = attachments;
+    // Backward compatibility for single file
+    data.fileUrl = attachments[0].fileUrl;
+    data.originalFileName = attachments[0].originalFileName;
+  }
+
+  // Process existing attachments passed from frontend
+  if (data.existingAttachments) {
+    try {
+      const existing = JSON.parse(data.existingAttachments);
+      if (Array.isArray(existing)) {
+        data.attachments = [...existing, ...(data.attachments || [])];
+      }
+    } catch (e) {
+      console.error("Error parsing existing attachments:", e);
+    }
+    delete data.existingAttachments;
   }
 
   return data;

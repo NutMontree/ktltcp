@@ -2,120 +2,183 @@
 
 import DeletePdca from "./DeletePdca";
 import Link from "next/link";
-// นำเข้าไอคอนที่จำเป็น (สมมติว่าคุณใช้ Heroicons หรืออื่น ๆ แต่ในตัวอย่างนี้ใช้ Emoji แทน)
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
-const PdcaCard = ({ pdca, editing = false, onEditChange }) => {
-  function formatThaiDate(timestamp) {
+const PdcaCard = ({ pdca, totalItems = 20 }) => {
+  const router = useRouter();
+  const [showPinModal, setShowPinModal] = useState(false);
+  const [pinInput, setPinInput] = useState("");
+  const [pinError, setPinError] = useState("");
+
+  const handleEditClick = (e) => {
+    e.stopPropagation();
+    setShowPinModal(true);
+    setPinInput("");
+    setPinError("");
+  };
+
+  const handlePinSubmit = (e) => {
+    e.preventDefault();
+    if (pinInput === "29122539") {
+      setShowPinModal(false);
+      router.push(`/PdcaPage/${pdca._id}`);
+    } else {
+      setPinError("รหัส PIN ไม่ถูกต้อง");
+    }
+  };
+  const formatThaiDate = (timestamp) => {
     if (!timestamp) return "-";
-    // ใช้ 'short' สำหรับชั่วโมง/นาที เพื่อให้ข้อความไม่ยาวเกินไป
-    const options = {
+    return new Date(timestamp).toLocaleString("th-TH", {
       year: "numeric",
-      month: "long",
+      month: "short",
       day: "2-digit",
       hour: "2-digit",
       minute: "2-digit",
-    };
-    return new Date(timestamp).toLocaleString("th-TH", options);
-  }
+    });
+  };
 
   const createdDateTime = formatThaiDate(pdca.createdAt);
+  
+  // Calculate completion percentage dynamically based on form configuration
+  const completedItems = Array.from({ length: totalItems }, (_, i) => pdca[`id${i + 1}`]).filter(Boolean).length;
+  const percentage = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
 
   return (
-    // 🎨 Container หลัก: ดูดีขึ้นด้วยเงาและขอบมน
-    <div className="relative rounded-xl bg-white p-6 shadow-xl transition-all duration-300 hover:shadow-2xl dark:bg-gray-800">
-      {/* 🌟 Action buttons - จัดตำแหน่งให้มองเห็นง่ายและทันสมัย */}
-      <div className="absolute right-4 top-4 flex gap-2">
-        <Link
-          href={`/PdcaPage/${pdca._id}`}
-          // ใช้ปุ่มสไตล์ไอคอน/ลิงก์
-          className="rounded-full bg-blue-100 p-2 text-blue-600 transition hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300"
-          title="แก้ไข"
-        >
-          <span className="text-lg">⚙️ แก้ไข</span>
-        </Link>
-        <DeletePdca id={pdca._id} />{" "}
-        {/* อย่าลืมปรับ DeletePdca ให้เข้ากับธีมนี้ด้วย */}
-      </div>
-
-      {/* ⭐️ Header - เน้นชื่อโครงการให้ชัดเจน */}
-      <div className="mb-4 pr-16 pt-4">
-        <h2 className="line-clamp-2 text-xl font-bold text-gray-900 dark:text-white">
-          {pdca.nameproject}
-        </h2>
-        <p className="mt-1 text-sm font-medium text-purple-600 dark:text-purple-400">
-          📁 งาน: {pdca.namework}
-        </p>
-      </div>
-
-      <hr className="my-4 border-gray-100 dark:border-gray-700" />
-
-      {/* 🏷️ Tags & Info - ข้อมูลสำคัญจัดให้อยู่ในแถวเดียวกัน */}
-      <div className="mb-4 flex flex-wrap items-center gap-2">
-        {/* Tag ปีงบประมาณ - ใช้สีเขียวเพื่อสื่อถึงความสำเร็จ/งบประมาณ */}
-        <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800 dark:bg-green-900 dark:text-green-300">
-          🗓️ ปี: {pdca.year}
-        </span>
-        {/* Tag แผนก/ฝ่าย */}
-        <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700 dark:bg-gray-700 dark:text-gray-300">
-          🏢 ฝ่าย: {pdca.department || "ไม่ระบุ"}
-        </span>
-      </div>
-
-      {/* 📋 รายการ ID / สถานะความคืบหน้า */}
-      <div className="mt-4 space-y-2">
-        <p className="text-md font-semibold text-gray-800 dark:text-gray-200">
-          📊 สถานะความคืบหน้า (PDCA Items):
-        </p>
-
-        {/* Grid สำหรับแสดงสถานะ 20 รายการ */}
-        <div className="grid grid-cols-1 gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3 px-6 py-6 dark:border-gray-600 dark:bg-gray-700 lg:grid-cols-2">
-          {Array.from({ length: 20 }, (_, i) => {
-            const key = `id${i + 1}`;
-            const value = pdca[key];
-            const isCompleted = !!value; // ตรวจสอบว่าเป็น true/มีค่า
-
-            if (editing && onEditChange) {
-              // ✏️ โหมดแก้ไข: แสดง Checkbox
-              return (
-                <div key={key} className="flex items-center gap-1">
-                  <input
-                    type="checkbox"
-                    checked={isCompleted}
-                    onChange={(e) => onEditChange(key, e.target.checked)}
-                    className="h-4 w-4 rounded text-blue-600 focus:ring-blue-500"
-                  />
-                  <label className="text-xs text-gray-700 dark:text-gray-300">
-                    {key.toUpperCase()}
-                  </label>
-                </div>
-              );
-            }
-
-            // 👁️ โหมดแสดงผล: แสดงสถานะเป็นไอคอน
-            return (
-              <div key={key} className="pt-1">
-                {value}
-              </div>
-            );
-          })}
+    <div className="group relative overflow-hidden rounded-2xl bg-white p-1 shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl dark:bg-gray-800">
+      {/* Background Accent Gradient */}
+      <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-primary/10 blur-3xl transition-all duration-500 group-hover:bg-primary/20"></div>
+      
+      <div className="relative h-full rounded-[14px] bg-white p-6 dark:bg-gray-900">
+        {/* Header Section */}
+        <div className="mb-6 flex items-start justify-between">
+          <div className="flex-1 pr-4">
+            <span className="mb-2 inline-block rounded-md bg-primary/10 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-primary">
+              {pdca.year} Budget Year
+            </span>
+            <h3 className="line-clamp-2 text-lg font-bold text-black transition-colors duration-300 group-hover:text-primary dark:text-white">
+              {pdca.nameproject}
+            </h3>
+          </div>
+          <div 
+            className="flex shrink-0 gap-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 relative z-20"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={handleEditClick}
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition hover:bg-blue-600 hover:text-white dark:bg-blue-900/30 dark:text-blue-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+            </button>
+            <DeletePdca id={pdca._id} />
+          </div>
         </div>
 
-        {/* ❌ โหมดแสดงผลดั้งเดิม (ถูกซ่อนในโค้ดใหม่ แต่เก็บไว้หากคุณต้องการแสดงข้อความ) */}
-        {/* {!editing && Array.from({ length: 20 }, (_, i) => {
-            const key = `id${i + 1}`;
-            return pdca[key] ? (
-              <div key={key} className="pt-1 text-sm text-gray-700">
-                {pdca[key]} 
-              </div>
-            ) : null;
-        })} 
-        */}
+        {/* Info Grid - Changed to vertical for better readability of long names */}
+        <div className="mb-6 space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-500 dark:bg-blue-900/20 dark:text-blue-400">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 22V4c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v18Z"/><path d="M6 18H2v2c0 1.1.9 2 2 2h2Z"/><path d="M10 22v-4h4v4Z"/></svg>
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">ฝ่ายที่รับผิดชอบ</p>
+              <p className="truncate text-sm font-bold text-black dark:text-white">{pdca.department}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-purple-50 text-purple-500 dark:bg-purple-900/20 dark:text-purple-400">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">งาน / สายงาน</p>
+              <p className="truncate text-sm font-bold text-black dark:text-white">{pdca.namework}</p>
+            </div>
+          </div>
+        </div>
+
+
+        {/* Progress Bar */}
+        <div className="mb-6">
+          <div className="mb-2 flex items-center justify-between text-xs font-bold">
+            <span className="text-gray-500">เอกสารที่ดำเนินการ</span>
+            <span className={percentage === 100 ? "text-success" : "text-primary"}>{percentage}%</span>
+          </div>
+          <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
+            <div 
+              className={`h-full transition-all duration-1000 ${percentage === 100 ? "bg-success" : "bg-primary"}`}
+              style={{ width: `${percentage}%` }}
+            ></div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="flex items-center justify-between border-t border-gray-100 pt-4 dark:border-gray-800">
+          <span className="text-[10px] text-gray-400">สร้างเมื่อ: {createdDateTime}</span>
+          {pdca.fileUrl ? (
+             <a
+             href={pdca.fileUrl}
+             target="_blank"
+             rel="noopener noreferrer"
+             className="flex items-center gap-1.5 text-xs font-bold text-danger hover:underline"
+           >
+             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M9 15h6"/><path d="M9 11h6"/><path d="M9 19h10"/></svg>
+             PDF
+           </a>
+          ) : (
+            <span className="text-[10px] italic text-gray-400">ไม่มีไฟล์แนบ</span>
+          )}
+        </div>
       </div>
 
-      {/* 🕒 Footer - ข้อมูลวันที่/เวลา */}
-      <div className="mt-6 border-t border-gray-100 pt-3 text-right text-xs text-gray-500 dark:border-gray-700 dark:text-gray-400">
-        <p>สร้างเมื่อ: **{createdDateTime}**</p>
-      </div>
+      {/* PIN Verification Modal for Editing */}
+      {showPinModal && (
+        <div 
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="w-[90%] max-w-sm rounded-2xl bg-white p-8 text-center shadow-2xl dark:bg-boxdark">
+            <h3 className="mb-4 text-xl font-black text-black dark:text-white uppercase tracking-widest">
+              🔐 ยืนยันสิทธิ์
+            </h3>
+            <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
+              กรุณากรอกรหัส PIN (8 หลัก) เพื่อแก้ไขข้อมูล
+            </p>
+            
+            <form onSubmit={handlePinSubmit}>
+              <input
+                type="password"
+                placeholder="รหัส PIN"
+                value={pinInput}
+                onChange={(e) => setPinInput(e.target.value)}
+                autoFocus
+                className="mb-4 w-full rounded-xl border-2 border-stroke bg-gray-50 px-6 py-3 text-center text-xl font-black tracking-[0.5em] outline-none transition focus:border-primary dark:border-strokedark dark:bg-meta-4 dark:text-white"
+              />
+              
+              {pinError && (
+                <p className="mb-4 text-sm font-bold text-red-500 animate-pulse">
+                  {pinError}
+                </p>
+              )}
+              
+              <div className="flex gap-4">
+                <button
+                  type="button"
+                  onClick={() => setShowPinModal(false)}
+                  className="flex-1 rounded-xl bg-gray-100 py-3 font-bold text-gray-600 transition hover:bg-gray-200 dark:bg-meta-4 dark:text-gray-300 dark:hover:bg-meta-4/80"
+                >
+                  ยกเลิก
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 rounded-xl bg-primary py-3 font-bold text-white transition hover:bg-opacity-90 shadow-lg shadow-primary/30"
+                >
+                  ยืนยัน
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

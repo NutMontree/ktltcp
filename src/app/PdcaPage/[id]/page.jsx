@@ -1,31 +1,31 @@
 import EditPdcaForm from "@/app/(components)/EditPdcaForm";
-const getUserById = async (id) => {
+const getPdcaById = async (id) => {
   try {
-    const res = await fetch(`https://ktltcp.vercel.app/api/Pdcas/${id}`, {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/Pdcas/${id}`, {
       cache: "no-store",
     });
 
     if (!res.ok) {
-      throw new Error("Failed to fetch topic");
+      throw new Error("Failed to fetch PDCA");
     }
 
     return res.json();
   } catch (error) {
-    console.log(error);
+    console.error("Fetch PDCA error:", error);
+    return null;
   }
 };
-
-let updatePdcaData = {};
 const PdcaPage = async ({ params }) => {
-  const EDITMODE = params.id === "new" ? false : true;
+  let updatePdcaData = { _id: "new" };
+  const { id } = await params;
+  const EDITMODE = id === "new" ? false : true;
 
   if (EDITMODE) {
-    updatePdcaData = await getUserById(params.id);
-    updatePdcaData = updatePdcaData.foundPdca;
-  } else {
-    updatePdcaData = {
-      _id: "new",
-    };
+    const data = await getPdcaById(id);
+    if (data) {
+      updatePdcaData = data.foundPdca;
+    }
   }
 
   return <EditPdcaForm pdca={updatePdcaData} />;

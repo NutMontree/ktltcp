@@ -25,11 +25,9 @@ export default function DefaultLayout({
 
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
-            <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-              {children}
-            </div>
+            <div className="mx-auto max-w-screen-2xl p-2">{children}</div>
           </main>
-          <footer className="flex justify-center gap-2 py-4 pl-4 ">
+          <footer className="flex justify-center gap-2 py-4 pl-4">
             <div className="text-sm">งานศูนย์ข้อมูลและสารสนเทศ</div>
             <div className="text-sm font-bold text-sky-600">KTLTC</div>
           </footer>

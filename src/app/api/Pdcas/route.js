@@ -1,129 +1,73 @@
-// import Pdca from "@/app/models/Pdca";
-// import { NextResponse } from "next/server";
-
-// export async function GET() {
-//   try {
-//     const pdcas = await Pdca.find();
-
-//     return NextResponse.json({ pdcas }, { status: 200 });
-//   } catch (err) {
-//     console.error("❌ DevDepartment fetch error:", err);
-//     return NextResponse.json({ messsge: "Error", err }, { status: 500 });
-//   }
-// }
-
-// export async function POST(req) {
-//   ////////////////////////////////////////////// NOtify Line //////////////////////////////////////////////
-//   const axios = require('axios');
-//   // let data = JSON.stringify({
-//   //   "to": "Cff6e2d23bf3c718620c38c98c3462ba1",
-//   //   "messages": [
-//   //     {
-//   //       "type": "text",
-//   //       "text": "You Have NEW PDCA ฝ่ายแผนงานและความร่วมมือ" + " " +
-//   //         "คลิกเพื่อดู" + " " +
-//   //         "https://ktltcp.vercel.app/pdca" + " "
-//   //     }
-//   //   ]
-//   // });
-
-//   // let config = {
-//   //   method: 'post',
-//   //   maxBodyLength: Infinity,
-//   //   url: 'https://api.line.me/v2/bot/message/push',
-//   //   headers: {
-//   //     'Content-Type': 'application/json',
-//   //     "Authorization": "Bearer LuVp1mV6NLHuAdPxbf3+XlqWBsxtEhLElHYlDjWAwURwKk2XGtjXvkYmevwGX02HqxLceZsEEtbsVDrmbTTeArQcRg9q8RsCopa7niK+DyoAkZl87MfgjV1bVPK3TO/QSbobW/UNW4y8TsSMYpze0QdB04t89/1O/w1cDnyilFU="
-//   //   },
-//   //   notificationDisabled: true, // เปลี่ยนเป็น true หากต้องการปิดการแจ้งเตือน
-//   //   data: data
-//   // };
-
-//   // axios.request(config)
-//   //   .then((response) => {
-//   //     console.log(JSON.stringify(response.data));
-//   //   })
-//   //   .catch((error) => {
-//   //     console.log(error);
-//   //   });
-//   ////////////////////////////////////////////// NOtify Line //////////////////////////////////////////////
-
-//   try {
-//     const body = await req.json();
-//     const pdcaData = body.formData;
-
-//     await Pdca.create(pdcaData);
-
-//     return NextResponse.json({ messsge: "Create Pdca" }, { status: 201 });
-//   } catch (err) {
-//     console.log(err);
-//     return NextResponse.json({ messsge: "Error", err }, { status: 500 });
-//   }
-// }
-
-
 
 import Pdca from "@/app/models/Pdca";
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { put } from "@vercel/blob";
+
+// --- ฟังก์ชันช่วย: parseFormData ---
+async function parseFormData(req) {
+  const formData = await req.formData();
+  const data = {};
+  const attachments = [];
+
+  for (const [key, value] of formData.entries()) {
+    if (value instanceof File && value.size > 0 && key.startsWith("filepdf")) {
+      // 🚀 อัปโหลดไปยัง Vercel Blob
+      const buffer = Buffer.from(await value.arrayBuffer());
+      // สร้างชื่อไฟล์ที่ไม่ซ้ำกัน
+      const filename = `${Date.now()}-${value.name.replaceAll(" ", "_")}`;
+      // Put file to Vercel Blob storage
+      const { url } = await put(filename, buffer, { access: "public" });
+
+      attachments.push({ fileUrl: url, originalFileName: value.name });
+    } else {
+      data[key] = value;
+    }
+  }
+
+  // Handle multiple attachments
+  if (attachments.length > 0) {
+    data.attachments = attachments;
+    // Backward compatibility for single file
+    data.fileUrl = attachments[0].fileUrl;
+    data.originalFileName = attachments[0].originalFileName;
+  }
+
+  // Process existing attachments passed from frontend
+  if (data.existingAttachments) {
+    try {
+      const existing = JSON.parse(data.existingAttachments);
+      if (Array.isArray(existing)) {
+        data.attachments = [...existing, ...(data.attachments || [])];
+      }
+    } catch (e) {
+      console.error("Error parsing existing attachments:", e);
+    }
+    delete data.existingAttachments;
+  }
+
+  return data;
+}
 
 export async function GET() {
   try {
-    const pdcas = await Pdca.find();
+    const pdcas = await Pdca.find().sort({ createdAt: -1 });
     return NextResponse.json({ pdcas }, { status: 200 });
   } catch (err) {
-    console.error("❌ DevDepartment fetch error:", err);
-    return NextResponse.json({ messsge: "Error", err }, { status: 500 });
+    console.error("❌ PDCA fetch error:", err);
+    return NextResponse.json({ message: "Error", err }, { status: 500 });
   }
 }
 
 export async function POST(req) {
-  const axios = require("axios");
   try {
-    let pdcaData = {};
     const contentType = req.headers.get("content-type") || "";
+    let pdcaData = {};
 
-    if (contentType.includes("application/json")) {
+    if (contentType.includes("multipart/form-data")) {
+      pdcaData = await parseFormData(req);
+    } else if (contentType.includes("application/json")) {
       const body = await req.json();
-      pdcaData = body.formData;
-    } else if (contentType.includes("multipart/form-data")) {
-      const formData = await req.formData();
-
-      pdcaData.year = formData.get("year");
-      pdcaData.department = formData.get("department");
-      pdcaData.namework = formData.get("namework");
-      pdcaData.nameproject = formData.get("nameproject");
-
-      const file = formData.get("filepdf");
-      if (file && file.name) {
-        if (file.type !== "application/pdf") {
-          return NextResponse.json(
-            { message: "อนุญาตเฉพาะไฟล์ PDF เท่านั้น" },
-            { status: 400 }
-          );
-        }
-
-        // แปลงไฟล์เป็น buffer
-        const bytes = await file.arrayBuffer();
-        const buffer = Buffer.from(bytes);
-
-        // ✅ บันทึกไฟล์ใน public/uploads (เหมือนเดิม)
-        const uploadDir = path.join(process.cwd(), "public",);
-        if (!fs.existsSync(uploadDir)) {
-          fs.mkdirSync(uploadDir, { recursive: true });
-        }
-
-        const originalFilename = file.name;
-        const filePath = path.join(uploadDir, originalFilename);
-        await fs.promises.writeFile(filePath, buffer);
-
-        // ✅ เพิ่มข้อมูลเก็บลง MongoDB
-        pdcaData.fileName = originalFilename;
-        pdcaData.fileUrl = `${originalFilename}`;
-        pdcaData.fileData = buffer; // <— เก็บไฟล์จริงในฐานข้อมูล
-        pdcaData.fileType = file.type;
-      }
+      pdcaData = body.formData || body;
     } else {
       return NextResponse.json(
         { message: "Unsupported content type" },
@@ -131,11 +75,17 @@ export async function POST(req) {
       );
     }
 
-    await Pdca.create(pdcaData);
+    const newPdca = await Pdca.create(pdcaData);
 
-    return NextResponse.json({ message: "Create Pdca" }, { status: 201 });
+    return NextResponse.json(
+      { message: "Create Pdca Success", pdca: newPdca },
+      { status: 201 }
+    );
   } catch (err) {
-    console.error("❌ Upload error:", err);
-    return NextResponse.json({ messsge: "Error", err }, { status: 500 });
+    console.error("❌ PDCA Create error:", err);
+    return NextResponse.json(
+      { message: "Error", error: err.message },
+      { status: 500 }
+    );
   }
 }

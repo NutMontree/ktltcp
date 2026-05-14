@@ -23,6 +23,12 @@ const PdcaSchema = new Schema(
     fileData: Buffer,
     fileType: String,
     originalFileName: String,
+    attachments: [
+      {
+        fileUrl: String,
+        originalFileName: String,
+      }
+    ],
     // ฟิลด์อื่น ๆ ตามที่ต้องการ
     id1: String,
     id2: String,
@@ -45,11 +51,10 @@ const PdcaSchema = new Schema(
     id19: String,
     id20: String,
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true, strict: false }
 );
 
-const Pdca = mongoose.models.Pdca || mongoose.model("Pdca", PdcaSchema);
+if (mongoose.models.Pdca) delete mongoose.models.Pdca;
+const Pdca = mongoose.model("Pdca", PdcaSchema);
 
 export default Pdca;

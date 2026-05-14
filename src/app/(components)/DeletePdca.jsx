@@ -6,6 +6,8 @@ const DeletePdca = ({ id }) => {
   const [loading, setLoading] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [toast, setToast] = useState(null); // ✅ เก็บข้อความ toast
+  const [pinInput, setPinInput] = useState("");
+  const [pinError, setPinError] = useState("");
 
   const showToast = (message, type = "success") => {
     setToast({ message, type });
@@ -13,7 +15,13 @@ const DeletePdca = ({ id }) => {
   };
 
   const handleDelete = async () => {
+    if (pinInput !== "29122539") {
+      setPinError("รหัส PIN ไม่ถูกต้อง");
+      return;
+    }
+    
     setLoading(true);
+    setPinError("");
     try {
       const res = await fetch(`/api/Pdcas/${id}`, { method: "DELETE" });
 
@@ -50,12 +58,28 @@ const DeletePdca = ({ id }) => {
             <h2 className="mb-4 text-2xl font-bold text-gray-800">
               ⚠️ ยืนยันการลบข้อมูล
             </h2>
-            <p className="mb-8 text-lg text-gray-600">
+            <p className="mb-6 text-lg text-gray-600">
               คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้?
               <span className="mt-2 block text-sm text-red-500">
                 การลบนี้ไม่สามารถกู้คืนได้
               </span>
             </p>
+
+            <div className="mb-8">
+              <input
+                type="password"
+                placeholder="กรุณากรอกรหัส PIN (8 หลัก)"
+                value={pinInput}
+                onChange={(e) => setPinInput(e.target.value)}
+                autoFocus
+                className="w-full rounded-xl border-2 border-stroke bg-gray-50 px-4 py-3 text-center text-xl font-bold tracking-widest outline-none transition focus:border-red-500 dark:border-strokedark dark:bg-meta-4 dark:text-white"
+              />
+              {pinError && (
+                <p className="mt-2 text-sm font-bold text-red-500 animate-pulse">
+                  {pinError}
+                </p>
+              )}
+            </div>
 
             <div className="flex justify-center gap-6">
               <button
@@ -66,7 +90,11 @@ const DeletePdca = ({ id }) => {
                 {loading ? "กำลังลบ..." : "ยืนยัน"}
               </button>
               <button
-                onClick={() => setShowConfirm(false)}
+                onClick={() => {
+                  setShowConfirm(false);
+                  setPinInput("");
+                  setPinError("");
+                }}
                 className="rounded-xl bg-gray-200 px-6 py-2 text-lg text-gray-800 shadow-md transition hover:bg-gray-300"
               >
                 ยกเลิก
