@@ -4,12 +4,26 @@ const { MONGODB_URI } = process.env;
 
 if (!MONGODB_URI) {
   console.error("Please define the MONGODB_URI environment variable");
-} else if (mongoose.connection.readyState === 0) {
-  mongoose
-    .connect(MONGODB_URI)
-    .then(() => console.log("MongoDB connected (FormConfig)"))
-    .catch((err) => console.error("MongoDB connection error:", err));
 }
+
+// Global cached connection for Serverless Environment (Vercel)
+let cached = global.mongoose;
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
+async function connectMongo() {
+  if (cached.conn) return cached.conn;
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(MONGODB_URI).then((mongoose) => {
+      console.log("MongoDB connected (FormConfig)");
+      return mongoose;
+    });
+  }
+  cached.conn = await cached.promise;
+  return cached.conn;
+}
+connectMongo();
 
 const FormConfigSchema = new Schema(
   {
