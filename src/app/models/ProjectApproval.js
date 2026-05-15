@@ -2,6 +2,25 @@ import mongoose from "mongoose";
 
 const ProjectApprovalSchema = new mongoose.Schema({
   projectId: { type: mongoose.Schema.Types.ObjectId, ref: "InternalPdca", required: true },
+  // Memo Style Fields
+  docNumber: String,
+  date: String,
+  subject: String,
+  salutation: String,
+  paragraphs: [String],
+  introPrefix: String,
+  departmentName: String,
+  additionalIntroText: String,
+  projectName: String,
+  signerName: String,
+  signerPosition: String,
+  deputy2Name: String,
+  deputy2Position: String,
+  deputy2Comment: String,
+  directorName: String,
+  directorComment: String,
+  footerText: String,
+  // Old fields (keep for compatibility or if needed later)
   title: String,
   rationale: String,
   objectives: [String],

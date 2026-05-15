@@ -14,13 +14,13 @@ const getMemoData = async (projectId) => {
   }
 };
 
-const MemoPage = async ({ params }) => {
+const Step1Page = async ({ params }) => {
   const { id } = await params;
   const initialData = await getMemoData(id);
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="แบบฟอร์มขออนุมัติโครงการ" />
+      <Breadcrumb pageName="แบบฟอร์มขออนุมัติโครงการ (Step 1)" />
       <div className="mx-auto max-w-5xl">
         <InternalMemoForm projectId={id} initialData={initialData} />
       </div>
@@ -28,4 +28,4 @@ const MemoPage = async ({ params }) => {
   );
 };
 
-export default MemoPage;
+export default Step1Page;

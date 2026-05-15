@@ -4,20 +4,19 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import ProjectApproval from "@/app/models/ProjectApproval";
 import { connectDB } from "@/app/models/InternalPdca";
 
-async function getStep3Data(projectId) {
+async function getStep2Data(projectId) {
   await connectDB();
-  // ใช้ Model เดิมเพื่อให้ข้อมูลยังเชื่อมโยงกับโครงการนั้นๆ ได้
   const data = await ProjectApproval.findOne({ projectId });
   return data ? JSON.parse(JSON.stringify(data)) : {};
 }
 
-const Step3Page = async ({ params }) => {
+const Step2Page = async ({ params }) => {
   const { id } = await params;
-  const initialData = await getStep3Data(id);
+  const initialData = await getStep2Data(id);
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="แบบฟอร์มขออนุญาตดำเนินโครงการ" />
+      <Breadcrumb pageName="แบบฟอร์มขออนุญาตดำเนินโครงการ (Step 2)" />
       <div className="mx-auto max-w-5xl">
         <PermissionForm projectId={id} initialData={initialData} />
       </div>
@@ -25,4 +24,4 @@ const Step3Page = async ({ params }) => {
   );
 };
 
-export default Step3Page;
+export default Step2Page;
