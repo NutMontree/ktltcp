@@ -210,7 +210,8 @@ const ProjectDetailForm = ({ projectId, initialData = {} }) => {
           : [""],
       proposer: {
         name: data.proposer?.name || "นายสิริปัญญ์ เสริมสิริพิพัฒน์",
-        position: data.proposer?.position || "",
+        position:
+          data.proposer?.position || "หัวหน้างานศูนย์ข้อมูลและสารสนเทศ",
       },
       endorser: {
         name: data.endorser?.name || "นายสมศักดิ์ จันทนิตย์",
@@ -602,29 +603,54 @@ const ProjectDetailForm = ({ projectId, initialData = {} }) => {
           </div>
           <div class="page-container" style="page-break-after: auto;">
             <div class="page-number" style="margin-bottom: 10px;">- ${toThaiDigits(4)} -</div>
-            <div class="section">
-              <span class="label" style="font-weight: bold;">๘.งบประมาณ/ทรัพยากร และแหล่งที่มา การดำเนินโครงการ</span>
-
-                  <!-- Row 5: Other (Target: จำนวน) -->
-                  <div style="display: flex; align-items: baseline;">
-                    <span style="width: 4cm; flex-shrink: 0;">งบรายจ่ายอื่น(ระบุ)</span>
-                    <div style="width: 4.5cm; border-bottom: 1px dotted black; height: 14px; margin: 0 4px;"></div>
-                    <span style="width: 2cm; text-align: center; flex-shrink: 0;">จำนวน</span>
-                    <div style="width: 2.5cm; border-bottom: 1px dotted black; height: 14px; margin: 0 4px;"></div>
-                    <span style="width: 1cm; text-align: right; flex-shrink: 0;">บาท</span>
-                  </div>
-
-                  <!-- Row 6: Education Support (Target: จำนวน) -->
-                  <div style="display: flex; align-items: baseline;">
-                    <span style="width: 4cm; flex-shrink: 0;">บำรุงการศึกษา (บกศ.)</span>
-                    <div style="width: 4.5cm; border-bottom: 1px dotted black; height: 14px; margin: 0 4px;"></div>
-                    <span style="width: 2cm; text-align: center; flex-shrink: 0;">จำนวน</span>
-                    <div style="width: 2.5cm; text-align: center; flex-shrink: 0; white-space: nowrap;">
-                      ....<u>&nbsp;${toThaiDigits(sources.educationSupport?.toLocaleString() || "๕๐,๐๐๐")}&nbsp;</u>....
-                    </div>
-                    <span style="width: 1cm; text-align: right; flex-shrink: 0;">บาท</span>
-                  </div>
+            <div class="section"
+              <span class="label" style="font-weight: bold;">๘.&nbsp; งบประมาณ/ทรัพยากร และแหล่งที่มา การดำเนินโครงการ</span>
+              <div style="margin-top: 5px; margin-left: 1cm;">
+                <!-- Row 1-3: Operating -->
+                <div style="display: flex; align-items: baseline;">
+                  <span style="width: 3.5cm; flex-shrink: 0;">ดำเนินงาน (ระบุ)</span>
+                  <span style="width: 2.5cm; flex-shrink: 0;">ผลผลิต ปวช.</span>
+                  <div style="flex: 1; border-bottom: 1px dotted black; text-align: center; height: 1.1em;">${sources.operating.vocational > 0 ? toThaiDigits(sources.operating.vocational.toLocaleString()) : ""}</div>
+                  <span style="margin-left: 5px; width: 1cm; text-align: right;">บาท</span>
                 </div>
+                <div style="display: flex; align-items: baseline;">
+                  <span style="width: 3.5cm; flex-shrink: 0;"></span>
+                  <span style="width: 2.5cm; flex-shrink: 0;">ผลผลิต ปวส.</span>
+                  <div style="flex: 1; border-bottom: 1px dotted black; text-align: center; height: 1.1em;">${sources.operating.highVocational > 0 ? toThaiDigits(sources.operating.highVocational.toLocaleString()) : ""}</div>
+                  <span style="margin-left: 5px; width: 1cm; text-align: right;">บาท</span>
+                </div>
+                <div style="display: flex; align-items: baseline;">
+                  <span style="width: 3.5cm; flex-shrink: 0;"></span>
+                  <span style="width: 2.5cm; flex-shrink: 0;">ผลผลิต ระยะสั้น</span>
+                  <div style="flex: 1; border-bottom: 1px dotted black; text-align: center; height: 1.1em;">${sources.operating.shortCourse > 0 ? toThaiDigits(sources.operating.shortCourse.toLocaleString()) : ""}</div>
+                  <span style="margin-left: 5px; width: 1cm; text-align: right;">บาท</span>
+                </div>
+                <!-- Row 4: Subsidy -->
+                <div style="display: flex; align-items: baseline; margin-top: 2px;">
+                  <span style="width: 3.5cm; flex-shrink: 0;">งบอุดหนุน (ระบุ)</span>
+                  <div style="flex: 1; border-bottom: 1px dotted black; text-align: center; margin: 0 5px; height: 1.1em;">${toThaiDigits(sources.subsidy.detail)}</div>
+                  <span style="width: 1.5cm; text-align: center; flex-shrink: 0;">จำนวน</span>
+                  <div style="width: 3cm; border-bottom: 1px dotted black; text-align: center; margin: 0 5px; height: 1.1em;">${sources.subsidy.amount > 0 ? toThaiDigits(sources.subsidy.amount.toLocaleString()) : ""}</div>
+                  <span style="width: 1cm; text-align: right;">บาท</span>
+                </div>
+                <!-- Row 5: Other -->
+                <div style="display: flex; align-items: baseline; margin-top: 2px;">
+                  <span style="width: 3.5cm; flex-shrink: 0;">งบรายจ่ายอื่น(ระบุ)</span>
+                  <div style="flex: 1; border-bottom: 1px dotted black; text-align: center; margin: 0 5px; height: 1.1em;">${toThaiDigits(sources.other.detail)}</div>
+                  <span style="width: 1.5cm; text-align: center; flex-shrink: 0;">จำนวน</span>
+                  <div style="width: 3cm; border-bottom: 1px dotted black; text-align: center; margin: 0 5px; height: 1.1em;">${sources.other.amount > 0 ? toThaiDigits(sources.other.amount.toLocaleString()) : ""}</div>
+                  <span style="width: 1cm; text-align: right;">บาท</span>
+                </div>
+                <!-- Row 6: Education Support -->
+                <div style="display: flex; align-items: baseline; margin-top: 2px;">
+                  <span style="width: 3.5cm; flex-shrink: 0;">บำรุงการศึกษา (บกศ.)</span>
+                  <div style="flex: 1; border-bottom: 1px dotted black; text-align: center; margin: 0 5px; height: 1.1em;"></div>
+                  <span style="width: 1.5cm; text-align: center; flex-shrink: 0;">จำนวน</span>
+                  <div style="width: 3cm; border-bottom: 1px dotted black; text-align: center; margin: 0 5px; height: 1.1em;">${sources.educationSupport > 0 ? toThaiDigits(sources.educationSupport.toLocaleString()) : ""}</div>
+                  <span style="width: 1cm; text-align: right;">บาท</span>
+                </div>
+              </div>
+            </div>
 
               <!-- Budget Item Table -->
               <table style="margin-top: 15px; width: 100%; border-collapse: collapse; font-size: 13pt;">
@@ -647,10 +673,11 @@ const ProjectDetailForm = ({ projectId, initialData = {} }) => {
             <div class="section" style="margin-top: 10px;"><span class="label">๑๐. การติดตาม และการประเมินผลโครงการ:</span><br>${renderNumberedList(formData.evaluationMethods, 10)}</div>
 
             <!-- Ultra-Compact Signature Blocks -->
+            <div style="height: 1.25em;"></div>
             <div style="margin-top: 20px; margin-left: 3cm; font-size: 16pt; line-height: 1.25; width: 16cm;">
               
               <!-- Proposer -->
-              <div style="margin-bottom: 15px;">
+              <div style="margin-bottom: 45px;">
                 <div style="display: flex; align-items: baseline; justify-content: center;">
                   <span style="white-space: nowrap;">ลงชื่อ</span>
                   <div style="width: 6.5cm; display: flex; flex-direction: column; align-items: center; margin: 0;">
@@ -665,7 +692,7 @@ const ProjectDetailForm = ({ projectId, initialData = {} }) => {
               </div>
 
               <!-- Endorser -->
-              <div style="margin-bottom: 15px;">
+              <div style="margin-bottom: 45px;">
                 <div style="display: flex; align-items: baseline; justify-content: center;">
                   <span style="white-space: nowrap;">ลงชื่อ</span>
                   <div style="width: 6.5cm; display: flex; flex-direction: column; align-items: center; margin: 0;">
