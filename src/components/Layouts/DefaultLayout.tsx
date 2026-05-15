@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, } from "react";
+import React, { useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 
@@ -27,7 +27,7 @@ export default function DefaultLayout({
           <main>
             <div className="mx-auto max-w-screen-2xl p-2">{children}</div>
           </main>
-          <div className="mt-12 flex flex-col items-center justify-center gap-4 border-t border-stroke pt-10 opacity-60 dark:border-strokedark">
+          <div className="flex flex-col items-center justify-center gap-4 border-t border-stroke py-12 pt-10 opacity-60 dark:border-strokedark">
             <div className="flex items-center gap-3">
               <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary"></div>
               <p className="text-xs font-black uppercase tracking-[0.2em] text-gray-400">

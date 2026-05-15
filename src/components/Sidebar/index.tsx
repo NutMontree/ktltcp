@@ -58,11 +58,80 @@ const menuGroups = [
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-             <path d="M9 1v16M1 9h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path
+              d="M9 1v16M1 9h16"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         ),
         label: "เพิ่มโครงการใหม่",
         route: "/PdcaPage/new",
+      },
+      {
+        icon: (
+          <svg
+            className="fill-current"
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9 1v16M1 9h16"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        ),
+        label: "เพิ่มเอกสารภายใน",
+        route: "/InternalPdcaPage/new",
+      },
+      {
+        icon: (
+          <svg
+            className="fill-current"
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+              stroke="currentColor"
+              strokeWidth="2"
+            />
+            <polyline
+              points="14 2 14 8 20 8"
+              stroke="currentColor"
+              strokeWidth="2"
+            />
+            <line
+              x1="16"
+              y1="13"
+              x2="8"
+              y2="13"
+              stroke="currentColor"
+              strokeWidth="2"
+            />
+            <line
+              x1="16"
+              y1="17"
+              x2="8"
+              y2="17"
+              stroke="currentColor"
+              strokeWidth="2"
+            />
+          </svg>
+        ),
+        label: "จัดการเอกสารภายใน",
+        route: "/InternalPdcaPage",
       },
 
       // {
@@ -263,14 +332,54 @@ const menuGroups = [
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path d="M11 2H3a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5l-3-3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M10 2v3h3M8 8h3M8 11h3" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            <path
+              d="M11 2H3a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5l-3-3Z"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M10 2v3h3M8 8h3M8 11h3"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
           </svg>
         ),
         label: "แก้ไขหัวข้อฟอร์ม",
         route: "/form-editor",
       },
-
+      {
+        icon: (
+          <svg
+            className="fill-current"
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"
+              stroke="currentColor"
+              strokeWidth="2"
+            />
+            <path
+              d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"
+              stroke="currentColor"
+              strokeWidth="2"
+            />
+            <path
+              d="M12 4V2M12 22v-2M4 12H2m20 0h-2m-2.4-5.6l1.4-1.4M5 19l1.4-1.4m0-11.2l-1.4-1.4M19 19l-1.4-1.4"
+              stroke="currentColor"
+              strokeWidth="2"
+            />
+          </svg>
+        ),
+        label: "ตั้งค่าระบบภายใน",
+        route: "/internal-form-editor",
+      },
 
       // {
       //   icon: (
