@@ -88,34 +88,36 @@ const EditPdcaForm = ({ pdca }) => {
     fetchConfig();
   }, [EDITMODE]);
 
-  if (EDITMODE && formData.nameproject === "") {
-    // Dynamically load all checklist states from the database
-    const checklistData = {};
-    Object.keys(pdca).forEach((key) => {
-      if (key.startsWith("id") && typeof pdca[key] === "string") {
-        checklistData[key] = pdca[key];
+  useEffect(() => {
+    if (EDITMODE && pdca) {
+      // Dynamically load all checklist states from the database
+      const checklistData = {};
+      Object.keys(pdca).forEach((key) => {
+        if (key.startsWith("id") && typeof pdca[key] === "string") {
+          checklistData[key] = pdca[key];
+        }
+      });
+
+      setFormData((prev) => ({
+        ...prev,
+        year: pdca.year || "2567",
+        department: pdca.department || departments[0],
+        namework: pdca.namework || "",
+        nameproject: pdca.nameproject || "",
+        pdcaLink: pdca.pdcaLink || "",
+        ...checklistData,
+      }));
+
+      // Load existing attachments correctly
+      if (pdca.attachments && pdca.attachments.length > 0) {
+        setExistingAttachments(pdca.attachments);
+      } else if (pdca.fileUrl) {
+        setExistingAttachments([
+          { fileUrl: pdca.fileUrl, originalFileName: pdca.originalFileName },
+        ]);
       }
-    });
-
-    setFormData((prev) => ({
-      ...prev,
-      year: pdca.year || "2567",
-      department: pdca.department || departments[0],
-      namework: pdca.namework || "",
-      nameproject: pdca.nameproject || "",
-      pdcaLink: pdca.pdcaLink || "",
-      ...checklistData,
-    }));
-
-    // Load existing attachments correctly
-    if (pdca.attachments && pdca.attachments.length > 0) {
-      setExistingAttachments(pdca.attachments);
-    } else if (pdca.fileUrl) {
-      setExistingAttachments([
-        { fileUrl: pdca.fileUrl, originalFileName: pdca.originalFileName },
-      ]);
     }
-  }
+  }, [EDITMODE, pdca]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
