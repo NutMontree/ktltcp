@@ -1,14 +1,32 @@
-import PermissionForm from "@/app/(components)/PermissionForm";
+export const dynamic = "force-dynamic";
+import ProjectDetailForm from "@/app/(components)/ProjectDetailForm";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import ProjectApproval from "@/app/models/ProjectApproval";
-import { connectDB } from "@/app/models/InternalPdca";
+import ProjectDetail from "@/app/models/ProjectDetail";
+import InternalPdca, { connectDB } from "@/app/models/InternalPdca";
 
 async function getStep3Data(projectId) {
-  await connectDB();
-  // ใช้ Model เดิมเพื่อให้ข้อมูลยังเชื่อมโยงกับโครงการนั้นๆ ได้
-  const data = await ProjectApproval.findOne({ projectId });
-  return data ? JSON.parse(JSON.stringify(data)) : {};
+  try {
+    await connectDB();
+    const [detailData, parentData] = await Promise.all([
+      ProjectDetail.findOne({ projectId }),
+      InternalPdca.findById(projectId)
+    ]);
+
+    const result = detailData ? JSON.parse(JSON.stringify(detailData)) : {};
+    
+    // If we have parent data, ensure the projectName matches the parent's nameproject
+    if (parentData) {
+      result.projectName = parentData.nameproject;
+      result.departmentName = parentData.namework;
+      result.divisionName = parentData.department;
+    }
+    
+    return result;
+  } catch (error) {
+    console.error("Error fetching step 3 data:", error);
+    return {};
+  }
 }
 
 const Step3Page = async ({ params }) => {
@@ -17,9 +35,9 @@ const Step3Page = async ({ params }) => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="แบบฟอร์มขออนุญาตดำเนินโครงการ" />
+      <Breadcrumb pageName="แบบฟอร์มโครงการ (Step 3)" />
       <div className="mx-auto max-w-5xl">
-        <PermissionForm projectId={id} initialData={initialData} />
+        <ProjectDetailForm projectId={id} initialData={initialData} />
       </div>
     </DefaultLayout>
   );

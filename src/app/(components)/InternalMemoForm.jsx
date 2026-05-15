@@ -493,13 +493,17 @@ const InternalMemoForm = ({ projectId, initialData = {} }) => {
                   {(formData.departmentName || "ระบุชื่อแผนก")
                     .trim()
                     .replace(/^[ \u0e48-\u0e4b|'‘’"“”]+/g, "")}{" "}
-                  <span className="font-bold italic text-primary underline">
+                  <span className="italic">
                     {formData.additionalIntroText || ""}
                   </span>{" "}
-                  จึงขออนุมัติโครงการ{" "}
-                  {(formData.projectName || "ระบุชื่อโครงการ")
-                    .trim()
-                    .replace(/^[ \u0e48-\u0e4b|'‘’"“”]+/g, "")}{" "}
+                  <span className="font-bold text-primary underline">
+                    จึงขออนุมัติโครงการ
+                  </span>{" "}
+                  <span className="font-bold">
+                    {(formData.projectName || "ระบุชื่อโครงการ")
+                      .trim()
+                      .replace(/^[ \u0e48-\u0e4b|'‘’"“”]+/g, "")}
+                  </span>{" "}
                   ดังเอกสารที่แนบมาพร้อมนี้
                 </div>
               </div>
@@ -568,7 +572,6 @@ const InternalMemoForm = ({ projectId, initialData = {} }) => {
           </div>
         </section>
 
-        {/* 5. ข้อความท้ายกระดาษ */}
         <section className="space-y-4">
           <h3 className="rounded-xl border-l-8 border-primary bg-gray-100 p-3 text-lg font-black">
             5. ข้อความท้ายกระดาษ (Footer)
@@ -581,6 +584,17 @@ const InternalMemoForm = ({ projectId, initialData = {} }) => {
             placeholder="พิมพ์ข้อความท้ายกระดาษ..."
           />
         </section>
+
+        {/* Bottom Save Button */}
+        <div className="mt-10 border-t pt-10 text-center">
+          <button
+            onClick={handleSave}
+            disabled={loading}
+            className="w-full max-w-md rounded-2xl bg-primary py-4 text-xl font-bold text-white shadow-xl transition-all hover:bg-opacity-90 disabled:bg-gray-400"
+          >
+            {loading ? "กำลังบันทึก..." : "บันทึกข้อมูล (Step 1)"}
+          </button>
+        </div>
       </div>
 
       {message && (

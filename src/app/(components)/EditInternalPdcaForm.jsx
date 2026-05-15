@@ -11,12 +11,17 @@ const internalPdcaItems = [
   {
     id: 1,
     label: "1. แบบฟอร์มขออนุมัติโครงการ",
-    file: "3.แบบฟอร์มขออนุมัติโครงการ",
+    file: "3.แบบฟอร์มขออนุมัติโครงการ.docx",
   },
   {
     id: 3,
     label: "2. แบบฟอร์มขออนุญาตดำเนินโครงการ",
-    file: "4.แบบฟอร์มขออนุญาตดำเนินโครงการ",
+    file: "4.แบบฟอร์มขออนุญาตดำเนินโครงการ.docx",
+  },
+  {
+    id: 7,
+    label: "3. แบบฟอร์มโครงการ",
+    file: "7.แบบฟอร์มโครงการ.doc",
   },
 ];
 
@@ -330,6 +335,14 @@ const EditInternalPdcaForm = ({
                             className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700"
                           >
                             ✍️ กรอกข้อมูล (แบบฟอร์ม 2)
+                          </Link>
+                        )}
+                        {item.id === 7 && (
+                          <Link
+                            href={`/InternalPdcaPage/${pdcaId}/step3`}
+                            className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700"
+                          >
+                            ✍️ กรอกข้อมูล (แบบฟอร์ม 3)
                           </Link>
                         )}
                       </div>

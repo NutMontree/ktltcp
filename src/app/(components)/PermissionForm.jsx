@@ -412,13 +412,37 @@ const PermissionForm = ({ projectId, initialData = {} }) => {
               <h4 className="mb-3 flex items-center gap-2 text-sm font-black text-primary">
                 Preview: ย่อหน้าสรุป
               </h4>
-              <div className="text-lg leading-relaxed text-gray-700">
-                {formData.introPrefix} {formData.departmentName}{" "}
-                <span className="font-bold italic text-primary">
-                  {formData.additionalIntroText}
-                </span>{" "}
-                จึงขออนุญาตดำเนินโครงการ {formData.projectName}{" "}
-                ดังเอกสารที่แนบมาพร้อมนี้
+              <div className="space-y-4 text-lg leading-relaxed text-gray-700">
+                {/* ย่อหน้าที่ 1 Preview */}
+                {formData.paragraphs[0] &&
+                  formData.paragraphs[0].trim() !== "" && (
+                    <div>
+                      <span className="text-gray-400">ย่อหน้าที่ 1: </span>
+                      {formData.paragraphs[0].trim()}
+                      {!formData.paragraphs[0].trim().endsWith("นั้น") && (
+                        <span className="font-bold text-success"> นั้น</span>
+                      )}
+                    </div>
+                  )}
+
+                {/* ย่อหน้าสรุป Preview */}
+                <div>
+                  <span className="text-gray-400">ย่อหน้าสรุป: </span>
+                  {formData.introPrefix || "ในการนี้"}{" "}
+                  {(formData.departmentName || "ระบุชื่อแผนก")
+                    .trim()
+                    .replace(/^[ \u0e48-\u0e4b|'‘’"“”]+/g, "")}{" "}
+                  <span className="italic">
+                    {formData.additionalIntroText || ""}
+                  </span>{" "}
+                  <span className="font-bold text-primary underline">
+                    จึงขออนุญาตดำเนินโครงการ
+                  </span>{" "}
+                  <span className="font-bold">
+                    {formData.projectName || "ระบุชื่อโครงการ"}
+                  </span>{" "}
+                  ดังเอกสารที่แนบมาพร้อมนี้
+                </div>
               </div>
             </div>
           </div>
@@ -495,6 +519,17 @@ const PermissionForm = ({ projectId, initialData = {} }) => {
             placeholder="“เรียนดี มีคุณธรรม”"
           />
         </section>
+
+        {/* Bottom Save Button */}
+        <div className="mt-10 border-t pt-10 text-center">
+          <button
+            onClick={handleSave}
+            disabled={loading}
+            className="w-full max-w-md rounded-2xl bg-primary py-4 text-xl font-bold text-white shadow-xl transition-all hover:bg-opacity-90 disabled:bg-gray-400"
+          >
+            {loading ? "กำลังบันทึก..." : "บันทึกข้อมูล (Step 2)"}
+          </button>
+        </div>
       </div>
 
       {message && (
