@@ -603,7 +603,7 @@ const ProjectDetailForm = ({ projectId, initialData = {} }) => {
           </div>
           <div class="page-container" style="page-break-after: auto;">
             <div class="page-number" style="margin-bottom: 10px;">- ${toThaiDigits(4)} -</div>
-            <div class="section"
+            <div class="section">
               <span class="label" style="font-weight: bold;">๘.&nbsp; งบประมาณ/ทรัพยากร และแหล่งที่มา การดำเนินโครงการ</span>
               <div style="margin-top: 5px; margin-left: 1cm;">
                 <!-- Row 1-3: Operating -->

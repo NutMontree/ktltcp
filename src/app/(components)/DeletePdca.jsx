@@ -15,7 +15,7 @@ const DeletePdca = ({ id }) => {
   };
 
   const handleDelete = async () => {
-    if (pinInput !== "29122539") {
+    if (pinInput !== "admin1234") {
       setPinError("รหัส PIN ไม่ถูกต้อง");
       return;
     }

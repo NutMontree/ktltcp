@@ -112,7 +112,7 @@ const InternalFormEditorPage = () => {
 
   const handlePinSubmit = (e) => {
     e.preventDefault();
-    if (pinInput === "29122539") {
+    if (pinInput === "admin1234") {
       setIsAuthenticated(true);
       setPinError("");
     } else {

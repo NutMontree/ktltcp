@@ -20,7 +20,7 @@ const PdcaCard = ({ pdca, totalItems = 20 }) => {
 
   const handlePinSubmit = (e) => {
     e.preventDefault();
-    if (pinInput === "29122539") {
+    if (pinInput === "admin1234") {
       setShowPinModal(false);
       router.push(`/PdcaPage/${pdca._id}`);
     } else {
