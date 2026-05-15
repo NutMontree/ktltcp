@@ -1,23 +1,21 @@
 import EditPdcaForm from "@/app/(components)/EditPdcaForm";
+import Pdca from "@/app/models/Pdca";
+
 const getPdcaById = async (id) => {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL 
-      ? process.env.NEXT_PUBLIC_BASE_URL 
-      : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
-    const res = await fetch(`${baseUrl}/api/Pdcas/${id}`, {
-      cache: "no-store",
-    });
+    // 1. Fetch data directly from MongoDB
+    const pdca = await Pdca.findById(id).lean();
+    if (!pdca) return null;
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch PDCA");
-    }
-
-    return res.json();
+    // 2. Convert all MongoDB specific objects (including nested ObjectIds in attachments) to plain strings
+    // JSON.stringify will automatically call .toString() on ObjectIds and .toISOString() on Dates
+    return JSON.parse(JSON.stringify(pdca));
   } catch (error) {
-    console.error("Fetch PDCA error:", error);
+    console.error("Fetch PDCA error directly from DB:", error);
     return null;
   }
 };
+
 const PdcaPage = async ({ params }) => {
   let updatePdcaData = { _id: "new" };
   const { id } = await params;
@@ -26,7 +24,8 @@ const PdcaPage = async ({ params }) => {
   if (EDITMODE) {
     const data = await getPdcaById(id);
     if (data) {
-      updatePdcaData = data.foundPdca;
+      // Direct data instead of data.foundPdca
+      updatePdcaData = data;
     }
   }
 
