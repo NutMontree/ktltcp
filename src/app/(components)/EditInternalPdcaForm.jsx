@@ -23,6 +23,14 @@ const internalPdcaItems = [
     label: "3. แบบฟอร์มโครงการ",
     file: "7.แบบฟอร์มโครงการ.doc",
   },
+  {
+    id: 4,
+    label: "4. บันทึกขออนุมัติคำสั่งแต่งตั้งคณะกรรมการดำเนินงาน",
+  },
+  {
+    id: 5,
+    label: "5. คำสั่งแต่งตั้งคณะกรรมการดำเนินงาน",
+  },
 ];
 
 const EditInternalPdcaForm = ({
@@ -343,6 +351,22 @@ const EditInternalPdcaForm = ({
                             className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700"
                           >
                             ✍️ กรอกข้อมูล (แบบฟอร์ม 3)
+                          </Link>
+                        )}
+                        {item.id === 4 && (
+                          <Link
+                            href={`/InternalPdcaPage/${pdcaId}/step4`}
+                            className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700"
+                          >
+                            ✍️ กรอกข้อมูล (แบบฟอร์ม 4)
+                          </Link>
+                        )}
+                        {item.id === 5 && (
+                          <Link
+                            href={`/InternalPdcaPage/${pdcaId}/step5`}
+                            className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700"
+                          >
+                            ✍️ กรอกข้อมูล (แบบฟอร์ม 5)
                           </Link>
                         )}
                       </div>
