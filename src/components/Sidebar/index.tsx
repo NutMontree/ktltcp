@@ -48,50 +48,50 @@ const menuGroups = [
         label: "ระบบติดตาม PDCA",
         route: "/pdca",
       },
-      {
-        icon: (
-          <svg
-            className="fill-current"
-            width="18"
-            height="18"
-            viewBox="0 0 18 18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M9 1v16M1 9h16"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        ),
-        label: "เพิ่มโครงการใหม่",
-        route: "/PdcaPage/new",
-      },
-      {
-        icon: (
-          <svg
-            className="fill-current"
-            width="18"
-            height="18"
-            viewBox="0 0 18 18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M9 1v16M1 9h16"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        ),
-        label: "เพิ่มเอกสารภายใน",
-        route: "/InternalPdcaPage/new",
-      },
+      // {
+      //   icon: (
+      //     <svg
+      //       className="fill-current"
+      //       width="18"
+      //       height="18"
+      //       viewBox="0 0 18 18"
+      //       fill="none"
+      //       xmlns="http://www.w3.org/2000/svg"
+      //     >
+      //       <path
+      //         d="M9 1v16M1 9h16"
+      //         stroke="currentColor"
+      //         strokeWidth="2"
+      //         strokeLinecap="round"
+      //         strokeLinejoin="round"
+      //       />
+      //     </svg>
+      //   ),
+      //   label: "เพิ่มโครงการใหม่",
+      //   route: "/PdcaPage/new",
+      // },
+      // {
+      //   icon: (
+      //     <svg
+      //       className="fill-current"
+      //       width="18"
+      //       height="18"
+      //       viewBox="0 0 18 18"
+      //       fill="none"
+      //       xmlns="http://www.w3.org/2000/svg"
+      //     >
+      //       <path
+      //         d="M9 1v16M1 9h16"
+      //         stroke="currentColor"
+      //         strokeWidth="2"
+      //         strokeLinecap="round"
+      //         strokeLinejoin="round"
+      //       />
+      //     </svg>
+      //   ),
+      //   label: "เพิ่มเอกสารภายใน",
+      //   route: "/InternalPdcaPage/new",
+      // },
       {
         icon: (
           <svg
@@ -474,15 +474,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <ClickOutside onClick={() => setSidebarOpen(false)}>
       <aside
-        className={`fixed left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+        className={`fixed left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:translate-x-0 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
         {/* <!-- SIDEBAR HEADER --> */}
         <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
           <Link href="/" className="flex items-center justify-start gap-2">
             <Image
-              width='50'
-              height='32'
+              width="50"
+              height="32"
               src={"/images/logo/logo.svg"}
               alt="Logo"
               className="scale-90 rounded-lg transition duration-500 hover:scale-100"
