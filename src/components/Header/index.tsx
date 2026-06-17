@@ -63,6 +63,7 @@ const Header = (props: {
               src={"/images/logo/logo.svg"}
               alt="Logo"
               className="rounded-lg"
+              style={{ height: "auto" }}
             />
           </Link>
         </div>

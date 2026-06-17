@@ -216,6 +216,7 @@ const EditInternalPdcaForm = ({
                 name="year"
                 value={formData.year}
                 onChange={handleChange}
+                required
                 className="w-full rounded-xl border bg-gray-50 p-3 dark:bg-meta-4"
               >
                 {fiscalYears.map((y) => (
@@ -231,6 +232,7 @@ const EditInternalPdcaForm = ({
                 name="department"
                 value={formData.department}
                 onChange={handleChange}
+                required
                 className="w-full rounded-xl border bg-gray-50 p-3 dark:bg-meta-4"
               >
                 {departments.map((d) => (

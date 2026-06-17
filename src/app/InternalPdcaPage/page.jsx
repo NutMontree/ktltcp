@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import InternalPdca, { connectDB } from "@/app/models/InternalPdca";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";

@@ -26,6 +26,7 @@ const SignIn: React.FC = () => {
                   alt="Logo"
                   width='176'
                   height='32'
+                  style={{ height: "auto" }}
                 />
                 <Image
                   className="dark:hidden"
@@ -33,6 +34,7 @@ const SignIn: React.FC = () => {
                   alt="Logo"
                   width='176'
                   height='32'
+                  style={{ height: "auto" }}
                 />
               </Link>
 

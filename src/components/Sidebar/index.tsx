@@ -487,6 +487,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               src={"/images/logo/logo.svg"}
               alt="Logo"
               className="scale-90 rounded-lg transition duration-500 hover:scale-100"
+              style={{ height: "auto" }}
               priority
             />
             <div className="text-white">
