@@ -211,7 +211,7 @@ const ProjectDetailForm = ({ projectId, initialData = {} }) => {
       proposer: {
         name: data.proposer?.name || "นายสิริปัญญ์ เสริมสิริพิพัฒน์",
         position:
-          data.proposer?.position || "หัวหน้างานศูนย์ข้อมูลและสารสนเทศ",
+          data.proposer?.position || "หัวหน้างานศูนย์ดิจิทัลและสื่อสารองค์กร",
       },
       endorser: {
         name: data.endorser?.name || "นายสมศักดิ์ จันทนิตย์",
@@ -433,7 +433,8 @@ const ProjectDetailForm = ({ projectId, initialData = {} }) => {
 
     const renderBudgetTable = (budget) => {
       const total = budget.reduce((sum, b) => sum + Number(b.amount || 0), 0);
-      const cellStyle = "border: 1px solid black; padding: 2px 6px; font-size: 13pt;";
+      const cellStyle =
+        "border: 1px solid black; padding: 2px 6px; font-size: 13pt;";
       let rows = budget
         .map(
           (b) => `

@@ -22,7 +22,7 @@ const PdcaCard = ({ pdca, totalItems = 20 }) => {
     e.preventDefault();
     if (pinInput === "admin1234") {
       setShowPinModal(false);
-      router.push(`/PdcaPage/${pdca._id}`);
+      router.push(pdca.type === "internal" ? `/InternalPdcaPage/${pdca._id}` : `/PdcaPage/${pdca._id}`);
     } else {
       setPinError("รหัส PIN ไม่ถูกต้อง");
     }
@@ -56,6 +56,11 @@ const PdcaCard = ({ pdca, totalItems = 20 }) => {
             <span className="mb-2 inline-block rounded-md bg-primary/10 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-primary">
               {pdca.year} Budget Year
             </span>
+            {pdca.type === "internal" && (
+              <span className="mb-2 ml-2 inline-block rounded-md bg-purple-500/10 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-purple-600">
+                เอกสารภายใน
+              </span>
+            )}
             <h3 className="line-clamp-2 text-lg font-bold text-black transition-colors duration-300 group-hover:text-primary dark:text-white">
               {pdca.nameproject}
             </h3>
@@ -70,7 +75,7 @@ const PdcaCard = ({ pdca, totalItems = 20 }) => {
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
             </button>
-            <DeletePdca id={pdca._id} />
+            <DeletePdca id={pdca._id} type={pdca.type} />
           </div>
         </div>
 

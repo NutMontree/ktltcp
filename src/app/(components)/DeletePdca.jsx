@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-const DeletePdca = ({ id }) => {
+const DeletePdca = ({ id, type = "external" }) => {
   const [loading, setLoading] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [toast, setToast] = useState(null); // ✅ เก็บข้อความ toast
@@ -23,7 +23,8 @@ const DeletePdca = ({ id }) => {
     setLoading(true);
     setPinError("");
     try {
-      const res = await fetch(`/api/Pdcas/${id}`, { method: "DELETE" });
+      const endpoint = type === "internal" ? `/api/InternalPdcas/${id}` : `/api/Pdcas/${id}`;
+      const res = await fetch(endpoint, { method: "DELETE" });
 
       if (!res.ok) throw new Error("ลบไม่สำเร็จ");
 

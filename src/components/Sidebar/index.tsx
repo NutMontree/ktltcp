@@ -130,7 +130,7 @@ const menuGroups = [
             />
           </svg>
         ),
-        label: "จัดการเอกสารภายใน",
+        label: "ระบบสร้างเอกสาร",
         route: "/InternalPdcaPage",
       },
 

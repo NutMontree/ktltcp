@@ -5,6 +5,7 @@ import PdcaCard from "@/app/(components)/PdcaCard";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Link from "next/link";
+import { internalPdcaItems } from "@/app/(components)/EditInternalPdcaForm";
 
 const PdcaDashboard = () => {
   const [pdcas, setPdcas] = useState([]);
@@ -19,14 +20,30 @@ const PdcaDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [resPdcas, resConfig] = await Promise.all([
+        const [resPdcas, resInternalPdcas, resConfig] = await Promise.all([
           fetch("/api/Pdcas", { cache: "no-store" }),
+          fetch("/api/InternalPdcas", { cache: "no-store" }),
           fetch("/api/FormConfig", { cache: "no-store" })
         ]);
         const dataPdcas = await resPdcas.json();
+        const dataInternalPdcas = await resInternalPdcas.json();
         const dataConfig = await resConfig.json();
         
-        setPdcas(dataPdcas.pdcas || []);
+        const externalPdcas = (dataPdcas.pdcas || []).map(p => ({ ...p, type: 'external' }));
+        const internalPdcas = (dataInternalPdcas.pdcas || []).map(p => {
+          const attachments = [];
+          if (p.fileUrl && Array.isArray(p.fileUrl)) {
+            p.fileUrl.forEach((url, i) => {
+              if (url) {
+                attachments.push({ fileUrl: url, originalFileName: p.originalFileName?.[i] || "เอกสารแนบ" });
+              }
+            });
+          }
+          return { ...p, type: 'internal', attachments, fileUrl: null };
+        });
+        const combinedPdcas = [...externalPdcas, ...internalPdcas].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        
+        setPdcas(combinedPdcas);
         setPdcaItems(dataConfig.pdcaItems || []);
       } catch (error) {
         console.error("Failed to fetch data:", error);
@@ -49,16 +66,21 @@ const PdcaDashboard = () => {
   );
 
   const stats = useMemo(() => {
-    const totalItems = pdcaItems.length || 20;
     return {
       total: pdcas.length,
       completed: pdcas.filter(p => {
-         const done = Array.from({ length: totalItems }, (_, i) => p[`id${i + 1}`]).filter(Boolean).length;
-         return done === totalItems;
+         const items = p.type === 'internal' ? internalPdcaItems : pdcaItems;
+         const total = items.length;
+         if (total === 0) return false;
+         const done = items.filter(item => p[`id${item.id || item.value}`]).length;
+         return done === total;
       }).length,
       pending: pdcas.filter(p => {
-        const done = Array.from({ length: totalItems }, (_, i) => p[`id${i + 1}`]).filter(Boolean).length;
-        return done > 0 && done < totalItems;
+         const items = p.type === 'internal' ? internalPdcaItems : pdcaItems;
+         const total = items.length;
+         if (total === 0) return false;
+         const done = items.filter(item => p[`id${item.id || item.value}`]).length;
+         return done > 0 && done < total;
       }).length,
       departments: new Set(pdcas.map(p => p.department)).size
     };
@@ -82,14 +104,24 @@ const PdcaDashboard = () => {
               ติดตามและจัดการโครงการพัฒนาคุณภาพการศึกษาแบบครบวงจร
             </p>
           </div>
-          <Link
-            href="/PdcaPage/new"
-            className="group relative inline-flex items-center justify-center overflow-hidden rounded-xl bg-primary px-8 py-4 font-bold text-white shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
-          >
-            <span className="absolute inset-0 bg-white/10 opacity-0 transition-opacity group-hover:opacity-100"></span>
-            <span className="mr-2 text-xl">+</span>
-            เพิ่มโครงการใหม่
-          </Link>
+          <div className="flex gap-4">
+            <Link
+              href="/InternalPdcaPage/new"
+              className="group relative inline-flex items-center justify-center overflow-hidden rounded-xl bg-purple-600 px-6 py-4 font-bold text-white shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
+            >
+              <span className="absolute inset-0 bg-white/10 opacity-0 transition-opacity group-hover:opacity-100"></span>
+              <span className="mr-2 text-xl">+</span>
+              เพิ่มเอกสารภายใน
+            </Link>
+            <Link
+              href="/PdcaPage/new"
+              className="group relative inline-flex items-center justify-center overflow-hidden rounded-xl bg-primary px-6 py-4 font-bold text-white shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
+            >
+              <span className="absolute inset-0 bg-white/10 opacity-0 transition-opacity group-hover:opacity-100"></span>
+              <span className="mr-2 text-xl">+</span>
+              เพิ่มเอกสารภายนอก
+            </Link>
+          </div>
         </div>
 
         {/* Stats Section */}
@@ -218,11 +250,11 @@ const PdcaDashboard = () => {
                 key={pdca._id}
                 onClick={() => {
                   setSelectedPdca(pdca);
-                  setSelectedFileUrl(pdca.attachments?.length > 0 ? pdca.attachments[0].fileUrl : pdca.fileUrl);
+                  setSelectedFileUrl(pdca.attachments?.length > 0 ? pdca.attachments[0].fileUrl : (Array.isArray(pdca.fileUrl) ? null : pdca.fileUrl));
                 }}
                 className="cursor-pointer"
               >
-                <PdcaCard pdca={pdca} totalItems={pdcaItems.length || 20} />
+                <PdcaCard pdca={pdca} totalItems={pdca.type === 'internal' ? internalPdcaItems.length : (pdcaItems.length || 20)} />
               </div>
             ))}
           </div>
@@ -281,20 +313,28 @@ const PdcaDashboard = () => {
 
                   {/* Checklist Card */}
                   <div className="rounded-2xl bg-success/5 p-6 border border-success/10 shadow-sm">
-                    <h4 className="mb-4 text-sm font-black text-success uppercase tracking-widest border-b border-success/10 pb-2">รายการตรวจสอบ ({pdcaItems.filter(i => selectedPdca[`id${i.id}`]).length}/{pdcaItems.length})</h4>
-                    <ul className="space-y-3 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
-                      {pdcaItems.map((item) => {
-                        const isChecked = !!selectedPdca[`id${item.id}`];
-                        return (
-                          <li key={item.id} className="flex items-start gap-3">
-                            <div className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border ${isChecked ? 'bg-success border-success text-white' : 'border-stroke bg-white dark:border-strokedark dark:bg-boxdark'}`}>
-                              {isChecked && <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>}
-                            </div>
-                            <span className={`text-xs font-bold leading-tight ${isChecked ? 'text-success dark:text-success' : 'text-gray-500 dark:text-gray-400'}`}>{item.label}</span>
-                          </li>
-                        );
-                      })}
-                    </ul>
+                    {(() => {
+                      const activeItems = selectedPdca.type === 'internal' ? internalPdcaItems : pdcaItems;
+                      return (
+                        <>
+                          <h4 className="mb-4 text-sm font-black text-success uppercase tracking-widest border-b border-success/10 pb-2">รายการตรวจสอบ ({activeItems.filter((i, idx) => selectedPdca[`id${i.id || (idx + 1)}`]).length}/{activeItems.length})</h4>
+                          <ul className="space-y-3 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+                            {activeItems.map((item, idx) => {
+                              const itemId = item.id || (idx + 1);
+                              const isChecked = !!selectedPdca[`id${itemId}`];
+                              return (
+                                <li key={itemId} className="flex items-start gap-3">
+                                  <div className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border ${isChecked ? 'bg-success border-success text-white' : 'border-stroke bg-white dark:border-strokedark dark:bg-boxdark'}`}>
+                                    {isChecked && <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>}
+                                  </div>
+                                  <span className={`text-xs font-bold leading-tight ${isChecked ? 'text-success dark:text-success' : 'text-gray-500 dark:text-gray-400'}`}>{item.label}</span>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </>
+                      );
+                    })()}
                   </div>
 
                   {/* Attachments Card */}

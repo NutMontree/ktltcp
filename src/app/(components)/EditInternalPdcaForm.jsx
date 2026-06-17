@@ -7,7 +7,7 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Link from "next/link";
 
 // Define only the 2 required items
-const internalPdcaItems = [
+export const internalPdcaItems = [
   {
     id: 1,
     label: "1. แบบฟอร์มขออนุมัติโครงการ",
@@ -31,6 +31,27 @@ const internalPdcaItems = [
     id: 5,
     label: "5. คำสั่งแต่งตั้งคณะกรรมการดำเนินงาน",
   },
+  {
+    id: 6,
+    label: "6. บันทึกข้อความขออนุญาตประชุม",
+  },
+  {
+    id: 8,
+    label: "7. บันทึกข้อความขอเชิญประชุม",
+  },
+  { id: 9, label: "8. บันทึกข้อความขอรายงานการประชุม" },
+  { id: 10, label: "9. บันทึกข้อความขอความอนุเคราะห์ประชาสัมพันธ์โครงการ" },
+  { id: 11, label: "10. บันทึกข้อความรายงานการประชาสัมพันธ์โครงการ" },
+  { id: 12, label: "11. กำหนดการจัดกิจกรรม" },
+  { id: 13, label: "12. หนังสือเชิญเป็นวิทยากร/หนังสือตอบรับเป็นวิทยากร/หนังสือขอบคุณวิทยากร" },
+  { id: 14, label: "13. ลายมือชื่อผู้เข้าร่วมโครงการ" },
+  { id: 15, label: "14. รูปภาพการดำเนินงานโครงการ" },
+  { id: 16, label: "15. บันทึกข้อความรายงานสรุปการใช้งบประมาณ" },
+  { id: 17, label: "16. เอกสารชุดเบิกโครงการ" },
+  { id: 18, label: "17. แบบสอบถามประเมินความพึงพอใจผู้เข้าร่วมโครงการ Google form / QR Code" },
+  { id: 19, label: "18. บันทึกข้อความรายงานสรุปผลการวิเคราะห์ข้อมูลการดำเนินโครงการ" },
+  { id: 20, label: "19. ผลการวิเคราะห์ข้อมูล" },
+  { id: 21, label: "20. บันทึกข้อความรายงานสรุปผลการดำเนินโครงการ" },
 ];
 
 const EditInternalPdcaForm = ({
@@ -336,7 +357,7 @@ const EditInternalPdcaForm = ({
                             href={`/InternalPdcaPage/${pdcaId}/step1`}
                             className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700"
                           >
-                            ✍️ กรอกข้อมูล (แบบฟอร์ม 1)
+                            ✍️ กรอกข้อมูล
                           </Link>
                         )}
                         {item.id === 3 && (
@@ -344,7 +365,7 @@ const EditInternalPdcaForm = ({
                             href={`/InternalPdcaPage/${pdcaId}/step2`}
                             className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700"
                           >
-                            ✍️ กรอกข้อมูล (แบบฟอร์ม 2)
+                            ✍️ กรอกข้อมูล
                           </Link>
                         )}
                         {item.id === 7 && (
@@ -352,7 +373,7 @@ const EditInternalPdcaForm = ({
                             href={`/InternalPdcaPage/${pdcaId}/step3`}
                             className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700"
                           >
-                            ✍️ กรอกข้อมูล (แบบฟอร์ม 3)
+                            ✍️ กรอกข้อมูล
                           </Link>
                         )}
                         {item.id === 4 && (
@@ -360,7 +381,7 @@ const EditInternalPdcaForm = ({
                             href={`/InternalPdcaPage/${pdcaId}/step4`}
                             className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700"
                           >
-                            ✍️ กรอกข้อมูล (แบบฟอร์ม 4)
+                            ✍️ กรอกข้อมูล
                           </Link>
                         )}
                         {item.id === 5 && (
@@ -368,7 +389,85 @@ const EditInternalPdcaForm = ({
                             href={`/InternalPdcaPage/${pdcaId}/step5`}
                             className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700"
                           >
-                            ✍️ กรอกข้อมูล (แบบฟอร์ม 5)
+                            ✍️ กรอกข้อมูล
+                          </Link>
+                        )}
+                        {item.id === 6 && (
+                          <Link
+                            href={`/InternalPdcaPage/${pdcaId}/step6`}
+                            className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700"
+                          >
+                            ✍️ กรอกข้อมูล
+                          </Link>
+                        )}
+                        {item.id === 8 && (
+                          <Link href={`/InternalPdcaPage/${pdcaId}/step8`} className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700">
+                            ✍️ กรอกข้อมูล
+                          </Link>
+                        )}
+                        {item.id === 9 && (
+                          <Link href={`/InternalPdcaPage/${pdcaId}/step9`} className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700">
+                            ✍️ กรอกข้อมูล
+                          </Link>
+                        )}
+                        {item.id === 10 && (
+                          <Link href={`/InternalPdcaPage/${pdcaId}/step10`} className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700">
+                            ✍️ กรอกข้อมูล
+                          </Link>
+                        )}
+                        {item.id === 11 && (
+                          <Link href={`/InternalPdcaPage/${pdcaId}/step11`} className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700">
+                            ✍️ กรอกข้อมูล
+                          </Link>
+                        )}
+                        {item.id === 12 && (
+                          <Link href={`/InternalPdcaPage/${pdcaId}/step12`} className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700">
+                            ✍️ กรอกข้อมูล
+                          </Link>
+                        )}
+                        {item.id === 13 && (
+                          <Link href={`/InternalPdcaPage/${pdcaId}/step13`} className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700">
+                            ✍️ กรอกข้อมูล
+                          </Link>
+                        )}
+                        {item.id === 14 && (
+                          <Link href={`/InternalPdcaPage/${pdcaId}/step14`} className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700">
+                            ✍️ กรอกข้อมูล
+                          </Link>
+                        )}
+                        {item.id === 15 && (
+                          <Link href={`/InternalPdcaPage/${pdcaId}/step15`} className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700">
+                            ✍️ กรอกข้อมูล
+                          </Link>
+                        )}
+                        {item.id === 16 && (
+                          <Link href={`/InternalPdcaPage/${pdcaId}/step16`} className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700">
+                            ✍️ กรอกข้อมูล
+                          </Link>
+                        )}
+                        {item.id === 17 && (
+                          <Link href={`/InternalPdcaPage/${pdcaId}/step17`} className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700">
+                            ✍️ กรอกข้อมูล
+                          </Link>
+                        )}
+                        {item.id === 18 && (
+                          <Link href={`/InternalPdcaPage/${pdcaId}/step18`} className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700">
+                            ✍️ กรอกข้อมูล
+                          </Link>
+                        )}
+                        {item.id === 19 && (
+                          <Link href={`/InternalPdcaPage/${pdcaId}/step19`} className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700">
+                            ✍️ กรอกข้อมูล
+                          </Link>
+                        )}
+                        {item.id === 20 && (
+                          <Link href={`/InternalPdcaPage/${pdcaId}/step20`} className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700">
+                            ✍️ กรอกข้อมูล
+                          </Link>
+                        )}
+                        {item.id === 21 && (
+                          <Link href={`/InternalPdcaPage/${pdcaId}/step21`} className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md transition-all hover:bg-blue-700">
+                            ✍️ กรอกข้อมูล
                           </Link>
                         )}
                       </div>
